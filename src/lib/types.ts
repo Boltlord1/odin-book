@@ -6,18 +6,19 @@ interface RawUser {
 	avatar: string
 }
 
+interface UserData {
+	name: string
+	display: string
+	avatar: CloudinaryImage
+}
+
 interface RawPost {
 	id: string
 	title: string
 	content: string
 	createdAt: string
 	author: RawUser
-}
-
-interface UserData {
-	name: string
-	display: string
-	avatar: CloudinaryImage
+	comments: RawComment[]
 }
 
 interface PostData {
@@ -26,6 +27,21 @@ interface PostData {
 	content: string
 	createdAt: Date
 	author: UserData
+	comments: CommentData[]
 }
 
-export type { PostData, RawPost, RawUser, UserData }
+interface RawComment {
+	id: string
+	content: string
+	createdAt: string
+	author: RawUser
+}
+
+interface CommentData {
+	id: string
+	content: string
+	createdAt: string
+	author: UserData
+}
+
+export type { CommentData, PostData, RawComment, RawPost, RawUser, UserData }
