@@ -1,8 +1,8 @@
 import { type FunctionComponent, useEffect, useState } from 'react'
 import { useParams } from 'react-router'
-import cloudinary from '../lib/cloudinary'
 import type { PostData, RawPost } from '../lib/types'
 import Post from './Post'
+import { refinePost } from '../lib/refine'
 
 const SinglePost: FunctionComponent = () => {
 	const { id } = useParams()
@@ -13,19 +13,7 @@ const SinglePost: FunctionComponent = () => {
 			const url = `http://localhost:3000/post/${id}`
 			const response = await fetch(url, { credentials: 'include' })
 			const json: RawPost = await response.json()
-
-			const data: PostData = {
-				...json,
-				createdAt: new Date(json.createdAt),
-				author: {
-					...json.author,
-					avatar: cloudinary.image(json.author.avatar)
-				},
-				comments: json.comments.map((c) => ({
-					...c,
-					author: { ...c.author, avatar: cloudinary.image(c.author.avatar) }
-				}))
-			}
+			const data = refinePost(json)
 			setPost(data)
 		}
 		getPost()

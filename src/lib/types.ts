@@ -46,7 +46,7 @@ interface RawComment {
 interface CommentData {
 	id: string
 	content: string
-	createdAt: string
+	createdAt: Date
 	author: UserData
 }
 
