@@ -1,5 +1,11 @@
 import type { CloudinaryImage } from '@cloudinary/url-gen/index'
 
+interface ReqError {
+	type: 'client' | 'server'
+	name: string
+	msg: string
+}
+
 interface RawUser {
 	name: string
 	display: string
@@ -44,4 +50,4 @@ interface CommentData {
 	author: UserData
 }
 
-export type { CommentData, PostData, RawComment, RawPost, RawUser, UserData }
+export type { CommentData, PostData, RawComment, RawPost, RawUser, ReqError, UserData }
