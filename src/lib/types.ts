@@ -50,4 +50,15 @@ interface CommentData {
 	author: UserData
 }
 
-export type { CommentData, PostData, RawComment, RawPost, RawUser, ReqError, UserData }
+type UpdatePost = (id: string) => Promise<void>
+
+export type {
+	CommentData,
+	PostData,
+	RawComment,
+	RawPost,
+	RawUser,
+	ReqError,
+	UpdatePost,
+	UserData
+}
