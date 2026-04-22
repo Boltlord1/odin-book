@@ -15,7 +15,7 @@ const Comment: FunctionComponent<Props> = ({ data }) => {
 			/>
 			<div className='mb-1'>
 				<p className='font-semibold leading-none mb-1'>{data.author.display}</p>
-				<p className=''>{data.content}</p>
+				<p className='wrap-anywhere'>{data.content}</p>
 			</div>
 		</div>
 	)

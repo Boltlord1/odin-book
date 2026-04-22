@@ -1,7 +1,7 @@
 import { type FunctionComponent, useEffect, useState } from 'react'
 import { useParams } from 'react-router'
 import { refinePost } from '../lib/refine'
-import type { PostData, RawPost, UpdatePost } from '../lib/types'
+import type { LikePost, PostData, RawPost, UpdatePost } from '../lib/types'
 import Post from './Post'
 
 const SinglePost: FunctionComponent = () => {
@@ -19,16 +19,28 @@ const SinglePost: FunctionComponent = () => {
 		getPost()
 	}, [id])
 
+	if (post === null) return null
+
 	const updatePost: UpdatePost = async (id) => {
 		const url = `http://localhost:3000/post/${id}`
 		const response = await fetch(url, { credentials: 'include' })
 		const json: RawPost = await response.json()
 		const data = refinePost(json)
+
 		setPost(data)
 	}
 
-	if (post === null) return
-	return <Post data={post} feed={false} update={updatePost} />
+	const likePost: LikePost = (id, dislike) => {
+		const data: PostData = {
+			...post,
+			liked: !dislike,
+			likes: dislike ? post.likes - 1 : post.likes + 1
+		}
+
+		setPost(data)
+	}
+
+	return <Post data={post} feed={false} like={likePost} update={updatePost} />
 }
 
 export default SinglePost

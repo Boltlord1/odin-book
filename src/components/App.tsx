@@ -1,7 +1,13 @@
 import { Outlet } from 'react-router'
+import Dashboard from './Dashboard'
 
 function App() {
-	return <Outlet />
+	return (
+		<>
+			<Dashboard />
+			<Outlet />
+		</>
+	)
 }
 
 export default App

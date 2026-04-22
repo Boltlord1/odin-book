@@ -25,6 +25,10 @@ interface RawPost {
 	createdAt: string
 	author: RawUser
 	comments: RawComment[]
+	likedBy: RawUser[]
+	_count: {
+		likedBy: number
+	}
 }
 
 interface PostData {
@@ -34,6 +38,8 @@ interface PostData {
 	createdAt: Date
 	author: UserData
 	comments: CommentData[]
+	liked: boolean
+	likes: number
 }
 
 interface RawComment {
@@ -41,6 +47,9 @@ interface RawComment {
 	content: string
 	createdAt: string
 	author: RawUser
+	_count: {
+		likedBy: number
+	}
 }
 
 interface CommentData {
@@ -48,12 +57,17 @@ interface CommentData {
 	content: string
 	createdAt: Date
 	author: UserData
+	_count: {
+		likedBy: number
+	}
 }
 
 type UpdatePost = (id: string) => Promise<void>
+type LikePost = (id: string, dislike: boolean) => void
 
 export type {
 	CommentData,
+	LikePost,
 	PostData,
 	RawComment,
 	RawPost,

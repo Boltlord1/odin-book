@@ -3,13 +3,17 @@ import type { CommentData, PostData, RawComment, RawPost } from './types'
 
 function refinePost(raw: RawPost) {
 	const refined: PostData = {
-		...raw,
+		id: raw.id,
+		title: raw.title,
+		content: raw.content,
 		createdAt: new Date(raw.createdAt),
 		author: {
 			...raw.author,
 			avatar: cloudinary.image(raw.author.avatar)
 		},
-		comments: raw.comments.map(refineComment)
+		comments: raw.comments.map(refineComment),
+		liked: raw.likedBy.length > 0,
+		likes: raw._count.likedBy
 	}
 
 	return refined

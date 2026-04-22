@@ -10,7 +10,7 @@ const routes: RouteObject[] = [
 		path: '/app',
 		element: <App />,
 		children: [
-			{ path: '/app', element: <Feed /> },
+			{ path: '/app/post', element: <Feed /> },
 			{ path: '/app/post/:id', element: <SinglePost /> }
 		]
 	},

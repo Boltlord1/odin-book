@@ -1,1 +1,22 @@
 @import "tailwindcss";
+
+@custom-variant nav-active (&.active);
+
+.icon.like path {
+	fill: white;
+	stroke: black;
+}
+
+.icon.like.liked path {
+	fill: oklch(65.6% 0.241 354.308);
+	stroke: oklch(65.6% 0.241 354.308);
+}
+
+.material-symbols-outlined {
+	font-size: inherit;
+	font-variation-settings:
+		"FILL" 0,
+		"wght" 400,
+		"GRAD" 0,
+		"opsz" 0;
+}

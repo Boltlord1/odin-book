@@ -12,13 +12,13 @@
   "dependencies": {
     "@cloudinary/react": "^1.14.4",
     "@cloudinary/url-gen": "^1.22.0",
-    "@mdi/js": "^7.4.47",
-    "@mdi/react": "^1.6.1",
+    "@material-design-icons/svg": "^0.14.15",
     "@tailwindcss/vite": "^4.2.2",
     "react": "^19.2.4",
     "react-dom": "^19.2.4",
     "react-router": "^7.14.0",
-    "tailwindcss": "^4.2.2"
+    "tailwindcss": "^4.2.2",
+    "vite-plugin-svgr": "^5.2.0"
   },
   "devDependencies": {
     "@babel/core": "^7.29.0",
