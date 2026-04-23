@@ -24,12 +24,12 @@ const LogIn: FunctionComponent = () => {
 			<input
 				type='text'
 				name='username'
-				className='border-1 border-gray-700 rounded-md outline-0 p-1 pl-4 pr-4 focus:border-blue-600 focus:shadow-md'
+				className='border border-gray-700 rounded-md outline-0 p-1 pl-4 pr-4 focus:border-blue-600 focus:shadow-md'
 			/>
 			<input
 				type='password'
 				name='password'
-				className='border-1 border-gray-700 rounded-md outline-0 p-1 pl-4 pr-4 focus:border-blue-600 focus:shadow-md'
+				className='border border-gray-700 rounded-md outline-0 p-1 pl-4 pr-4 focus:border-blue-600 focus:shadow-md'
 			/>
 			<button
 				type='submit'

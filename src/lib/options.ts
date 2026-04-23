@@ -11,4 +11,15 @@ function jsonPost(form: HTMLFormElement) {
 	return options
 }
 
-export { jsonPost }
+function formPost(form: HTMLFormElement) {
+	const data = new FormData(form)
+	const options: RequestInit = {
+		method: 'post',
+		credentials: 'include',
+		body: data
+	}
+
+	return options
+}
+
+export { formPost, jsonPost }

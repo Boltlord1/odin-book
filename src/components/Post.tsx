@@ -23,7 +23,7 @@ interface Props {
 }
 
 const Post: FunctionComponent<Props> = ({ data, feed, like, update }) => {
-	const changeText: ChangeEventHandler<HTMLTextAreaElement> = (event) => {
+	const adjustHeight: ChangeEventHandler<HTMLTextAreaElement> = (event) => {
 		const textarea = event.target
 		textarea.style.height = 'auto'
 		textarea.style.height = `${Math.min(textarea.scrollHeight, 200)}px`
@@ -129,7 +129,7 @@ const Post: FunctionComponent<Props> = ({ data, feed, like, update }) => {
 								name='content'
 								placeholder='add a comment...'
 								rows={2}
-								onChange={changeText}
+								onChange={adjustHeight}
 								className='bg-gray-200 p-2 text-sm rounded-lg outline-0'
 							></textarea>
 							<button type='submit' className='self-end mr-4 mt-2'>
