@@ -1,7 +1,7 @@
 import { type FunctionComponent, useEffect, useState } from 'react'
 import { useParams } from 'react-router'
 import { refinePost } from '../lib/refine'
-import type { LikePost, PostData, RawPost, UpdatePost } from '../lib/types'
+import type { LikePost, PostData, RawPost, UpdatePost } from '../types/post'
 import Post from './Post'
 
 const SinglePost: FunctionComponent = () => {

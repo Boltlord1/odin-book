@@ -1,5 +1,5 @@
-import type { FunctionComponent, HTMLAttributes, SVGProps } from 'react'
 import type { Icon, IconProps } from '@phosphor-icons/react'
+import type { FunctionComponent, HTMLAttributes } from 'react'
 
 interface Props {
 	Icon: Icon
@@ -8,7 +8,12 @@ interface Props {
 	divProps?: HTMLAttributes<HTMLDivElement>
 }
 
-const LabelledIcon: FunctionComponent<Props> = ({ Icon, text, divProps, iconProps }) => {
+const LabelledIcon: FunctionComponent<Props> = ({
+	Icon,
+	text,
+	divProps,
+	iconProps
+}) => {
 	const divClass = `flex gap-2 items-center bg-config-test ${divProps?.className ?? ''}`
 	const iconClass = `w-6 h-6 icon ${iconProps?.className ?? ''}`
 

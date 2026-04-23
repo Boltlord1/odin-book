@@ -1,8 +1,10 @@
 import { AdvancedImage } from '@cloudinary/react'
-import Send from '@material-design-icons/svg/filled/send.svg?react'
-import Message from '@material-design-icons/svg/outlined/chat_bubble.svg?react'
-import Like from '@material-design-icons/svg/outlined/favorite.svg?react'
-import Share from '@material-design-icons/svg/outlined/share.svg?react'
+import {
+	ChatCircleIcon,
+	HeartStraightIcon,
+	PaperPlaneRightIcon,
+	ShareFatIcon
+} from '@phosphor-icons/react'
 import type {
 	ChangeEventHandler,
 	FunctionComponent,
@@ -11,10 +13,9 @@ import type {
 } from 'react'
 import { Link } from 'react-router'
 import { jsonPost } from '../lib/options'
-import type { LikePost, PostData, UpdatePost } from '../lib/types'
+import type { LikePost, PostData, UpdatePost } from '../types/post'
 import Comment from './Comment'
 import LabelledIcon from './LabelledIcon'
-import { ChatCircleIcon, PaperPlaneRightIcon, HeartStraightIcon, ShareFatIcon } from '@phosphor-icons/react'
 
 interface Props {
 	data: PostData
@@ -84,10 +85,7 @@ const Post: FunctionComponent<Props> = ({ data, feed, like, update }) => {
 
 	const title = <h3 className='font-semibold text-lg'>{data.title}</h3>
 	const comments = (
-		<LabelledIcon
-			Icon={ChatCircleIcon}
-			text={data.comments.length}
-		/>
+		<LabelledIcon Icon={ChatCircleIcon} text={data.comments.length} />
 	)
 
 	if (data === null) return
@@ -110,7 +108,10 @@ const Post: FunctionComponent<Props> = ({ data, feed, like, update }) => {
 						Icon={HeartStraightIcon}
 						text={data.likes}
 						divProps={{ onClick: handleLike }}
-						iconProps={{ className: `${data.liked ? 'liked' : 'like'}`, weight: data.liked ? 'fill' : 'bold' }}
+						iconProps={{
+							className: `${data.liked ? 'liked' : 'like'}`,
+							weight: data.liked ? 'fill' : 'bold'
+						}}
 					/>
 					{feed ? (
 						<Link to={`/app/post/${data.id}`}>{comments}</Link>

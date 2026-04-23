@@ -1,10 +1,10 @@
+import { FileArrowUpIcon } from '@phosphor-icons/react'
 import type { FunctionComponent, SubmitEventHandler } from 'react'
 import { useNavigate } from 'react-router'
 import adjustHeight from '../lib/adjustHeight'
 import useFiles from '../lib/changeFile'
 import { formPost } from '../lib/options'
 import Label from './LabelledInput'
-import { FileArrowUpIcon } from '@phosphor-icons/react'
 
 const Upload: FunctionComponent = () => {
 	const navigate = useNavigate()
@@ -59,7 +59,10 @@ const Upload: FunctionComponent = () => {
 	)
 	const imageLabel = (
 		<div className='flex justify-evenly items-center bg-gray-200 p-2 pl-4 pr-4 rounded-2xl text-5xl active:bg-gray-100'>
-			<FileArrowUpIcon weight='bold' className={`icon ${files ? 'uploaded' : 'upload'}`} />
+			<FileArrowUpIcon
+				weight='bold'
+				className={`icon ${files ? 'uploaded' : 'upload'}`}
+			/>
 			<span
 				className={`text-gray-${files ? 8 : 6}00 text-2xl text-center min-w-2/3 underline underline-offset-10 decoration-1`}
 			>

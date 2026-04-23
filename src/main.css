@@ -11,9 +11,9 @@
 }
 
 .icon.upload path {
-	fill: var(--color-gray-400)
+	fill: var(--color-gray-400);
 }
 
 .icon.uploaded path {
-	fill: var(--color-gray-800)
+	fill: var(--color-gray-800);
 }

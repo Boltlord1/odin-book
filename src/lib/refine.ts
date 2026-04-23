@@ -1,5 +1,6 @@
+import type { CommentData, RawComment } from '../types/comment'
+import type { PostData, RawPost } from '../types/post'
 import cloudinary from './cloudinary'
-import type { CommentData, PostData, RawComment, RawPost } from './types'
 
 function refinePost(raw: RawPost) {
 	const refined: PostData = {

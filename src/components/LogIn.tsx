@@ -1,7 +1,7 @@
 import type { FunctionComponent, SubmitEventHandler } from 'react'
 import { useNavigate } from 'react-router'
 import { jsonPost } from '../lib/options'
-import type { ReqError } from '../lib/types'
+import type { ReqError } from '../types/response'
 
 const LogIn: FunctionComponent = () => {
 	const navigate = useNavigate()
