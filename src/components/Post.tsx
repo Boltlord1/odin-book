@@ -14,6 +14,7 @@ import { jsonPost } from '../lib/options'
 import type { LikePost, PostData, UpdatePost } from '../lib/types'
 import Comment from './Comment'
 import LabelledIcon from './LabelledIcon'
+import { ChatCircleIcon, PaperPlaneRightIcon, HeartStraightIcon, ShareFatIcon } from '@phosphor-icons/react'
 
 interface Props {
 	data: PostData
@@ -84,9 +85,8 @@ const Post: FunctionComponent<Props> = ({ data, feed, like, update }) => {
 	const title = <h3 className='font-semibold text-lg'>{data.title}</h3>
 	const comments = (
 		<LabelledIcon
-			Svg={Message}
+			Icon={ChatCircleIcon}
 			text={data.comments.length}
-			svgProps={{ fill: 'none', stroke: 'black', strokeWidth: 2 }}
 		/>
 	)
 
@@ -107,20 +107,17 @@ const Post: FunctionComponent<Props> = ({ data, feed, like, update }) => {
 				</div>
 				<div className={`flex gap-4 ${feed ? '' : 'ml-4'}`}>
 					<LabelledIcon
-						Svg={Like}
+						Icon={HeartStraightIcon}
 						text={data.likes}
-						svgProps={{
-							className: `like ${data.liked ? 'liked' : ''}`,
-							strokeWidth: 2
-						}}
 						divProps={{ onClick: handleLike }}
+						iconProps={{ className: `${data.liked ? 'liked' : 'like'}`, weight: data.liked ? 'fill' : 'bold' }}
 					/>
 					{feed ? (
 						<Link to={`/app/post/${data.id}`}>{comments}</Link>
 					) : (
 						comments
 					)}
-					<LabelledIcon Svg={Share} text='Share' />
+					<LabelledIcon Icon={ShareFatIcon} text='Share' />
 				</div>
 				{!feed && (
 					<>
@@ -130,10 +127,10 @@ const Post: FunctionComponent<Props> = ({ data, feed, like, update }) => {
 								placeholder='add a comment...'
 								rows={2}
 								onChange={adjustHeight}
-								className='bg-gray-200 p-2 text-sm rounded-lg outline-0'
+								className='bg-gray-200 p-2 text-sm rounded-lg outline-0 resize-none'
 							></textarea>
 							<button type='submit' className='self-end mr-4 mt-2'>
-								<Send />
+								<PaperPlaneRightIcon weight='bold' className='w-6 h-6' />
 							</button>
 						</form>
 						<div className='flex flex-col ml-2 mr-2 gap-2'>

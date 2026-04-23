@@ -1,21 +1,20 @@
 import type { FunctionComponent, HTMLAttributes, SVGProps } from 'react'
+import type { Icon, IconProps } from '@phosphor-icons/react'
 
 interface Props {
-	Svg: FunctionComponent<SVGProps<SVGSVGElement>>
+	Icon: Icon
 	text: string | number
-	svgProps?: SVGProps<SVGSVGElement>
+	iconProps?: IconProps
 	divProps?: HTMLAttributes<HTMLDivElement>
 }
 
-const LabelledIcon: FunctionComponent<Props> = (props) => {
-	const { Svg, text, divProps, svgProps } = props
-	const divClassName =
-		`flex gap-2 items-center bg-config-test ${divProps?.className ?? ''}`.trim()
-	const svgClassName = `w-6 h-6 icon ${svgProps?.className ?? ''}`.trim()
+const LabelledIcon: FunctionComponent<Props> = ({ Icon, text, divProps, iconProps }) => {
+	const divClass = `flex gap-2 items-center bg-config-test ${divProps?.className ?? ''}`
+	const iconClass = `w-6 h-6 icon ${iconProps?.className ?? ''}`
 
 	return (
-		<div {...divProps} className={divClassName}>
-			<Svg {...svgProps} className={svgClassName} />
+		<div {...divProps} className={divClass}>
+			<Icon weight='bold' {...iconProps} className={iconClass} />
 			<span className='font-semibold'>{text}</span>
 		</div>
 	)
