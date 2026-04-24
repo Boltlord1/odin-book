@@ -1,10 +1,11 @@
 import type { CommentData, RawComment } from './comment'
+import type { ImageData, RawImage } from './image'
 import type { RawUser, UserData } from './user'
 
 interface RawPost {
 	id: string
 	title: string
-	content: string
+	content?: string
 	createdAt: string
 	author: RawUser
 	comments: RawComment[]
@@ -12,17 +13,19 @@ interface RawPost {
 	_count: {
 		likedBy: number
 	}
+	images: RawImage[]
 }
 
 interface PostData {
 	id: string
 	title: string
-	content: string
+	content?: string
 	createdAt: Date
 	author: UserData
 	comments: CommentData[]
 	liked: boolean
 	likes: number
+	images: ImageData[]
 }
 
 type UpdatePost = (id: string) => Promise<void>

@@ -16,6 +16,7 @@ import { jsonPost } from '../lib/options'
 import type { LikePost, PostData, UpdatePost } from '../types/post'
 import Comment from './Comment'
 import LabelledIcon from './LabelledIcon'
+import Slideshow from './Slideshow'
 
 interface Props {
 	data: PostData
@@ -101,7 +102,8 @@ const Post: FunctionComponent<Props> = ({ data, feed, like, update }) => {
 						<p className='text-lg'>{data.author.display}</p>
 					</div>
 					{feed ? <Link to={`/app/post/${data.id}`}>{title}</Link> : title}
-					<p>{data.content}</p>
+					{data.images.length > 0 && <Slideshow data={data.images} />}
+					{data.content && <p>{data.content}</p>}
 				</div>
 				<div className={`flex gap-4 ${feed ? '' : 'ml-4'}`}>
 					<LabelledIcon

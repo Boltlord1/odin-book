@@ -1,6 +1,6 @@
 @import "tailwindcss";
 
-@custom-variant nav-active (&.active);
+@custom-variant js-active (&.active);
 
 .icon.like path {
 	fill: black;

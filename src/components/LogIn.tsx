@@ -7,6 +7,7 @@ const LogIn: FunctionComponent = () => {
 	const navigate = useNavigate()
 
 	const submit: SubmitEventHandler = async (event) => {
+		event.preventDefault()
 		const response = await fetch(
 			'http://localhost:3000/auth/login',
 			jsonPost(event.target)
