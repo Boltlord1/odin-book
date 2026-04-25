@@ -1,27 +1,29 @@
 import type { FunctionComponent, SubmitEventHandler } from 'react'
-import { useNavigate } from 'react-router'
+import { Link, useNavigate } from 'react-router'
 import { jsonPost } from '../lib/options'
+import { backendUrl } from '../lib/variables'
 import type { ReqError } from '../types/response'
+import AuthForm from './AuthForm'
 
 const LogIn: FunctionComponent = () => {
 	const navigate = useNavigate()
 
-	const submit: SubmitEventHandler = async (event) => {
+	const handleSubmit: SubmitEventHandler = async (event) => {
 		event.preventDefault()
 		const response = await fetch(
-			'http://localhost:3000/auth/login',
+			`${backendUrl}/auth/login`,
 			jsonPost(event.target)
 		)
 		const json: true | ReqError[] = await response.json()
 		if (json === true) {
-			return navigate('/app')
+			return navigate('/app/post')
 		}
 
 		console.log(json)
 	}
 
 	return (
-		<form onSubmit={submit} className='flex flex-col w-1/2 min-w-3xs p-2 gap-2'>
+		<AuthForm handleSubmit={handleSubmit}>
 			<input
 				type='text'
 				name='username'
@@ -38,7 +40,11 @@ const LogIn: FunctionComponent = () => {
 			>
 				Submit
 			</button>
-		</form>
+			<div>
+				<Link to={`${backendUrl}/auth/google`}>Sign in with Google</Link>
+				<Link to={`${backendUrl}/auth/github`}>Sign in with Github</Link>
+			</div>
+		</AuthForm>
 	)
 }
 

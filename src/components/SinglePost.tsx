@@ -1,6 +1,7 @@
 import { type FunctionComponent, useEffect, useState } from 'react'
 import { useParams } from 'react-router'
 import { refinePost } from '../lib/refine'
+import { backendUrl } from '../lib/variables'
 import type { LikePost, PostData, RawPost, UpdatePost } from '../types/post'
 import Post from './Post'
 
@@ -10,7 +11,7 @@ const SinglePost: FunctionComponent = () => {
 
 	useEffect(() => {
 		async function getPost() {
-			const url = `http://localhost:3000/post/${id}`
+			const url = `${backendUrl}/post/${id}`
 			const response = await fetch(url, { credentials: 'include' })
 			const json: RawPost = await response.json()
 			const data = refinePost(json)
@@ -22,7 +23,7 @@ const SinglePost: FunctionComponent = () => {
 	if (post === null) return null
 
 	const updatePost: UpdatePost = async (id) => {
-		const url = `http://localhost:3000/post/${id}`
+		const url = `${backendUrl}/post/${id}`
 		const response = await fetch(url, { credentials: 'include' })
 		const json: RawPost = await response.json()
 		const data = refinePost(json)

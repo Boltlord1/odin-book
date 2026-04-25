@@ -5,7 +5,7 @@ const verify: LoaderFunction = async () => {
 		credentials: 'include'
 	})
 
-	return response.ok ? redirect('/app') : redirect('/auth/login')
+	return response.ok ? redirect('/app/post') : redirect('/auth/login')
 }
 
 export default verify

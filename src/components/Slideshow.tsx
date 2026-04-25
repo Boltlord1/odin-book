@@ -13,27 +13,34 @@ interface Props {
 }
 
 const Slideshow: FunctionComponent<Props> = ({ data }) => {
-  const ref = useRef<HTMLDivElement>(null)
-  const [height, setHeight] = useState('0px')
+	const ref = useRef<HTMLDivElement>(null)
+	const [height, setHeight] = useState('0px')
 	const [current, setCurrent] = useState<number>(0)
 
 	const butClass = 'absolute h-full group z-1'
-	const caretClass = 'bg-gray-900/50 group-active:bg-gray-800/75 rounded-full p-2'
+	const caretClass =
+		'bg-gray-900/50 group-active:bg-gray-800/75 rounded-full p-2'
 
-  const ratio = data.map(i => i.height / i.width).reduce((high, curr) => curr > high ? curr > 1 ? 1 : curr : high, 0)
+	const ratio = data
+		.map((i) => i.height / i.width)
+		.reduce((high, curr) => (curr > high ? (curr > 1 ? 1 : curr) : high), 0)
 
-  useLayoutEffect(() => {
-    const div = ref.current
-    if (div) {
-      const width = div.offsetWidth
-      const height = `${Math.ceil(width * ratio)}px`
-      setHeight(height)
-    }
-  }, [ratio])
+	useLayoutEffect(() => {
+		const div = ref.current
+		if (div) {
+			const width = div.offsetWidth
+			const height = `${Math.ceil(width * ratio)}px`
+			setHeight(height)
+		}
+	}, [ratio])
 
 	return (
 		<div className='flex flex-col gap-2'>
-			<div style={{height}} ref={ref} className='bg-gray-800 w-full max-h-100 relative flex justify-center items-center'>
+			<div
+				style={{ height }}
+				ref={ref}
+				className='bg-gray-800 w-full max-h-100 relative flex justify-center items-center'
+			>
 				<button
 					type='button'
 					onClick={() =>

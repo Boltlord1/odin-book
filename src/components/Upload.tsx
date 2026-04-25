@@ -4,6 +4,7 @@ import { useNavigate } from 'react-router'
 import adjustHeight from '../lib/adjustHeight'
 import useFiles from '../lib/changeFile'
 import { formPost } from '../lib/options'
+import { backendUrl } from '../lib/variables'
 import Label from './LabelledInput'
 
 const Upload: FunctionComponent = () => {
@@ -13,10 +14,7 @@ const Upload: FunctionComponent = () => {
 	const uploadPost: SubmitEventHandler = async (event) => {
 		event.preventDefault()
 
-		const response = await fetch(
-			'http://localhost:3000/post',
-			formPost(event.target)
-		)
+		const response = await fetch(`${backendUrl}/post`, formPost(event.target))
 		const json = await response.json()
 
 		if (typeof json === 'string') {

@@ -1,5 +1,6 @@
 import { type FunctionComponent, useEffect, useState } from 'react'
 import { refinePost } from '../lib/refine'
+import { backendUrl } from '../lib/variables'
 import type { LikePost, PostData, RawPost, UpdatePost } from '../types/post'
 import Post from './Post'
 
@@ -8,7 +9,7 @@ const Feed: FunctionComponent = () => {
 
 	useEffect(() => {
 		async function getPosts() {
-			const url = 'http://localhost:3000/post'
+			const url = `${backendUrl}/post`
 			const response = await fetch(url, { credentials: 'include' })
 			const json: RawPost[] = await response.json()
 			const data = json.map(refinePost)
@@ -20,7 +21,7 @@ const Feed: FunctionComponent = () => {
 	if (posts === null) return null
 
 	const updateFeed: UpdatePost = async (id) => {
-		const url = `http://localhost:3000/post/${id}`
+		const url = `${backendUrl}/post/${id}`
 		const response = await fetch(url, { credentials: 'include' })
 		const json: RawPost = await response.json()
 		const refined = refinePost(json)
