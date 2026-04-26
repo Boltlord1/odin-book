@@ -1,9 +1,9 @@
 import type { FunctionComponent, SubmitEventHandler } from 'react'
 import { useNavigate } from 'react-router'
-import { jsonPost } from '../lib/options'
+import { jsonOptions } from '../lib/options'
 import { backendUrl } from '../lib/variables'
 import AuthForm from './AuthForm'
-import Label from './LabelledInput'
+import Label from './general/Label'
 
 interface Props {
 	provider: 'google' | 'github'
@@ -20,7 +20,7 @@ const SignUpOAuth: FunctionComponent<Props> = ({ provider }) => {
 
 		const response = await fetch(
 			`${backendUrl}/auth/${provider}/register`,
-			jsonPost(event.target)
+			jsonOptions(event.target)
 		)
 		const json = await response.json()
 

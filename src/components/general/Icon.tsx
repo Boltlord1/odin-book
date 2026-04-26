@@ -1,14 +1,14 @@
-import type { Icon, IconProps } from '@phosphor-icons/react'
+import type { IconProps, Icon as IconType } from '@phosphor-icons/react'
 import type { FunctionComponent, HTMLAttributes } from 'react'
 
 interface Props {
-	Icon: Icon
+	Icon: IconType
 	text: string | number
 	iconProps?: IconProps
 	divProps?: HTMLAttributes<HTMLDivElement>
 }
 
-const LabelledIcon: FunctionComponent<Props> = ({
+const Icon: FunctionComponent<Props> = ({
 	Icon,
 	text,
 	divProps,
@@ -25,4 +25,4 @@ const LabelledIcon: FunctionComponent<Props> = ({
 	)
 }
 
-export default LabelledIcon
+export default Icon

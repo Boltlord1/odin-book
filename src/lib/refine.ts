@@ -1,6 +1,7 @@
 import type { CommentData, RawComment } from '../types/comment'
 import type { ImageData, RawImage } from '../types/image'
 import type { PostData, RawPost } from '../types/post'
+import type { RawUser, UserData } from '../types/user'
 import cloudinary from './cloudinary'
 
 function refinePost(raw: RawPost) {
@@ -9,10 +10,7 @@ function refinePost(raw: RawPost) {
 		title: raw.title,
 		content: raw.content,
 		createdAt: new Date(raw.createdAt),
-		author: {
-			...raw.author,
-			avatar: cloudinary.image(raw.author.avatar)
-		},
+		author: refineUser(raw.author),
 		comments: raw.comments.map(refineComment),
 		liked: raw.likedBy.length > 0,
 		likes: raw._count.likedBy,
@@ -26,10 +24,7 @@ function refineComment(raw: RawComment) {
 	const refined: CommentData = {
 		...raw,
 		createdAt: new Date(raw.createdAt),
-		author: {
-			...raw.author,
-			avatar: cloudinary.image(raw.author.avatar)
-		}
+		author: refineUser(raw.author)
 	}
 
 	return refined
@@ -46,4 +41,13 @@ function refineImage(raw: RawImage) {
 	return refined
 }
 
-export { refineComment, refinePost }
+function refineUser(raw: RawUser) {
+	const refined: UserData = {
+		...raw,
+		avatar: cloudinary.image(raw.avatar)
+	}
+
+	return refined
+}
+
+export { refineComment, refinePost, refineUser }

@@ -1,4 +1,4 @@
-import { HouseIcon, PlusCircleIcon } from '@phosphor-icons/react'
+import { HouseIcon, PlusCircleIcon, UserIcon } from '@phosphor-icons/react'
 import type { FunctionComponent } from 'react'
 import { NavLink } from 'react-router'
 
@@ -10,6 +10,9 @@ const Dashboard: FunctionComponent = () => {
 			</NavLink>
 			<NavLink to={'/app/upload'} className='text-4xl js-active:text-pink-500'>
 				<PlusCircleIcon />
+			</NavLink>
+			<NavLink to={'/app/account'} className='text-4xl js-active:text-pink-500'>
+				<UserIcon />
 			</NavLink>
 		</nav>
 	)

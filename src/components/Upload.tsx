@@ -3,9 +3,10 @@ import type { FunctionComponent, SubmitEventHandler } from 'react'
 import { useNavigate } from 'react-router'
 import adjustHeight from '../lib/adjustHeight'
 import useFiles from '../lib/changeFile'
-import { formPost } from '../lib/options'
+import { formOptions } from '../lib/options'
 import { backendUrl } from '../lib/variables'
-import Label from './LabelledInput'
+import File from './general/File'
+import Label from './general/Label'
 
 const Upload: FunctionComponent = () => {
 	const navigate = useNavigate()
@@ -14,7 +15,10 @@ const Upload: FunctionComponent = () => {
 	const uploadPost: SubmitEventHandler = async (event) => {
 		event.preventDefault()
 
-		const response = await fetch(`${backendUrl}/post`, formPost(event.target))
+		const response = await fetch(
+			`${backendUrl}/post`,
+			formOptions(event.target)
+		)
 		const json = await response.json()
 
 		if (typeof json === 'string') {
@@ -35,6 +39,7 @@ const Upload: FunctionComponent = () => {
 			className='outline-0 bg-gray-200 p-2 pl-4 pr-4 rounded-2xl resize-none focus:ring-1 focus:ring-gray-800 focus:shadow-lg'
 		/>
 	)
+
 	const content = (
 		<textarea
 			name='content'
@@ -44,34 +49,6 @@ const Upload: FunctionComponent = () => {
 			className='outline-0 bg-gray-200 p-2 pl-4 pr-4 rounded-2xl resize-none focus:ring-1 focus:ring-gray-800 focus:shadow-lg'
 		/>
 	)
-	const images = (
-		<input
-			type='file'
-			name='images'
-			id='images'
-			accept='image/png, image/jpeg, image/gif'
-			multiple={true}
-			onChange={changeFiles}
-			className='hidden'
-		/>
-	)
-	const imageLabel = (
-		<div className='flex justify-evenly items-center bg-gray-200 p-2 pl-4 pr-4 rounded-2xl text-5xl active:bg-gray-100'>
-			<FileArrowUpIcon
-				weight='bold'
-				className={`icon ${files ? 'uploaded' : 'upload'}`}
-			/>
-			<span
-				className={`text-gray-${files ? 8 : 6}00 text-2xl text-center min-w-2/3 underline underline-offset-10 decoration-1`}
-			>
-				{files === null
-					? 'No files'
-					: typeof files === 'string'
-						? files
-						: `${files} files`}
-			</span>
-		</div>
-	)
 
 	return (
 		<>
@@ -79,10 +56,12 @@ const Upload: FunctionComponent = () => {
 			<form onSubmit={uploadPost} className='flex flex-col p-4 gap-3'>
 				<Label label='Title' input={title} />
 				<Label label='Content' input={content} />
-				<Label
-					label='Add images (limit: 5)'
-					input={images}
-					extra={imageLabel}
+				<File
+					name='images'
+					accept='image/png, image/jpeg, image/gif'
+					multiple={true}
+					files={files}
+					changeFiles={changeFiles}
 				/>
 				<button type='submit' className='self-end'>
 					Create Post

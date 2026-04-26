@@ -12,10 +12,10 @@ import type {
 	SubmitEventHandler
 } from 'react'
 import { Link } from 'react-router'
-import { jsonPost } from '../lib/options'
+import { jsonOptions } from '../lib/options'
 import type { LikePost, PostData, UpdatePost } from '../types/post'
 import Comment from './Comment'
-import LabelledIcon from './LabelledIcon'
+import Icon from './general/Icon'
 import Slideshow from './Slideshow'
 
 interface Props {
@@ -37,7 +37,7 @@ const Post: FunctionComponent<Props> = ({ data, feed, like, update }) => {
 
 		const response = await fetch(
 			`http://localhost:3000/post/${data.id}`,
-			jsonPost(event.target)
+			jsonOptions(event.target)
 		)
 		const json = await response.json()
 
@@ -85,9 +85,7 @@ const Post: FunctionComponent<Props> = ({ data, feed, like, update }) => {
 			}
 
 	const title = <h3 className='font-semibold text-lg'>{data.title}</h3>
-	const comments = (
-		<LabelledIcon Icon={ChatCircleIcon} text={data.comments.length} />
-	)
+	const comments = <Icon Icon={ChatCircleIcon} text={data.comments.length} />
 
 	if (data === null) return
 	return (
@@ -106,7 +104,7 @@ const Post: FunctionComponent<Props> = ({ data, feed, like, update }) => {
 					{data.content && <p>{data.content}</p>}
 				</div>
 				<div className={`flex gap-4 ${feed ? '' : 'ml-4'}`}>
-					<LabelledIcon
+					<Icon
 						Icon={HeartStraightIcon}
 						text={data.likes}
 						divProps={{ onClick: handleLike }}
@@ -120,7 +118,7 @@ const Post: FunctionComponent<Props> = ({ data, feed, like, update }) => {
 					) : (
 						comments
 					)}
-					<LabelledIcon Icon={ShareFatIcon} text='Share' />
+					<Icon Icon={ShareFatIcon} text='Share' />
 				</div>
 				{!feed && (
 					<>

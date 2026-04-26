@@ -2,10 +2,11 @@ import { FileArrowUpIcon } from '@phosphor-icons/react'
 import type { FunctionComponent, SubmitEventHandler } from 'react'
 import { Link, useNavigate } from 'react-router'
 import useFiles from '../lib/changeFile'
-import { formPost } from '../lib/options'
+import { formOptions } from '../lib/options'
 import { backendUrl } from '../lib/variables'
 import AuthForm from './AuthForm'
-import Label from './LabelledInput'
+import File from './general/File'
+import Label from './general/Label'
 
 const SignUp: FunctionComponent = () => {
 	const navigate = useNavigate()
@@ -15,36 +16,12 @@ const SignUp: FunctionComponent = () => {
 	const display = <input type='text' name='display' id='display' />
 	const password = <input type='password' name='password' id='password' />
 
-	const image = (
-		<input
-			type='file'
-			name='avatar'
-			id='avatar'
-			accept='image/png, image/jpeg'
-			onChange={changeFile}
-			className='hidden'
-		/>
-	)
-	const imageLabel = (
-		<div className='flex justify-evenly items-center bg-gray-200 p-2 pl-4 pr-4 rounded-2xl text-5xl active:bg-gray-100'>
-			<FileArrowUpIcon
-				weight='bold'
-				className={`icon ${file ? 'uploaded' : 'upload'}`}
-			/>
-			<span
-				className={`text-gray-${file ? 8 : 6}00 text-2xl text-center min-w-2/3 underline underline-offset-10 decoration-1`}
-			>
-				{file === null ? 'No files' : file}
-			</span>
-		</div>
-	)
-
 	const handleSubmit: SubmitEventHandler = async (event) => {
 		event.preventDefault()
 
 		const response = await fetch(
 			`${backendUrl}/auth/register`,
-			formPost(event.target)
+			formOptions(event.target)
 		)
 		const json = await response.json()
 
@@ -61,7 +38,13 @@ const SignUp: FunctionComponent = () => {
 			<Label label='Username' input={username} />
 			<Label label='Display Name' input={display} />
 			<Label label='Password' input={password} />
-			<Label label='Avatar' input={image} extra={imageLabel} />
+			<File
+				name='avatar'
+				accept='image/png, image/jpeg'
+				multiple={false}
+				files={file}
+				changeFiles={changeFile}
+			/>
 			<button type='submit'>Sign Up</button>
 			<div>
 				<Link to={`${backendUrl}/auth/google`}>Sign in with Google</Link>

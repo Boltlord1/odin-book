@@ -1,6 +1,6 @@
 import type { FunctionComponent, SubmitEventHandler } from 'react'
 import { Link, useNavigate } from 'react-router'
-import { jsonPost } from '../lib/options'
+import { jsonOptions } from '../lib/options'
 import { backendUrl } from '../lib/variables'
 import type { ReqError } from '../types/response'
 import AuthForm from './AuthForm'
@@ -12,7 +12,7 @@ const LogIn: FunctionComponent = () => {
 		event.preventDefault()
 		const response = await fetch(
 			`${backendUrl}/auth/login`,
-			jsonPost(event.target)
+			jsonOptions(event.target)
 		)
 		const json: true | ReqError[] = await response.json()
 		if (json === true) {

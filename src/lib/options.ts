@@ -1,8 +1,8 @@
-function jsonPost(form: HTMLFormElement) {
+function jsonOptions(form: HTMLFormElement, method: 'post' | 'put' = 'post') {
 	const data = new FormData(form)
 	const obj = Object.fromEntries(data.entries())
 	const options: RequestInit = {
-		method: 'post',
+		method,
 		headers: { 'content-type': 'application/json' },
 		credentials: 'include',
 		body: JSON.stringify(obj)
@@ -11,10 +11,10 @@ function jsonPost(form: HTMLFormElement) {
 	return options
 }
 
-function formPost(form: HTMLFormElement) {
+function formOptions(form: HTMLFormElement, method: 'post' | 'put' = 'post') {
 	const data = new FormData(form)
 	const options: RequestInit = {
-		method: 'post',
+		method,
 		credentials: 'include',
 		body: data
 	}
@@ -22,4 +22,4 @@ function formPost(form: HTMLFormElement) {
 	return options
 }
 
-export { formPost, jsonPost }
+export { formOptions, jsonOptions }
