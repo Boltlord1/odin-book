@@ -5,7 +5,11 @@ import { backendUrl } from '../../lib/variables'
 import type { EditProps } from '../../types/props'
 import Form from './Form'
 
-const Names: FunctionComponent<EditProps> = ({ setEdit, setUser, children }) => {
+const Names: FunctionComponent<EditProps> = ({
+	setEdit,
+	setUser,
+	children
+}) => {
 	const handleSubmit: SubmitEventHandler = async (event) => {
 		event.preventDefault()
 		const response = await fetch(

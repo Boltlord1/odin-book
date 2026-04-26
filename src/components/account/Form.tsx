@@ -1,21 +1,30 @@
-import type { FunctionComponent, SubmitEventHandler } from "react";
-import type { Dispatch, PropsWithChildren, SetStateAction } from 'react'
+import type {
+	Dispatch,
+	FunctionComponent,
+	PropsWithChildren,
+	SetStateAction,
+	SubmitEventHandler
+} from 'react'
 
 interface Props extends PropsWithChildren {
-  handleSubmit: SubmitEventHandler
+	handleSubmit: SubmitEventHandler
 	setEdit: Dispatch<SetStateAction<boolean>>
 }
 
-const Form: FunctionComponent<Props> = ({ handleSubmit, setEdit, children }) => {
-  return (
-    <form onSubmit={handleSubmit}>
+const Form: FunctionComponent<Props> = ({
+	handleSubmit,
+	setEdit,
+	children
+}) => {
+	return (
+		<form onSubmit={handleSubmit}>
 			<button type='button' onClick={() => setEdit(false)}>
 				Cancel
 			</button>
 			<button type='submit'>Save</button>
-      {children}
-    </form>
-  )
+			{children}
+		</form>
+	)
 }
 
 export default Form

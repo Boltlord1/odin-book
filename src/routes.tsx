@@ -1,12 +1,12 @@
 import type { RouteObject } from 'react-router'
 import App from './components/App'
 import Account from './components/account/Account'
-import Feed from './components/Feed'
-import LogIn from './components/LogIn'
-import SignUp from './components/SignUp'
-import SignUpOAuth from './components/SignUpOAuth'
-import SinglePost from './components/SinglePost'
-import Upload from './components/Upload'
+import LogIn from './components/auth/LogIn'
+import SignUp from './components/auth/SignUp'
+import SignUpOAuth from './components/auth/SignUpOAuth'
+import Feed from './components/post/Feed'
+import SinglePost from './components/post/SinglePost'
+import Upload from './components/post/Upload'
 import { indexLoader, userLoader } from './lib/loaders'
 
 const routes: RouteObject[] = [

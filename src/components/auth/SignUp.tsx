@@ -1,12 +1,11 @@
-import { FileArrowUpIcon } from '@phosphor-icons/react'
 import type { FunctionComponent, SubmitEventHandler } from 'react'
 import { Link, useNavigate } from 'react-router'
-import useFiles from '../lib/changeFile'
-import { formOptions } from '../lib/options'
-import { backendUrl } from '../lib/variables'
+import useFiles from '../../lib/changeFile'
+import { formOptions } from '../../lib/options'
+import { backendUrl } from '../../lib/variables'
+import File from '../general/File'
+import Label from '../general/Label'
 import AuthForm from './AuthForm'
-import File from './general/File'
-import Label from './general/Label'
 
 const SignUp: FunctionComponent = () => {
 	const navigate = useNavigate()
@@ -50,6 +49,9 @@ const SignUp: FunctionComponent = () => {
 				<Link to={`${backendUrl}/auth/google`}>Sign in with Google</Link>
 				<Link to={`${backendUrl}/auth/github`}>Sign in with Github</Link>
 			</div>
+			<p>
+				Already have an account? <Link to='/auth/login'>Log in</Link> instead
+			</p>
 		</AuthForm>
 	)
 }

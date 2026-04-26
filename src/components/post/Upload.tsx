@@ -1,12 +1,11 @@
-import { FileArrowUpIcon } from '@phosphor-icons/react'
 import type { FunctionComponent, SubmitEventHandler } from 'react'
 import { useNavigate } from 'react-router'
-import adjustHeight from '../lib/adjustHeight'
-import useFiles from '../lib/changeFile'
-import { formOptions } from '../lib/options'
-import { backendUrl } from '../lib/variables'
-import File from './general/File'
-import Label from './general/Label'
+import adjustHeight from '../../lib/adjustHeight'
+import useFiles from '../../lib/changeFile'
+import { formOptions } from '../../lib/options'
+import { backendUrl } from '../../lib/variables'
+import File from './../general/File'
+import Label from './../general/Label'
 
 const Upload: FunctionComponent = () => {
 	const navigate = useNavigate()

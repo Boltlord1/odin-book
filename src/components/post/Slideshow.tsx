@@ -6,7 +6,7 @@ import {
 	useRef,
 	useState
 } from 'react'
-import type { ImageData } from '../types/image'
+import type { ImageData } from '../../types/image'
 
 interface Props {
 	data: ImageData[]

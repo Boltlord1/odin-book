@@ -1,14 +1,14 @@
 import type { FunctionComponent, SubmitEventHandler } from 'react'
+import useFiles from '../../lib/changeFile'
 import { formOptions } from '../../lib/options'
 import { refineUser } from '../../lib/refine'
 import { backendUrl } from '../../lib/variables'
 import type { EditProps } from '../../types/props'
 import File from '../general/File'
-import useFiles from '../../lib/changeFile'
 import Form from './Form'
 
 const Avatar: FunctionComponent<EditProps> = ({ setEdit, setUser }) => {
-  const [file, changeFile] = useFiles()
+	const [file, changeFile] = useFiles()
 
 	const handleSubmit: SubmitEventHandler = async (event) => {
 		event.preventDefault()
@@ -27,14 +27,14 @@ const Avatar: FunctionComponent<EditProps> = ({ setEdit, setUser }) => {
 
 	return (
 		<Form setEdit={setEdit} handleSubmit={handleSubmit}>
-      <File
+			<File
 				name='avatar'
 				accept='image/png, image/jpeg'
 				multiple={false}
 				files={file}
 				changeFiles={changeFile}
 			/>
-    </Form>
+		</Form>
 	)
 }
 

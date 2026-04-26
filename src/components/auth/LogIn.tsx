@@ -1,8 +1,8 @@
 import type { FunctionComponent, SubmitEventHandler } from 'react'
 import { Link, useNavigate } from 'react-router'
-import { jsonOptions } from '../lib/options'
-import { backendUrl } from '../lib/variables'
-import type { ReqError } from '../types/response'
+import { jsonOptions } from '../../lib/options'
+import { backendUrl } from '../../lib/variables'
+import type { ReqError } from '../../types/response'
 import AuthForm from './AuthForm'
 
 const LogIn: FunctionComponent = () => {
@@ -44,6 +44,9 @@ const LogIn: FunctionComponent = () => {
 				<Link to={`${backendUrl}/auth/google`}>Sign in with Google</Link>
 				<Link to={`${backendUrl}/auth/github`}>Sign in with Github</Link>
 			</div>
+			<p>
+				Don't have an account? <Link to='/auth/signup'>Sign up</Link> instead
+			</p>
 		</AuthForm>
 	)
 }

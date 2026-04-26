@@ -12,10 +12,10 @@ import type {
 	SubmitEventHandler
 } from 'react'
 import { Link } from 'react-router'
-import { jsonOptions } from '../lib/options'
-import type { LikePost, PostData, UpdatePost } from '../types/post'
+import { jsonOptions } from '../../lib/options'
+import type { LikePost, PostData, UpdatePost } from '../../types/post'
+import Icon from '../general/Icon'
 import Comment from './Comment'
-import Icon from './general/Icon'
 import Slideshow from './Slideshow'
 
 interface Props {

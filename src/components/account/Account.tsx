@@ -2,11 +2,11 @@ import { AdvancedImage } from '@cloudinary/react'
 import { type FunctionComponent, useState } from 'react'
 import { useOutletContext } from 'react-router'
 import type { AppContext } from '../../types/app'
-import Display from './Display'
-import { default as NameForm } from './FormName'
-import { default as AvatarForm } from './FormAvatar'
-import Label from '../general/Label'
 import Input from '../general/Input'
+import Label from '../general/Label'
+import Display from './Display'
+import { default as AvatarForm } from './FormAvatar'
+import { default as NameForm } from './FormName'
 
 const Account: FunctionComponent = () => {
 	const { user, setUser } = useOutletContext<AppContext>()
@@ -15,8 +15,14 @@ const Account: FunctionComponent = () => {
 
 	const names = editNames ? (
 		<NameForm setEdit={setNames} setUser={setUser}>
-			<Label label='Username' input={<Input name='username' type='text' placeholder={user.name} />} />
-			<Label label='Username' input={<Input name='username' type='text' placeholder={user.display} />} />
+			<Label
+				label='Username'
+				input={<Input name='username' type='text' placeholder={user.name} />}
+			/>
+			<Label
+				label='Username'
+				input={<Input name='username' type='text' placeholder={user.display} />}
+			/>
 		</NameForm>
 	) : (
 		<Display setEdit={setNames}>

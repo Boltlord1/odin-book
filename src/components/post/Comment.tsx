@@ -1,6 +1,6 @@
 import { AdvancedImage } from '@cloudinary/react'
 import type { FunctionComponent } from 'react'
-import type { CommentData } from '../types/comment'
+import type { CommentData } from '../../types/comment'
 
 interface Props {
 	data: CommentData

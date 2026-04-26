@@ -1,9 +1,9 @@
 import type { FunctionComponent, SubmitEventHandler } from 'react'
 import { useNavigate } from 'react-router'
-import { jsonOptions } from '../lib/options'
-import { backendUrl } from '../lib/variables'
-import AuthForm from './AuthForm'
-import Label from './general/Label'
+import { jsonOptions } from '../../lib/options'
+import { backendUrl } from '../../lib/variables'
+import AuthForm from '../auth/AuthForm'
+import Label from '../general/Label'
 
 interface Props {
 	provider: 'google' | 'github'
