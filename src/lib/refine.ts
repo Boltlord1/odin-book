@@ -1,7 +1,7 @@
 import type { CommentData, RawComment } from '../types/comment'
 import type { ImageData, RawImage } from '../types/image'
 import type { PostData, RawPost } from '../types/post'
-import type { RawUser, UserData } from '../types/user'
+import type { RawSelf, RawUser, SelfData, UserData } from '../types/user'
 import cloudinary from './cloudinary'
 
 function refinePost(raw: RawPost) {
@@ -50,4 +50,13 @@ function refineUser(raw: RawUser) {
 	return refined
 }
 
-export { refineComment, refinePost, refineUser }
+function refineSelf(raw: RawSelf) {
+	const refined: SelfData = {
+		...refineUser(raw),
+		identities: raw.identities
+	}
+
+	return refined
+}
+
+export { refineComment, refinePost, refineSelf, refineUser }

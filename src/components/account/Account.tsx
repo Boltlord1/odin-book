@@ -1,6 +1,7 @@
 import { AdvancedImage } from '@cloudinary/react'
 import { type FunctionComponent, useState } from 'react'
-import { useOutletContext } from 'react-router'
+import { Link, useOutletContext } from 'react-router'
+import { backendUrl } from '../../lib/variables'
 import type { AppContext } from '../../types/app'
 import Input from '../general/Input'
 import Label from '../general/Label'
@@ -20,8 +21,8 @@ const Account: FunctionComponent = () => {
 				input={<Input name='username' type='text' placeholder={user.name} />}
 			/>
 			<Label
-				label='Username'
-				input={<Input name='username' type='text' placeholder={user.display} />}
+				label='Display name'
+				input={<Input name='display' type='text' placeholder={user.display} />}
 			/>
 		</NameForm>
 	) : (
@@ -39,10 +40,35 @@ const Account: FunctionComponent = () => {
 		</Display>
 	)
 
+	const email = user.identities.find((i) => i.provider === 'Email')
+	const google = user.identities.find((i) => i.provider === 'Google')
+	const github = user.identities.find((i) => i.provider === 'Github')
+
 	return (
 		<div>
 			{names}
 			{avatar}
+			<div>
+				<h2>Connections:</h2>
+				{email ? <h2>Email: {email.id}</h2> : <h2>Email: None</h2>}
+				{google ? (
+					<h2>Google: {google.data.email}</h2>
+				) : (
+					<h2>
+						Google: None <Link to={`${backendUrl}/auth/google`}>Connect</Link>
+					</h2>
+				)}
+				{github ? (
+					<h2>
+						Github: <Link to={github.data.url}>{github.data.username}</Link>
+					</h2>
+				) : (
+					<h2>
+						Github: None <Link to={`${backendUrl}/auth/github`}>Connect</Link>
+					</h2>
+				)}
+			</div>
+			<Link to={`${backendUrl}/auth/logout`}>Log out</Link>
 		</div>
 	)
 }

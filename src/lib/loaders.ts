@@ -1,10 +1,10 @@
 import { type LoaderFunction, redirect } from 'react-router'
-import type { RawUser } from '../types/user'
-import { refineUser } from './refine'
+import type { RawSelf } from '../types/user'
+import { refineSelf } from './refine'
 import { backendUrl } from './variables'
 
 const indexLoader: LoaderFunction = async () => {
-	const response = await fetch(`${backendUrl}/verify`, {
+	const response = await fetch(`${backendUrl}/auth/verify`, {
 		credentials: 'include'
 	})
 
@@ -18,8 +18,8 @@ const userLoader: LoaderFunction = async () => {
 		return redirect('/auth/login')
 	}
 
-	const json: RawUser = await response.json()
-	return refineUser(json)
+	const json: RawSelf = await response.json()
+	return refineSelf(json)
 }
 
 export { indexLoader, userLoader }

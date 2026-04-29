@@ -1,7 +1,7 @@
 import type { FunctionComponent, SubmitEventHandler } from 'react'
 import useFiles from '../../lib/changeFile'
 import { formOptions } from '../../lib/options'
-import { refineUser } from '../../lib/refine'
+import { refineSelf } from '../../lib/refine'
 import { backendUrl } from '../../lib/variables'
 import type { EditProps } from '../../types/props'
 import File from '../general/File'
@@ -16,10 +16,10 @@ const Avatar: FunctionComponent<EditProps> = ({ setEdit, setUser }) => {
 			`${backendUrl}/user/avatar`,
 			formOptions(event.target, 'put')
 		)
-		const json = await response.json()
 
 		if (response.ok) {
-			setUser(refineUser(json))
+			const json = await response.json()
+			setUser(refineSelf(json))
 			setEdit(false)
 			return
 		}

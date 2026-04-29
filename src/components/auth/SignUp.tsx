@@ -4,6 +4,7 @@ import useFiles from '../../lib/changeFile'
 import { formOptions } from '../../lib/options'
 import { backendUrl } from '../../lib/variables'
 import File from '../general/File'
+import Input from '../general/Input'
 import Label from '../general/Label'
 import AuthForm from './AuthForm'
 
@@ -11,9 +12,11 @@ const SignUp: FunctionComponent = () => {
 	const navigate = useNavigate()
 	const [file, changeFile] = useFiles()
 
-	const username = <input type='text' name='username' id='username' />
-	const display = <input type='text' name='display' id='display' />
-	const password = <input type='password' name='password' id='password' />
+	const username = <Input type='text' name='username' />
+	const display = <Input type='text' name='display' />
+	const email = <Input type='email' name='email' />
+	const password = <Input type='password' name='password' />
+	const confirm = <Input type='password' name='confirm-password' />
 
 	const handleSubmit: SubmitEventHandler = async (event) => {
 		event.preventDefault()
@@ -36,7 +39,9 @@ const SignUp: FunctionComponent = () => {
 		<AuthForm handleSubmit={handleSubmit}>
 			<Label label='Username' input={username} />
 			<Label label='Display Name' input={display} />
+			<Label label='Email' input={email} />
 			<Label label='Password' input={password} />
+			<Label label='Confirm Password' input={confirm} />
 			<File
 				name='avatar'
 				accept='image/png, image/jpeg'
