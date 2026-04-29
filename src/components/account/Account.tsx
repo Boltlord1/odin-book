@@ -50,7 +50,13 @@ const Account: FunctionComponent = () => {
 			{avatar}
 			<div>
 				<h2>Connections:</h2>
-				{email ? <h2>Email: {email.id}</h2> : <h2>Email: None</h2>}
+				{email ? (
+					<h2>Email: {email.id}</h2>
+				) : (
+					<h2>
+						Email: None <Link to='/auth/signup/email'>Connect</Link>
+					</h2>
+				)}
 				{google ? (
 					<h2>Google: {google.data.email}</h2>
 				) : (

@@ -6,40 +6,37 @@ import Input from '../general/Input'
 import Label from '../general/Label'
 import Form from './Form'
 
-interface Props {
-	provider: 'google' | 'github'
-}
-
-const SignUpOAuth: FunctionComponent<Props> = ({ provider }) => {
+const SignUpEmail: FunctionComponent = () => {
 	const navigate = useNavigate()
 
-	const username = <Input type='text' name='username' />
-	const display = <Input type='text' name='display' />
+	const email = <Input type='email' name='email' />
+	const password = <Input type='password' name='password' />
+	const confirm = <Input type='password' name='confirm-password' />
 
 	const handleSubmit: SubmitEventHandler = async (event) => {
 		event.preventDefault()
 
 		const response = await fetch(
-			`${backendUrl}/auth/${provider}/register`,
+			`${backendUrl}/auth/email`,
 			jsonOptions(event.target)
 		)
-		const json = await response.json()
 
-		if (json === true) {
-			navigate('/app/post')
+		if (response.ok) {
+			navigate('/')
 			return
 		}
 
-		console.log(json)
+		console.log(response)
 	}
 
 	return (
 		<Form handleSubmit={handleSubmit}>
-			<Label label='Username' input={username} />
-			<Label label='Display Name' input={display} />
+			<Label label='Email' input={email} />
+			<Label label='Password' input={password} />
+			<Label label='Confirm Password' input={confirm} />
 			<button type='submit'>Sign Up</button>
 		</Form>
 	)
 }
 
-export default SignUpOAuth
+export default SignUpEmail

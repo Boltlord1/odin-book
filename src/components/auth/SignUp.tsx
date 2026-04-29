@@ -6,7 +6,7 @@ import { backendUrl } from '../../lib/variables'
 import File from '../general/File'
 import Input from '../general/Input'
 import Label from '../general/Label'
-import AuthForm from './AuthForm'
+import Form from './Form'
 
 const SignUp: FunctionComponent = () => {
 	const navigate = useNavigate()
@@ -36,7 +36,7 @@ const SignUp: FunctionComponent = () => {
 	}
 
 	return (
-		<AuthForm handleSubmit={handleSubmit}>
+		<Form handleSubmit={handleSubmit}>
 			<Label label='Username' input={username} />
 			<Label label='Display Name' input={display} />
 			<Label label='Email' input={email} />
@@ -57,7 +57,7 @@ const SignUp: FunctionComponent = () => {
 			<p>
 				Already have an account? <Link to='/auth/login'>Log in</Link> instead
 			</p>
-		</AuthForm>
+		</Form>
 	)
 }
 

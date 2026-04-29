@@ -3,7 +3,7 @@ import { Link, useNavigate } from 'react-router'
 import { jsonOptions } from '../../lib/options'
 import { backendUrl } from '../../lib/variables'
 import type { ReqError } from '../../types/response'
-import AuthForm from './AuthForm'
+import Form from './Form'
 
 const LogIn: FunctionComponent = () => {
 	const navigate = useNavigate()
@@ -23,7 +23,7 @@ const LogIn: FunctionComponent = () => {
 	}
 
 	return (
-		<AuthForm handleSubmit={handleSubmit}>
+		<Form handleSubmit={handleSubmit}>
 			<input
 				type='text'
 				name='username'
@@ -47,7 +47,7 @@ const LogIn: FunctionComponent = () => {
 			<p>
 				Don't have an account? <Link to='/auth/signup'>Sign up</Link> instead
 			</p>
-		</AuthForm>
+		</Form>
 	)
 }
 

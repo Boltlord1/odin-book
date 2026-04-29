@@ -3,6 +3,7 @@ import App from './components/App'
 import Account from './components/account/Account'
 import LogIn from './components/auth/LogIn'
 import SignUp from './components/auth/SignUp'
+import SignUpEmail from './components/auth/SignUpEmail'
 import SignUpOAuth from './components/auth/SignUpOAuth'
 import Feed from './components/post/Feed'
 import SinglePost from './components/post/SinglePost'
@@ -26,16 +27,20 @@ const routes: RouteObject[] = [
 		element: <LogIn />
 	},
 	{
-		path: 'auth/signup',
+		path: '/auth/signup',
 		element: <SignUp />
 	},
 	{
-		path: 'auth/signup/google',
+		path: '/auth/signup/google',
 		element: <SignUpOAuth provider='google' />
 	},
 	{
-		path: 'auth/signup/github',
+		path: '/auth/signup/github',
 		element: <SignUpOAuth provider='github' />
+	},
+	{
+		path: '/auth/signup/email',
+		element: <SignUpEmail />
 	},
 	{
 		path: '/',

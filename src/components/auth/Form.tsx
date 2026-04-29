@@ -8,7 +8,7 @@ interface Props extends PropsWithChildren {
 	handleSubmit: SubmitEventHandler
 }
 
-const AuthForm: FunctionComponent<Props> = ({ handleSubmit, children }) => {
+const Form: FunctionComponent<Props> = ({ handleSubmit, children }) => {
 	return (
 		<form
 			onSubmit={handleSubmit}
@@ -19,4 +19,4 @@ const AuthForm: FunctionComponent<Props> = ({ handleSubmit, children }) => {
 	)
 }
 
-export default AuthForm
+export default Form
