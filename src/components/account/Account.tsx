@@ -1,6 +1,7 @@
 import { AdvancedImage } from '@cloudinary/react'
 import { type FunctionComponent, useState } from 'react'
 import { Link, useOutletContext } from 'react-router'
+import getImg from '../../lib/cloudinary'
 import { backendUrl } from '../../lib/variables'
 import type { AppContext } from '../../types/app'
 import Input from '../general/Input'
@@ -36,7 +37,7 @@ const Account: FunctionComponent = () => {
 	) : (
 		<Display setEdit={setAvatar}>
 			<h2>Avatar</h2>
-			<AdvancedImage cldImg={user.avatar} />
+			<AdvancedImage cldImg={getImg(user.avatar)} />
 		</Display>
 	)
 

@@ -1,61 +1,15 @@
-import { type FunctionComponent, useEffect, useState } from 'react'
-import { refinePost } from '../../lib/refine'
-import { backendUrl } from '../../lib/variables'
-import type { LikePost, PostData, RawPost, UpdatePost } from '../../types/post'
+import type { FunctionComponent } from 'react'
+import { useLoaderData } from 'react-router'
+import type { PostData } from '../../types/data'
 import Post from './Post'
 
 const Feed: FunctionComponent = () => {
-	const [posts, setPosts] = useState<PostData[] | null>(null)
-
-	useEffect(() => {
-		async function getPosts() {
-			const url = `${backendUrl}/post`
-			const response = await fetch(url, { credentials: 'include' })
-			const json: RawPost[] = await response.json()
-			const data = json.map(refinePost)
-			setPosts(data)
-		}
-		getPosts()
-	}, [])
-
-	if (posts === null) return null
-
-	const updateFeed: UpdatePost = async (id) => {
-		const url = `${backendUrl}/post/${id}`
-		const response = await fetch(url, { credentials: 'include' })
-		const json: RawPost = await response.json()
-		const refined = refinePost(json)
-
-		const index = posts.findIndex((p) => p.id === id)
-		const data = posts.slice(0)
-		data[index] = refined
-
-		setPosts(data)
-	}
-
-	const likePost: LikePost = (id, dislike) => {
-		const index = posts.findIndex((p) => p.id === id)
-		const data = posts.slice(0)
-		data[index] = {
-			...data[index],
-			liked: !dislike,
-			likes: dislike ? data[index].likes-- : data[index].likes++
-		}
-
-		setPosts(data)
-	}
+	const posts = useLoaderData<PostData[]>()
 
 	return (
-		<div>
-			<hr />
+		<div className='flex flex-col gap-4'>
 			{posts.map((p) => (
-				<Post
-					key={p.id}
-					data={p}
-					feed={true}
-					like={likePost}
-					update={updateFeed}
-				/>
+				<Post key={p.id} post={p} feed={true} />
 			))}
 		</div>
 	)

@@ -2,148 +2,86 @@ import { AdvancedImage } from '@cloudinary/react'
 import {
 	ChatCircleIcon,
 	HeartStraightIcon,
-	PaperPlaneRightIcon,
 	ShareFatIcon
 } from '@phosphor-icons/react'
-import type {
-	ChangeEventHandler,
-	FunctionComponent,
-	MouseEventHandler,
-	SubmitEventHandler
-} from 'react'
+import { type FunctionComponent, type MouseEventHandler, useRef, useState } from 'react'
 import { Link } from 'react-router'
-import { jsonOptions } from '../../lib/options'
-import type { LikePost, PostData, UpdatePost } from '../../types/post'
+import getImg from '../../lib/cloudinary'
+import type { PostData } from '../../types/data'
 import Icon from '../general/Icon'
-import Comment from './Comment'
 import Slideshow from './Slideshow'
+import { backendUrl } from '../../lib/variables'
 
 interface Props {
-	data: PostData
+	post: PostData
 	feed: boolean
-	like: LikePost
-	update: UpdatePost
 }
 
-const Post: FunctionComponent<Props> = ({ data, feed, like, update }) => {
-	const adjustHeight: ChangeEventHandler<HTMLTextAreaElement> = (event) => {
-		const textarea = event.target
-		textarea.style.height = 'auto'
-		textarea.style.height = `${Math.min(textarea.scrollHeight, 200)}px`
-	}
+const Post: FunctionComponent<Props> = ({ post, feed }) => {
+  const [liked, setLiked] = useState(post.liked)
+  const abortRef = useRef<AbortController | null>(null)
 
-	const submitComment: SubmitEventHandler = async (event) => {
-		event.preventDefault()
+  const changeLiked: MouseEventHandler = async () => {
+    const changed = !liked
+    setLiked(changed)
 
-		const response = await fetch(
-			`http://localhost:3000/post/${data.id}`,
-			jsonOptions(event.target)
-		)
-		const json = await response.json()
+    if (abortRef.current) {
+      abortRef.current.abort()
+    }
 
-		if (json === true) {
-			update(data.id)
-			const textarea = event.target.querySelector('textarea')
-			if (textarea) {
-				textarea.value = ''
+    const controller = new AbortController()
+    abortRef.current = controller
+
+    try {
+      const response = await fetch(`${backendUrl}/post/${post.id}`, { method: changed ? 'put' : 'delete', credentials: 'include', signal: controller.signal })
+			if (!response.ok) {
+				throw new Error()
 			}
-			return
-		}
-
-		console.log(json)
-	}
-
-	const handleLike: MouseEventHandler = data.liked
-		? async () => {
-				const response = await fetch(
-					`http://localhost:3000/like/post/${data.id}`,
-					{ method: 'delete', credentials: 'include' }
-				)
-				console.log('asd')
-				const json: boolean = await response.json()
-
-				if (json === true) {
-					like(data.id, true)
-					return
-				}
-
-				console.log(json)
-			}
-		: async () => {
-				const response = await fetch(
-					`http://localhost:3000/like/post/${data.id}`,
-					{ method: 'post', credentials: 'include' }
-				)
-				const json: boolean = await response.json()
-
-				if (json === true) {
-					like(data.id, false)
-					return
-				}
-
-				console.log(json)
+    } catch (err: unknown) {
+			if (err instanceof Error && err.name === 'AbortError') {
+				return
 			}
 
-	const title = <h3 className='font-semibold text-lg'>{data.title}</h3>
-	const comments = <Icon Icon={ChatCircleIcon} text={data.comments.length} />
+			setLiked(!changed)
+			console.log('Failed to like post.')
+    }
+  }
 
-	if (data === null) return
+	const title = <h3 className='pl-4 pr-4 font-semibold text-lg'>{post.title}</h3>
+	const comments = <Icon Icon={ChatCircleIcon} text={post.comments} />
+
 	return (
-		<>
-			<div className='p-4 flex flex-col gap-4'>
-				<div className='flex flex-col gap-1'>
-					<div className='flex gap-2'>
-						<AdvancedImage
-							cldImg={data.author.avatar}
-							className='w-8 h-8 rounded-full'
-						/>
-						<p className='text-lg'>{data.author.display}</p>
-					</div>
-					{feed ? <Link to={`/app/post/${data.id}`}>{title}</Link> : title}
-					{data.images.length > 0 && <Slideshow data={data.images} />}
-					{data.content && <p>{data.content}</p>}
-				</div>
-				<div className={`flex gap-4 ${feed ? '' : 'ml-4'}`}>
-					<Icon
-						Icon={HeartStraightIcon}
-						text={data.likes}
-						divProps={{ onClick: handleLike }}
-						iconProps={{
-							className: `${data.liked ? 'liked' : 'like'}`,
-							weight: data.liked ? 'fill' : 'bold'
-						}}
+		<div className='flex flex-col gap-4'>
+			<div className='flex flex-col gap-2'>
+				<div className='pl-4 pr-4 flex gap-2'>
+					<AdvancedImage
+						cldImg={getImg(post.author.avatar)}
+						className='w-8 h-8 rounded-full'
 					/>
-					{feed ? (
-						<Link to={`/app/post/${data.id}`}>{comments}</Link>
-					) : (
-						comments
-					)}
-					<Icon Icon={ShareFatIcon} text='Share' />
+					<p className='text-lg'>{post.author.display}</p>
 				</div>
-				{!feed && (
-					<>
-						<form onSubmit={submitComment} className='flex flex-col ml-4 mr-4'>
-							<textarea
-								name='content'
-								placeholder='add a comment...'
-								rows={2}
-								onChange={adjustHeight}
-								className='bg-gray-200 p-2 text-sm rounded-lg outline-0 resize-none'
-							></textarea>
-							<button type='submit' className='self-end mr-4 mt-2'>
-								<PaperPlaneRightIcon weight='bold' className='w-6 h-6' />
-							</button>
-						</form>
-						<div className='flex flex-col ml-2 mr-2 gap-2'>
-							{data.comments.map((c) => (
-								<Comment key={c.id} data={c} />
-							))}
-						</div>
-					</>
-				)}
+				{feed ? <Link to={`/app/post/${post.id}`}>{title}</Link> : title}
+				{post.images.length > 0 && <Slideshow data={post.images} />}
+				{post.content && <p className='pl-4 pr-4'>{post.content}</p>}
 			</div>
-			<hr />
-		</>
+			<div className='pl-4 pr-4 flex gap-4'>
+				<Icon
+					Icon={HeartStraightIcon}
+					text={liked ? post.likes + 1 : post.likes}
+					divProps={{ onClick: changeLiked }}
+					iconProps={{
+						className: `${liked ? 'liked' : 'like'}`,
+						weight: liked ? 'fill' : 'bold'
+					}}
+				/>
+				{feed ? (
+					<Link to={`/app/post/${post.id}`}>{comments}</Link>
+				) : (
+					comments
+				)}
+				<Icon Icon={ShareFatIcon} text='Share' />
+			</div>
+		</div>
 	)
 }
 

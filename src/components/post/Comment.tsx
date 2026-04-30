@@ -1,6 +1,7 @@
 import { AdvancedImage } from '@cloudinary/react'
 import type { FunctionComponent } from 'react'
-import type { CommentData } from '../../types/comment'
+import getImg from '../../lib/cloudinary'
+import type { CommentData } from '../../types/data'
 
 interface Props {
 	data: CommentData
@@ -8,9 +9,9 @@ interface Props {
 
 const Comment: FunctionComponent<Props> = ({ data }) => {
 	return (
-		<div className='flex gap-2'>
+		<div className='pl-4 pr-4 flex gap-2'>
 			<AdvancedImage
-				cldImg={data.author.avatar}
+				cldImg={getImg(data.author.avatar)}
 				className='w-6 h-6 rounded-full'
 			/>
 			<div className='mb-1'>

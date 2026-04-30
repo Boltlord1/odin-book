@@ -1,7 +1,7 @@
 import type { FunctionComponent, SubmitEventHandler } from 'react'
 import { useNavigate } from 'react-router'
 import adjustHeight from '../../lib/adjustHeight'
-import useFiles from '../../lib/changeFile'
+import useFiles from '../../hooks/useFiles'
 import { formOptions } from '../../lib/options'
 import { backendUrl } from '../../lib/variables'
 import File from './../general/File'
@@ -50,23 +50,20 @@ const Upload: FunctionComponent = () => {
 	)
 
 	return (
-		<>
-			<hr />
-			<form onSubmit={uploadPost} className='flex flex-col p-4 gap-3'>
-				<Label label='Title' input={title} />
-				<Label label='Content' input={content} />
-				<File
-					name='images'
-					accept='image/png, image/jpeg, image/gif'
-					multiple={true}
-					files={files}
-					changeFiles={changeFiles}
-				/>
-				<button type='submit' className='self-end'>
-					Create Post
-				</button>
-			</form>
-		</>
+		<form onSubmit={uploadPost} className='flex flex-col p-4 gap-3'>
+			<Label label='Title' input={title} />
+			<Label label='Content' input={content} />
+			<File
+				name='images'
+				accept='image/png, image/jpeg, image/gif'
+				multiple={true}
+				files={files}
+				changeFiles={changeFiles}
+			/>
+			<button type='submit' className='self-end'>
+				Create Post
+			</button>
+		</form>
 	)
 }
 

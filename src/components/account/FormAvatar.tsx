@@ -1,8 +1,8 @@
 import type { FunctionComponent, SubmitEventHandler } from 'react'
-import useFiles from '../../lib/changeFile'
+import useFiles from '../../hooks/useFiles'
 import { formOptions } from '../../lib/options'
-import { refineSelf } from '../../lib/refine'
 import { backendUrl } from '../../lib/variables'
+import type { SelfData } from '../../types/data'
 import type { EditProps } from '../../types/props'
 import File from '../general/File'
 import Form from './Form'
@@ -18,8 +18,8 @@ const Avatar: FunctionComponent<EditProps> = ({ setEdit, setUser }) => {
 		)
 
 		if (response.ok) {
-			const json = await response.json()
-			setUser(refineSelf(json))
+			const json: SelfData = await response.json()
+			setUser(json)
 			setEdit(false)
 			return
 		}

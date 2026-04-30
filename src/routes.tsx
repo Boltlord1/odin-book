@@ -8,17 +8,17 @@ import SignUpOAuth from './components/auth/SignUpOAuth'
 import Feed from './components/post/Feed'
 import SinglePost from './components/post/SinglePost'
 import Upload from './components/post/Upload'
-import { indexLoader, userLoader } from './lib/loaders'
+import { feedLoader, indexLoader, postLoader, selfLoader } from './lib/loaders'
 
 const routes: RouteObject[] = [
 	{
 		path: '/app',
 		element: <App />,
-		loader: userLoader,
+		loader: selfLoader,
 		children: [
 			{ path: '/app/account', element: <Account /> },
-			{ path: '/app/post', element: <Feed /> },
-			{ path: '/app/post/:id', element: <SinglePost /> },
+			{ path: '/app/post', element: <Feed />, loader: feedLoader },
+			{ path: '/app/post/:id', element: <SinglePost />, loader: postLoader },
 			{ path: '/app/upload', element: <Upload /> }
 		]
 	},

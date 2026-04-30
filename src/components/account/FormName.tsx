@@ -1,7 +1,7 @@
 import type { FunctionComponent, SubmitEventHandler } from 'react'
 import { jsonOptions } from '../../lib/options'
-import { refineSelf } from '../../lib/refine'
 import { backendUrl } from '../../lib/variables'
+import type { SelfData } from '../../types/data'
 import type { EditProps } from '../../types/props'
 import Form from './Form'
 
@@ -16,10 +16,10 @@ const Names: FunctionComponent<EditProps> = ({
 			`${backendUrl}/user`,
 			jsonOptions(event.target, 'put')
 		)
-		const json = await response.json()
 
 		if (response.ok) {
-			setUser(refineSelf(json))
+			const json: SelfData = await response.json()
+			setUser(json)
 			setEdit(false)
 			return
 		}

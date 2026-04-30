@@ -6,7 +6,8 @@ import {
 	useRef,
 	useState
 } from 'react'
-import type { ImageData } from '../../types/image'
+import getImg from '../../lib/cloudinary'
+import type { ImageData } from '../../types/data'
 
 interface Props {
 	data: ImageData[]
@@ -39,7 +40,7 @@ const Slideshow: FunctionComponent<Props> = ({ data }) => {
 			<div
 				style={{ height }}
 				ref={ref}
-				className='bg-gray-800 w-full max-h-100 relative flex justify-center items-center'
+				className='bg-gray-800 w-full relative flex justify-center items-center'
 			>
 				<button
 					type='button'
@@ -72,7 +73,7 @@ const Slideshow: FunctionComponent<Props> = ({ data }) => {
 				{data.map((img, ind) => (
 					<AdvancedImage
 						key={img.id}
-						cldImg={img.img}
+						cldImg={getImg(img.publicId)}
 						className={`${ind === current ? '' : 'hidden'} max-h-full w-auto`}
 					/>
 				))}
@@ -83,7 +84,7 @@ const Slideshow: FunctionComponent<Props> = ({ data }) => {
 						type='button'
 						key={img.id}
 						onClick={() => setCurrent(ind)}
-						className={`w-4 h-4 bg-gray-200 rounded-full js-active:bg-gray-500 ${ind === current ? 'active' : ''}`}
+						className={`w-3 h-3 bg-gray-200 rounded-full js-active:bg-gray-500 ${ind === current ? 'active' : ''}`}
 					/>
 				))}
 			</div>

@@ -1,6 +1,6 @@
 import type { FunctionComponent, SubmitEventHandler } from 'react'
 import { Link, useNavigate } from 'react-router'
-import useFiles from '../../lib/changeFile'
+import useFiles from '../../hooks/useFiles'
 import { formOptions } from '../../lib/options'
 import { backendUrl } from '../../lib/variables'
 import File from '../general/File'

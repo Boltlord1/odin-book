@@ -1,5 +1,5 @@
 import type { Dispatch, SetStateAction } from 'react'
-import type { SelfData } from './user'
+import type { SelfData } from './data'
 
 interface AppContext {
 	user: SelfData

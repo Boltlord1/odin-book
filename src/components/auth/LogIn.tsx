@@ -2,7 +2,7 @@ import type { FunctionComponent, SubmitEventHandler } from 'react'
 import { Link, useNavigate } from 'react-router'
 import { jsonOptions } from '../../lib/options'
 import { backendUrl } from '../../lib/variables'
-import type { ReqError } from '../../types/response'
+import type { ResError } from '../../types/response'
 import Form from './Form'
 
 const LogIn: FunctionComponent = () => {
@@ -14,11 +14,12 @@ const LogIn: FunctionComponent = () => {
 			`${backendUrl}/auth/login`,
 			jsonOptions(event.target)
 		)
-		const json: true | ReqError[] = await response.json()
-		if (json === true) {
+
+		if (response.ok) {
 			return navigate('/app/post')
 		}
 
+		const json: ResError[] = await response.json()
 		console.log(json)
 	}
 
