@@ -6,30 +6,30 @@ import type { EditProps } from '../../types/props'
 import Form from './Form'
 
 const Names: FunctionComponent<EditProps> = ({
-	setEdit,
-	setUser,
-	children
+  setEdit,
+  setSelf,
+  children
 }) => {
-	const handleSubmit: SubmitEventHandler = async (event) => {
-		event.preventDefault()
-		const response = await fetch(
-			`${backendUrl}/user`,
-			jsonOptions(event.target, 'put')
-		)
+  const handleSubmit: SubmitEventHandler = async event => {
+    event.preventDefault()
+    const response = await fetch(
+      `${backendUrl}/user`,
+      jsonOptions(event.target, 'put')
+    )
 
-		if (response.ok) {
-			const json: SelfData = await response.json()
-			setUser(json)
-			setEdit(false)
-			return
-		}
-	}
+    if (response.ok) {
+      const json: SelfData = await response.json()
+      setSelf(json)
+      setEdit(false)
+      return
+    }
+  }
 
-	return (
-		<Form setEdit={setEdit} handleSubmit={handleSubmit}>
-			{children}
-		</Form>
-	)
+  return (
+    <Form handleSubmit={handleSubmit} setEdit={setEdit}>
+      {children}
+    </Form>
+  )
 }
 
 export default Names

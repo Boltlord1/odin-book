@@ -7,10 +7,10 @@ import './main.css'
 const root = document.getElementById('root')
 
 if (root !== null) {
-	const router = createBrowserRouter(routes)
-	createRoot(root).render(
-		<StrictMode>
-			<RouterProvider router={router} />
-		</StrictMode>
-	)
+  const router = createBrowserRouter(routes)
+  createRoot(root).render(
+    <StrictMode>
+      <RouterProvider router={router} />
+    </StrictMode>
+  )
 }

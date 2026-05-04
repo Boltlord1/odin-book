@@ -3,17 +3,17 @@
 @custom-variant js-active (&.active);
 
 .icon.like path {
-	fill: black;
+  fill: black;
 }
 
 .icon.liked path {
-	fill: var(--color-pink-600);
+  fill: var(--color-pink-600);
 }
 
 .icon.upload path {
-	fill: var(--color-gray-400);
+  fill: var(--color-gray-400);
 }
 
 .icon.uploaded path {
-	fill: var(--color-gray-800);
+  fill: var(--color-gray-800);
 }

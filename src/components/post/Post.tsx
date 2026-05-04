@@ -1,23 +1,29 @@
 import { AdvancedImage } from '@cloudinary/react'
 import {
-	ChatCircleIcon,
-	HeartStraightIcon,
-	ShareFatIcon
+  ChatCircleIcon,
+  HeartStraightIcon,
+  ShareFatIcon
 } from '@phosphor-icons/react'
-import { type FunctionComponent, type MouseEventHandler, useRef, useState } from 'react'
+import {
+  type FunctionComponent,
+  type MouseEventHandler,
+  useRef,
+  useState
+} from 'react'
 import { Link } from 'react-router'
 import getImg from '../../lib/cloudinary'
+import { backendUrl } from '../../lib/variables'
 import type { PostData } from '../../types/data'
 import Icon from '../general/Icon'
 import Slideshow from './Slideshow'
-import { backendUrl } from '../../lib/variables'
 
 interface Props {
-	post: PostData
-	feed: boolean
+  feed: boolean
+  post: PostData
+  user: boolean
 }
 
-const Post: FunctionComponent<Props> = ({ post, feed }) => {
+const Post: FunctionComponent<Props> = ({ post, feed, user }) => {
   const [liked, setLiked] = useState(post.liked)
   const abortRef = useRef<AbortController | null>(null)
 
@@ -33,56 +39,67 @@ const Post: FunctionComponent<Props> = ({ post, feed }) => {
     abortRef.current = controller
 
     try {
-      const response = await fetch(`${backendUrl}/post/${post.id}`, { method: changed ? 'put' : 'delete', credentials: 'include', signal: controller.signal })
-			if (!response.ok) {
-				throw new Error()
-			}
+      const response = await fetch(`${backendUrl}/post/${post.id}`, {
+        method: changed ? 'put' : 'delete',
+        credentials: 'include',
+        signal: controller.signal
+      })
+      if (!response.ok) {
+        throw new Error('Failed to like post.')
+      }
     } catch (err: unknown) {
-			if (err instanceof Error && err.name === 'AbortError') {
-				return
-			}
+      if (err instanceof Error && err.name === 'AbortError') {
+        return
+      }
 
-			setLiked(!changed)
-			console.log('Failed to like post.')
+      setLiked(!changed)
+      console.log('Failed to like post.')
     }
   }
 
-	const title = <h3 className='pl-4 pr-4 font-semibold text-lg'>{post.title}</h3>
-	const comments = <Icon Icon={ChatCircleIcon} text={post.comments} />
+  const author = (
+    <div className='flex gap-2 pr-4 pl-4'>
+      <AdvancedImage
+        className='h-8 w-8 rounded-full'
+        cldImg={getImg(post.author.avatar)}
+      />
+      <p className='text-lg'>{post.author.display}</p>
+    </div>
+  )
+  const title = (
+    <h3 className='pr-4 pl-4 font-semibold text-lg'>{post.title}</h3>
+  )
+  const comments = <Icon Icon={ChatCircleIcon} text={post.comments} />
 
-	return (
-		<div className='flex flex-col gap-4'>
-			<div className='flex flex-col gap-2'>
-				<div className='pl-4 pr-4 flex gap-2'>
-					<AdvancedImage
-						cldImg={getImg(post.author.avatar)}
-						className='w-8 h-8 rounded-full'
-					/>
-					<p className='text-lg'>{post.author.display}</p>
-				</div>
-				{feed ? <Link to={`/app/post/${post.id}`}>{title}</Link> : title}
-				{post.images.length > 0 && <Slideshow data={post.images} />}
-				{post.content && <p className='pl-4 pr-4'>{post.content}</p>}
-			</div>
-			<div className='pl-4 pr-4 flex gap-4'>
-				<Icon
-					Icon={HeartStraightIcon}
-					text={liked ? post.likes + 1 : post.likes}
-					divProps={{ onClick: changeLiked }}
-					iconProps={{
-						className: `${liked ? 'liked' : 'like'}`,
-						weight: liked ? 'fill' : 'bold'
-					}}
-				/>
-				{feed ? (
-					<Link to={`/app/post/${post.id}`}>{comments}</Link>
-				) : (
-					comments
-				)}
-				<Icon Icon={ShareFatIcon} text='Share' />
-			</div>
-		</div>
-	)
+  return (
+    <div className='flex flex-col gap-4'>
+      <div className='flex flex-col gap-2'>
+        {user ? (
+          author
+        ) : (
+          <Link to={`/app/profile/${post.author.id}`}>{author}</Link>
+        )}
+        {feed ? <Link to={`/app/post/${post.id}`}>{title}</Link> : title}
+        {post.images.length > 0 && <Slideshow data={post.images} />}
+        {post.content && <p className='pr-4 pl-4'>{post.content}</p>}
+      </div>
+      <div className='flex gap-4 pr-4 pl-4'>
+        <Icon
+          divProps={{
+            onClick: changeLiked
+          }}
+          Icon={HeartStraightIcon}
+          iconProps={{
+            className: `${liked ? 'liked' : 'like'}`,
+            weight: liked ? 'fill' : 'bold'
+          }}
+          text={liked ? post.likes + 1 : post.likes}
+        />
+        {feed ? <Link to={`/app/post/${post.id}`}>{comments}</Link> : comments}
+        <Icon Icon={ShareFatIcon} text='Share' />
+      </div>
+    </div>
+  )
 }
 
 export default Post

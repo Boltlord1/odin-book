@@ -1,43 +1,63 @@
 import type { Identity } from './identity'
 
 interface UserData {
-	id: string
-	name: string
-	display: string
-	avatar: string
+  avatar: string
+  display: string
+  followers: number
+  follows: number
+  id: string
+  name: string
+  posts: number
+}
+
+interface ProfileData extends UserData {
+  followed: boolean
+  followers: number
+  follows: number
+  posts: number
 }
 
 interface SelfData extends UserData {
-	identities: Identity[]
+  followers: number
+  follows: number
+  identities: Identity[]
+  posts: number
 }
 
 interface CommentData {
-	id: string
-	content: string
-	createdAt: string
-	author: UserData
-	likes: number
-	liked: boolean
+  author: UserData
+  content: string
+  createdAt: string
+  id: string
+  liked: boolean
+  likes: number
 }
 
 interface PostData {
-	id: string
-	title: string
-	content: string | null
-	createdAt: string
-	images: ImageData[]
-	author: UserData
-	comments: number
-	likes: number
-	liked: boolean
+  author: UserData
+  comments: number
+  content: string | null
+  createdAt: string
+  id: string
+  images: ImageData[]
+  liked: boolean
+  likes: number
+  title: string
 }
 
 interface ImageData {
-	id: string
-	postId: string
-	publicId: string
-	width: number
-	height: number
+  height: number
+  id: string
+  postId: string
+  publicId: string
+  width: number
 }
 
-export type { CommentData, ImageData, PostData, SelfData, UserData }
+export type {
+  CommentData,
+  ImageData,
+  PostData,
+  ProfileData,
+  SelfData,
+  UserData
+}

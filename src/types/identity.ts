@@ -1,26 +1,26 @@
 interface EmailIdentity {
-	provider: 'Email'
-	id: string
-	data: {
-		verified: boolean
-	}
+  data: {
+    verified: boolean
+  }
+  id: string
+  provider: 'Email'
 }
 
 interface GoogleIdentity {
-	provider: 'Google'
-	id: string
-	data: {
-		email: string
-	}
+  data: {
+    email: string
+  }
+  id: string
+  provider: 'Google'
 }
 
 interface GithubIdentity {
-	provider: 'Github'
-	id: string
-	data: {
-		username: string
-		url: string
-	}
+  data: {
+    username: string
+    url: string
+  }
+  id: string
+  provider: 'Github'
 }
 
 type Identity = EmailIdentity | GoogleIdentity | GithubIdentity

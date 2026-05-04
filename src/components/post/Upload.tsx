@@ -1,70 +1,70 @@
 import type { FunctionComponent, SubmitEventHandler } from 'react'
 import { useNavigate } from 'react-router'
+import useFiles from '../../hooks/files'
 import adjustHeight from '../../lib/adjustHeight'
-import useFiles from '../../hooks/useFiles'
 import { formOptions } from '../../lib/options'
 import { backendUrl } from '../../lib/variables'
 import File from './../general/File'
 import Label from './../general/Label'
 
 const Upload: FunctionComponent = () => {
-	const navigate = useNavigate()
-	const [files, changeFiles] = useFiles()
+  const navigate = useNavigate()
+  const [files, changeFiles] = useFiles()
 
-	const uploadPost: SubmitEventHandler = async (event) => {
-		event.preventDefault()
+  const uploadPost: SubmitEventHandler = async event => {
+    event.preventDefault()
 
-		const response = await fetch(
-			`${backendUrl}/post`,
-			formOptions(event.target)
-		)
-		const json = await response.json()
+    const response = await fetch(
+      `${backendUrl}/post`,
+      formOptions(event.target)
+    )
+    const json = await response.json()
 
-		if (typeof json === 'string') {
-			navigate(`/app/post/${json}`)
-			return
-		}
+    if (typeof json === 'string') {
+      navigate(`/app/post/${json}`)
+      return
+    }
 
-		console.log(json)
-	}
+    console.log(json)
+  }
 
-	const title = (
-		<textarea
-			name='title'
-			id='title'
-			rows={1}
-			onChange={adjustHeight}
-			required={true}
-			className='outline-0 bg-gray-200 p-2 pl-4 pr-4 rounded-2xl resize-none focus:ring-1 focus:ring-gray-800 focus:shadow-lg'
-		/>
-	)
+  const title = (
+    <textarea
+      className='resize-none rounded-2xl bg-gray-200 p-2 pr-4 pl-4 outline-0 focus:shadow-lg focus:ring-1 focus:ring-gray-800'
+      id='title'
+      name='title'
+      onChange={adjustHeight}
+      required={true}
+      rows={1}
+    />
+  )
 
-	const content = (
-		<textarea
-			name='content'
-			id='content'
-			rows={4}
-			onChange={adjustHeight}
-			className='outline-0 bg-gray-200 p-2 pl-4 pr-4 rounded-2xl resize-none focus:ring-1 focus:ring-gray-800 focus:shadow-lg'
-		/>
-	)
+  const content = (
+    <textarea
+      className='resize-none rounded-2xl bg-gray-200 p-2 pr-4 pl-4 outline-0 focus:shadow-lg focus:ring-1 focus:ring-gray-800'
+      id='content'
+      name='content'
+      onChange={adjustHeight}
+      rows={4}
+    />
+  )
 
-	return (
-		<form onSubmit={uploadPost} className='flex flex-col p-4 gap-3'>
-			<Label label='Title' input={title} />
-			<Label label='Content' input={content} />
-			<File
-				name='images'
-				accept='image/png, image/jpeg, image/gif'
-				multiple={true}
-				files={files}
-				changeFiles={changeFiles}
-			/>
-			<button type='submit' className='self-end'>
-				Create Post
-			</button>
-		</form>
-	)
+  return (
+    <form className='flex flex-col gap-3 p-4' onSubmit={uploadPost}>
+      <Label input={title} label='Title' />
+      <Label input={content} label='Content' />
+      <File
+        accept='image/png, image/jpeg, image/gif'
+        changeFiles={changeFiles}
+        files={files}
+        multiple={true}
+        name='images'
+      />
+      <button className='self-end' type='submit'>
+        Create Post
+      </button>
+    </form>
+  )
 }
 
 export default Upload

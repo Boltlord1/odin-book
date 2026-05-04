@@ -1,33 +1,63 @@
-import { useEffect, useState, type FunctionComponent } from 'react'
+import {
+  type FunctionComponent,
+  type SubmitEventHandler,
+  useEffect,
+  useState
+} from 'react'
 import { useLoaderData } from 'react-router'
-import type { CommentData, PostData } from '../../types/data'
-import Post from './Post'
-import CommentForm from './CommentForm'
-import Comment from './Comment'
+import { jsonOptions } from '../../lib/options'
 import { backendUrl } from '../../lib/variables'
+import type { CommentData, PostData } from '../../types/data'
+import Comment from './Comment'
+import CommentForm from './CommentForm'
+import Post from './Post'
 
 const SinglePost: FunctionComponent = () => {
-	const post = useLoaderData<PostData>()
-	const [comments, setComments] = useState<CommentData[]>([])
+  const post = useLoaderData<PostData>()
+  const [comments, setComments] = useState<CommentData[]>([])
 
-	useEffect(() => {
-		async function getComments() {
-			const response = await fetch(`${backendUrl}/post/${post.id}/comment`, { credentials: 'include' })
-			if (response.ok) {
-				const json = await response.json()
-				setComments(json)
-			}
-		}
-		getComments()
-	}, [post.id])
+  useEffect(() => {
+    async function getComments() {
+      const response = await fetch(`${backendUrl}/post/${post.id}/comment`, {
+        credentials: 'include'
+      })
+      if (response.ok) {
+        const json = await response.json()
+        setComments(json)
+      }
+    }
+    getComments()
+  }, [
+    post.id
+  ])
 
-	return (
-		<div className='flex flex-col gap-4'>
-			<Post post={post} feed={false} />
-			<CommentForm id={post.id} />
-			{comments.map(c => <Comment key={c.id} data={c} />)}
-		</div>
-	)
+  const submitComment: SubmitEventHandler = async event => {
+    event.preventDefault()
+
+    const form = event.target
+    const response = await fetch(
+      `http://localhost:3000/post/${post.id}`,
+      jsonOptions(form)
+    )
+
+    if (response.ok) {
+      form.reset()
+      const json: CommentData = await response.json()
+      const updated = comments.slice()
+      updated.push(json)
+      setComments(updated)
+    }
+  }
+
+  return (
+    <div className='flex flex-col gap-4'>
+      <Post feed={false} post={post} user={false} />
+      <CommentForm handleSubmit={submitComment} />
+      {comments.map(c => (
+        <Comment data={c} key={c.id} />
+      ))}
+    </div>
+  )
 }
 
 export default SinglePost

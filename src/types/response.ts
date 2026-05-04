@@ -1,7 +1,7 @@
 interface ResError {
-	type: 'client' | 'server'
-	name: string
-	msg: string
+  msg: string
+  name: string
+  type: 'client' | 'server'
 }
 
 export type { ResError }

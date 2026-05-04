@@ -1,22 +1,22 @@
-import { useState } from 'react'
+import { type FunctionComponent, useState } from 'react'
 import { Outlet, useLoaderData } from 'react-router'
-import type { AppContext } from '../types/app'
 import type { SelfData } from '../types/data'
 import Dashboard from './Dashboard'
 
-function App() {
-	const [user, setUser] = useState<SelfData>(useLoaderData<SelfData>())
-	const context: AppContext = {
-		user,
-		setUser
-	}
+const App: FunctionComponent = () => {
+  const data = useLoaderData<SelfData>()
+  const [self, setSelf] = useState(data)
+  const context = {
+    self,
+    setSelf
+  }
 
-	return (
-		<>
-			<Dashboard />
-			<Outlet context={context} />
-		</>
-	)
+  return (
+    <>
+      <Dashboard />
+      <Outlet context={context} />
+    </>
+  )
 }
 
 export default App

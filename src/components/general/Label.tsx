@@ -1,17 +1,15 @@
 import type { FunctionComponent, JSX } from 'react'
 
 interface Props {
-	label: string
-	input: JSX.Element
+  input: JSX.Element
+  label: string
 }
 
-const Label: FunctionComponent<Props> = ({ label, input }) => {
-	return (
-		<label htmlFor={input.props.id} className='flex flex-col gap-1'>
-			<span>{label}</span>
-			{input}
-		</label>
-	)
-}
+const Label: FunctionComponent<Props> = ({ label, input }) => (
+  <label className='flex flex-col gap-1' htmlFor={input.props.id}>
+    <span>{label}</span>
+    {input}
+  </label>
+)
 
 export default Label
