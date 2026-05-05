@@ -1,3 +1,8 @@
+const options: RequestInit = {
+  method: 'get',
+  credentials: 'include'
+}
+
 function jsonOptions(form: HTMLFormElement, method: 'post' | 'put' = 'post') {
   const data = new FormData(form)
   const obj = Object.fromEntries(data.entries())
@@ -24,4 +29,4 @@ function formOptions(form: HTMLFormElement, method: 'post' | 'put' = 'post') {
   return options
 }
 
-export { formOptions, jsonOptions }
+export { formOptions, jsonOptions, options }

@@ -1,9 +1,5 @@
 import { AdvancedImage } from '@cloudinary/react'
-import {
-  ChatCircleIcon,
-  HeartStraightIcon,
-  ShareFatIcon
-} from '@phosphor-icons/react'
+import { ChatCircleIcon, HeartIcon, ShareFatIcon } from '@phosphor-icons/react'
 import {
   type FunctionComponent,
   type MouseEventHandler,
@@ -39,8 +35,8 @@ const Post: FunctionComponent<Props> = ({ post, feed, user }) => {
     abortRef.current = controller
 
     try {
-      const response = await fetch(`${backendUrl}/post/${post.id}`, {
-        method: changed ? 'put' : 'delete',
+      const response = await fetch(`${backendUrl}/post/${post.id}/like`, {
+        method: changed ? 'post' : 'delete',
         credentials: 'include',
         signal: controller.signal
       })
@@ -58,7 +54,7 @@ const Post: FunctionComponent<Props> = ({ post, feed, user }) => {
   }
 
   const author = (
-    <div className='flex gap-2 pr-4 pl-4'>
+    <div className='flex gap-2 px-4'>
       <AdvancedImage
         className='h-8 w-8 rounded-full'
         cldImg={getImg(post.author.avatar)}
@@ -66,9 +62,7 @@ const Post: FunctionComponent<Props> = ({ post, feed, user }) => {
       <p className='text-lg'>{post.author.display}</p>
     </div>
   )
-  const title = (
-    <h3 className='pr-4 pl-4 font-semibold text-lg'>{post.title}</h3>
-  )
+  const title = <h3 className='px-4 font-semibold text-lg'>{post.title}</h3>
   const comments = <Icon Icon={ChatCircleIcon} text={post.comments} />
 
   return (
@@ -81,14 +75,14 @@ const Post: FunctionComponent<Props> = ({ post, feed, user }) => {
         )}
         {feed ? <Link to={`/app/post/${post.id}`}>{title}</Link> : title}
         {post.images.length > 0 && <Slideshow data={post.images} />}
-        {post.content && <p className='pr-4 pl-4'>{post.content}</p>}
+        {post.content && <p className='px-4'>{post.content}</p>}
       </div>
-      <div className='flex gap-4 pr-4 pl-4'>
+      <div className='flex gap-4 px-4'>
         <Icon
           divProps={{
             onClick: changeLiked
           }}
-          Icon={HeartStraightIcon}
+          Icon={HeartIcon}
           iconProps={{
             className: `${liked ? 'liked' : 'like'}`,
             weight: liked ? 'fill' : 'bold'

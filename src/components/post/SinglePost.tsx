@@ -5,22 +5,22 @@ import {
   useState
 } from 'react'
 import { useLoaderData } from 'react-router'
-import { jsonOptions } from '../../lib/options'
+import { jsonOptions, options } from '../../lib/options'
 import { backendUrl } from '../../lib/variables'
 import type { CommentData, PostData } from '../../types/data'
 import Comment from './Comment'
 import CommentForm from './CommentForm'
 import Post from './Post'
+import Sort from './Sort'
 
 const SinglePost: FunctionComponent = () => {
   const post = useLoaderData<PostData>()
   const [comments, setComments] = useState<CommentData[]>([])
 
+  const path = `${backendUrl}/post/${post.id}/comment`
   useEffect(() => {
     async function getComments() {
-      const response = await fetch(`${backendUrl}/post/${post.id}/comment`, {
-        credentials: 'include'
-      })
+      const response = await fetch(path, options)
       if (response.ok) {
         const json = await response.json()
         setComments(json)
@@ -28,7 +28,7 @@ const SinglePost: FunctionComponent = () => {
     }
     getComments()
   }, [
-    post.id
+    path
   ])
 
   const submitComment: SubmitEventHandler = async event => {
@@ -50,9 +50,10 @@ const SinglePost: FunctionComponent = () => {
   }
 
   return (
-    <div className='flex flex-col gap-4'>
+    <div className='flex flex-col gap-4 py-4'>
       <Post feed={false} post={post} user={false} />
       <CommentForm handleSubmit={submitComment} />
+      <Sort path={path} setSort={setComments} />
       {comments.map(c => (
         <Comment data={c} key={c.id} />
       ))}

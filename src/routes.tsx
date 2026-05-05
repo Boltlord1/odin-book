@@ -5,11 +5,11 @@ import LogIn from './components/auth/LogIn'
 import SignUp from './components/auth/SignUp'
 import SignUpEmail from './components/auth/SignUpEmail'
 import SignUpOAuth from './components/auth/SignUpoAuth'
-import Feed from './components/post/Feed'
+import FeedMain from './components/post/FeedMain'
 import SinglePost from './components/post/SinglePost'
 import Upload from './components/post/Upload'
-import ProfileFeed from './components/profile/ProfileFeed'
-import ProfileSelf from './components/profile/ProfileSelf'
+import Other from './components/profile/Other'
+import Self from './components/profile/Self'
 import {
   feedLoader,
   indexLoader,
@@ -30,7 +30,7 @@ const routes: RouteObject[] = [
       },
       {
         path: '/app/post',
-        element: <Feed user={false} />,
+        element: <FeedMain />,
         loader: feedLoader
       },
       {
@@ -40,11 +40,11 @@ const routes: RouteObject[] = [
       },
       {
         path: '/app/profile',
-        element: <ProfileSelf />
+        element: <Self />
       },
       {
         path: '/app/profile/:id',
-        element: <ProfileFeed />,
+        element: <Other />,
         loader: profileLoader
       },
       {

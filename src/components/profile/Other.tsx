@@ -1,42 +1,22 @@
 import {
   type FunctionComponent,
   type MouseEventHandler,
-  useEffect,
   useRef,
   useState
 } from 'react'
 import { useLoaderData, useOutletContext } from 'react-router'
 import { backendUrl } from '../../lib/variables'
 import type { AppContext } from '../../types/app'
-import type { PostData, ProfileData } from '../../types/data'
-import Feed from '../post/Feed'
+import type { ProfileData } from '../../types/data'
+import ProfileFeed from './Feed'
 import Profile from './Profile'
 
-const ProfileFeed: FunctionComponent = () => {
+const Other: FunctionComponent = () => {
   const { self, setSelf } = useOutletContext<AppContext>()
   const user = useLoaderData<ProfileData>()
-  const [posts, setPosts] = useState<PostData[] | null>(null)
+
   const [followed, setFollowed] = useState(user.followed)
   const abortRef = useRef<AbortController | null>(null)
-
-  useEffect(() => {
-    async function getPosts() {
-      const response = await fetch(`${backendUrl}/user/${user.id}/post`, {
-        credentials: 'include'
-      })
-
-      if (response.ok) {
-        const json: PostData[] = await response.json()
-        setPosts(json)
-        return
-      }
-
-      console.log(response)
-    }
-    getPosts()
-  }, [
-    user.id
-  ])
 
   const changeFollow: MouseEventHandler = async () => {
     const changed = !followed
@@ -51,7 +31,7 @@ const ProfileFeed: FunctionComponent = () => {
 
     try {
       const response = await fetch(`${backendUrl}/user/${user.id}`, {
-        method: changed ? 'put' : 'delete',
+        method: changed ? 'post' : 'delete',
         credentials: 'include',
         signal: controller.signal
       })
@@ -88,9 +68,9 @@ const ProfileFeed: FunctionComponent = () => {
       <Profile data={user} followed={followed}>
         {follow}
       </Profile>
-      {posts ? <Feed data={posts} user={true} /> : null}
+      <ProfileFeed id={user.id} />
     </div>
   )
 }
 
-export default ProfileFeed
+export default Other
