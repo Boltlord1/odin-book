@@ -5,6 +5,7 @@ import {
   useState
 } from 'react'
 import { useLoaderData, useOutletContext } from 'react-router'
+import { toggleOptions } from '../../lib/options'
 import { backendUrl } from '../../lib/variables'
 import type { AppContext } from '../../types/app'
 import type { ProfileData } from '../../types/data'
@@ -30,11 +31,10 @@ const Other: FunctionComponent = () => {
     abortRef.current = controller
 
     try {
-      const response = await fetch(`${backendUrl}/user/${user.id}`, {
-        method: changed ? 'post' : 'delete',
-        credentials: 'include',
-        signal: controller.signal
-      })
+      const response = await fetch(
+        `${backendUrl}/user/${user.id}`,
+        toggleOptions(changed, controller.signal)
+      )
       if (!response.ok) {
         throw new Error('Failed to follow user.')
       }

@@ -14,7 +14,7 @@ const Icon: FunctionComponent<Props> = ({
   divProps,
   iconProps
 }) => {
-  const divClass = `flex gap-2 items-center bg-config-test ${divProps?.className ?? ''}`
+  const divClass = `flex gap-2 items-center min-w-12 ${divProps?.className ?? ''}`
   const iconClass = `w-6 h-6 icon ${iconProps?.className ?? ''}`
 
   return (

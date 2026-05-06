@@ -9,7 +9,7 @@ import { jsonOptions, options } from '../../lib/options'
 import { backendUrl } from '../../lib/variables'
 import type { CommentData, PostData } from '../../types/data'
 import Comment from './Comment'
-import CommentForm from './CommentForm'
+import Form from './Form'
 import Post from './Post'
 import Sort from './Sort'
 
@@ -17,7 +17,7 @@ const SinglePost: FunctionComponent = () => {
   const post = useLoaderData<PostData>()
   const [comments, setComments] = useState<CommentData[]>([])
 
-  const path = `${backendUrl}/post/${post.id}/comment`
+  const path = `${backendUrl}/comment/${post.id}`
   useEffect(() => {
     async function getComments() {
       const response = await fetch(path, options)
@@ -36,7 +36,7 @@ const SinglePost: FunctionComponent = () => {
 
     const form = event.target
     const response = await fetch(
-      `http://localhost:3000/post/${post.id}`,
+      `http://localhost:3000/comment/${post.id}`,
       jsonOptions(form)
     )
 
@@ -47,16 +47,22 @@ const SinglePost: FunctionComponent = () => {
       updated.unshift(json)
       setComments(updated)
     }
+
+    console.log(response)
   }
 
   return (
     <div className='flex flex-col gap-4 py-4'>
       <Post feed={false} post={post} user={false} />
-      <CommentForm handleSubmit={submitComment} />
+      <Form handleSubmit={submitComment} placeholder='comment' />
       <Sort path={path} setSort={setComments} />
-      {comments.map(c => (
-        <Comment comment={c} key={c.id} postId={post.id} />
-      ))}
+      {comments.length > 0 && (
+        <div className='flex flex-col gap-2'>
+          {comments.map(c => (
+            <Comment comment={c} key={c.id} />
+          ))}
+        </div>
+      )}
     </div>
   )
 }

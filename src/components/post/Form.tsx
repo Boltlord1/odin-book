@@ -3,16 +3,25 @@ import type { FunctionComponent, SubmitEventHandler } from 'react'
 import adjustHeight from '../../lib/adjustHeight'
 
 interface Props {
+  className?: string
   handleSubmit: SubmitEventHandler
+  placeholder: string
 }
 
-const CommentForm: FunctionComponent<Props> = ({ handleSubmit }) => (
-  <form className='relative flex flex-col pr-4 pl-4' onSubmit={handleSubmit}>
+const Form: FunctionComponent<Props> = ({
+  handleSubmit,
+  placeholder,
+  className
+}) => (
+  <form
+    className={`relative flex flex-col pr-4 pl-4 ${className}`}
+    onSubmit={handleSubmit}
+  >
     <textarea
       className='resize-none rounded-lg bg-gray-100 p-2 text-sm outline-0'
       name='content'
       onChange={adjustHeight}
-      placeholder='add a comment...'
+      placeholder={`add a ${placeholder}...`}
       rows={2}
     />
     <button
@@ -25,4 +34,4 @@ const CommentForm: FunctionComponent<Props> = ({ handleSubmit }) => (
   </form>
 )
 
-export default CommentForm
+export default Form

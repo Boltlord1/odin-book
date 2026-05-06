@@ -29,4 +29,14 @@ function formOptions(form: HTMLFormElement, method: 'post' | 'put' = 'post') {
   return options
 }
 
-export { formOptions, jsonOptions, options }
+function toggleOptions(bool: boolean, signal: AbortSignal) {
+  const options: RequestInit = {
+    method: bool ? 'post' : 'delete',
+    credentials: 'include',
+    signal
+  }
+
+  return options
+}
+
+export { formOptions, jsonOptions, options, toggleOptions }

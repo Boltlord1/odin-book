@@ -24,7 +24,11 @@ interface SelfData extends UserData {
   posts: number
 }
 
-interface CommentData {
+interface CommentData extends ReplyData {
+  replies: ReplyData[]
+}
+
+interface ReplyData {
   author: UserData
   content: string
   createdAt: string
@@ -58,6 +62,7 @@ export type {
   ImageData,
   PostData,
   ProfileData,
+  ReplyData,
   SelfData,
   UserData
 }

@@ -1,24 +1,29 @@
 import { AdvancedImage } from '@cloudinary/react'
-import { HeartIcon } from '@phosphor-icons/react'
+import { ChatCircleIcon, HeartIcon } from '@phosphor-icons/react'
 import {
   type FunctionComponent,
   type MouseEventHandler,
+  type SubmitEventHandler,
   useRef,
   useState
 } from 'react'
 import getImg from '../../lib/cloudinary'
+import { jsonOptions, toggleOptions } from '../../lib/options'
 import { backendUrl } from '../../lib/variables'
-import type { CommentData } from '../../types/data'
+import type { CommentData, ReplyData } from '../../types/data'
 import Icon from '../general/Icon'
+import Form from './Form'
+import Reply from './Reply'
 
 interface Props {
   comment: CommentData
-  postId: string
 }
 
-const Comment: FunctionComponent<Props> = ({ comment, postId }) => {
-  const [liked, setLiked] = useState(comment.liked)
+const Comment: FunctionComponent<Props> = ({ comment }) => {
   const abortRef = useRef<AbortController | null>(null)
+  const [liked, setLiked] = useState(comment.liked)
+  const [replies, setReplies] = useState(comment.replies)
+  const [replyOpen, setReply] = useState(false)
 
   const changeLiked: MouseEventHandler = async () => {
     const changed = !liked
@@ -33,12 +38,8 @@ const Comment: FunctionComponent<Props> = ({ comment, postId }) => {
 
     try {
       const response = await fetch(
-        `${backendUrl}/post/${postId}/like/${comment.id}`,
-        {
-          method: changed ? 'post' : 'delete',
-          credentials: 'include',
-          signal: controller.signal
-        }
+        `${backendUrl}/like/comment/${comment.id}`,
+        toggleOptions(changed, controller.signal)
       )
       if (!response.ok) {
         throw new Error('Failed to like comment.')
@@ -53,11 +54,32 @@ const Comment: FunctionComponent<Props> = ({ comment, postId }) => {
     }
   }
 
+  const submitReply: SubmitEventHandler = async event => {
+    event.preventDefault()
+
+    const form = event.target
+    const response = await fetch(
+      `http://localhost:3000/reply/${comment.id}`,
+      jsonOptions(form)
+    )
+
+    if (response.ok) {
+      form.reset()
+      const json: ReplyData = await response.json()
+      const updated = replies.slice()
+      updated.unshift(json)
+      setReplies(updated)
+    }
+
+    console.log(response)
+  }
+
+  const openReply: MouseEventHandler = () => setReply(!replyOpen)
+
   const like = (
     <Icon
       divProps={{
-        onClick: changeLiked,
-        className: 'absolute right-4 top-0'
+        onClick: changeLiked
       }}
       Icon={HeartIcon}
       iconProps={{
@@ -68,19 +90,51 @@ const Comment: FunctionComponent<Props> = ({ comment, postId }) => {
     />
   )
 
+  const reply = (
+    <Icon
+      divProps={{
+        onClick: openReply
+      }}
+      Icon={ChatCircleIcon}
+      iconProps={{
+        weight: 'bold'
+      }}
+      text={comment.replies.length}
+    />
+  )
+
   return (
-    <div className='relative flex gap-2 px-4'>
-      <AdvancedImage
-        className='h-6 w-6 rounded-full'
-        cldImg={getImg(comment.author.avatar)}
-      />
-      <div className='mb-1'>
-        <p className='mb-1 font-semibold leading-none'>
-          {comment.author.display}
-        </p>
-        <p className='wrap-anywhere'>{comment.content}</p>
+    <div className='flex flex-col gap-2 px-4'>
+      <div className='flex gap-2'>
+        <AdvancedImage
+          className='h-6 w-6 rounded-full'
+          cldImg={getImg(comment.author.avatar)}
+        />
+        <div className='mb-1 flex-1'>
+          <p className='mb-1 font-semibold leading-none'>
+            {comment.author.display}
+          </p>
+          <p className='wrap-anywhere'>{comment.content}</p>
+        </div>
+        <div className='flex gap-2'>
+          {reply}
+          {like}
+        </div>
       </div>
-      {like}
+      {replyOpen && (
+        <Form
+          className={`${replyOpen ? 'mb-10' : ''}`}
+          handleSubmit={submitReply}
+          placeholder='reply'
+        />
+      )}
+      {replies.length > 0 && (
+        <div className='ml-8 flex flex-col gap-2'>
+          {replies.map(r => (
+            <Reply key={r.id} reply={r} />
+          ))}
+        </div>
+      )}
     </div>
   )
 }

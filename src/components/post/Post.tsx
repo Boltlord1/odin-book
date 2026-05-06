@@ -8,6 +8,7 @@ import {
 } from 'react'
 import { Link } from 'react-router'
 import getImg from '../../lib/cloudinary'
+import { toggleOptions } from '../../lib/options'
 import { backendUrl } from '../../lib/variables'
 import type { PostData } from '../../types/data'
 import Icon from '../general/Icon'
@@ -20,8 +21,8 @@ interface Props {
 }
 
 const Post: FunctionComponent<Props> = ({ post, feed, user }) => {
-  const [liked, setLiked] = useState(post.liked)
   const abortRef = useRef<AbortController | null>(null)
+  const [liked, setLiked] = useState(post.liked)
 
   const changeLiked: MouseEventHandler = async () => {
     const changed = !liked
@@ -35,11 +36,10 @@ const Post: FunctionComponent<Props> = ({ post, feed, user }) => {
     abortRef.current = controller
 
     try {
-      const response = await fetch(`${backendUrl}/post/${post.id}/like`, {
-        method: changed ? 'post' : 'delete',
-        credentials: 'include',
-        signal: controller.signal
-      })
+      const response = await fetch(
+        `${backendUrl}/like/post/${post.id}`,
+        toggleOptions(changed, controller.signal)
+      )
       if (!response.ok) {
         throw new Error('Failed to like post.')
       }
