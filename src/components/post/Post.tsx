@@ -65,6 +65,20 @@ const Post: FunctionComponent<Props> = ({ post, feed, user }) => {
   const title = <h3 className='px-4 font-semibold text-lg'>{post.title}</h3>
   const comments = <Icon Icon={ChatCircleIcon} text={post.comments} />
 
+  const like = (
+    <Icon
+      divProps={{
+        onClick: changeLiked
+      }}
+      Icon={HeartIcon}
+      iconProps={{
+        className: `${liked ? 'liked' : 'like'}`,
+        weight: liked ? 'fill' : 'bold'
+      }}
+      text={liked ? post.likes + 1 : post.likes}
+    />
+  )
+
   return (
     <div className='flex flex-col gap-4'>
       <div className='flex flex-col gap-2'>
@@ -78,17 +92,7 @@ const Post: FunctionComponent<Props> = ({ post, feed, user }) => {
         {post.content && <p className='px-4'>{post.content}</p>}
       </div>
       <div className='flex gap-4 px-4'>
-        <Icon
-          divProps={{
-            onClick: changeLiked
-          }}
-          Icon={HeartIcon}
-          iconProps={{
-            className: `${liked ? 'liked' : 'like'}`,
-            weight: liked ? 'fill' : 'bold'
-          }}
-          text={liked ? post.likes + 1 : post.likes}
-        />
+        {like}
         {feed ? <Link to={`/app/post/${post.id}`}>{comments}</Link> : comments}
         <Icon Icon={ShareFatIcon} text='Share' />
       </div>

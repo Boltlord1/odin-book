@@ -44,7 +44,7 @@ const SinglePost: FunctionComponent = () => {
       form.reset()
       const json: CommentData = await response.json()
       const updated = comments.slice()
-      updated.push(json)
+      updated.unshift(json)
       setComments(updated)
     }
   }
@@ -55,7 +55,7 @@ const SinglePost: FunctionComponent = () => {
       <CommentForm handleSubmit={submitComment} />
       <Sort path={path} setSort={setComments} />
       {comments.map(c => (
-        <Comment data={c} key={c.id} />
+        <Comment comment={c} key={c.id} postId={post.id} />
       ))}
     </div>
   )
