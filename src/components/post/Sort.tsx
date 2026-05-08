@@ -68,10 +68,7 @@ const Sort: FunctionComponent<Props> = ({ path, setSort }) => {
           </div>
         </ListboxButton>
         <ListboxOptions
-          anchor={{
-            to: 'bottom end',
-            gap: 8
-          }}
+          anchor={{ to: 'bottom end', gap: 8 }}
           className='flex flex-col rounded-xl bg-gray-100 px-4 py-2'
           modal={false}
         >

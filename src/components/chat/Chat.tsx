@@ -13,10 +13,7 @@ const Chat: FunctionComponent = () => {
   const [messages, setMessages] = useState(chat.messages)
 
   const updateMessages = (message: unknown) =>
-    setMessages([
-      message as MessageData,
-      ...messages
-    ])
+    setMessages([message as MessageData, ...messages])
 
   return (
     <div className='flex flex-1 flex-col py-4'>
@@ -28,7 +25,7 @@ const Chat: FunctionComponent = () => {
         <span className='font-semibold text-2xl'>{chat.user.display}</span>
       </Link>
       <div className='flex flex-1 flex-col justify-end gap-2 p-4'>
-        {reverseMap(messages, m => (
+        {reverseMap(messages, (m) => (
           <Message message={m} />
         ))}
       </div>

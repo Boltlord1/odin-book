@@ -26,69 +26,22 @@ const routes: RouteObject[] = [
     element: <App />,
     loader: selfLoader,
     children: [
-      {
-        path: '/app/account',
-        element: <Account />
-      },
-      {
-        path: '/app/post',
-        element: <FeedMain />,
-        loader: feedLoader
-      },
-      {
-        path: '/app/post/:id',
-        element: <SinglePost />,
-        loader: postLoader
-      },
-      {
-        path: '/app/upload',
-        element: <Upload />
-      },
-      {
-        path: '/app/profile',
-        element: <Self />
-      },
-      {
-        path: '/app/profile/:id',
-        element: <Other />,
-        loader: profileLoader
-      },
-      {
-        path: '/app/chat',
-        element: <Chats />,
-        loader: chatsLoader
-      },
-      {
-        path: '/app/chat/:id',
-        element: <Chat />,
-        loader: chatLoader
-      }
+      { path: '/app/account', element: <Account /> },
+      { path: '/app/post', element: <FeedMain />, loader: feedLoader },
+      { path: '/app/post/:id', element: <SinglePost />, loader: postLoader },
+      { path: '/app/upload', element: <Upload /> },
+      { path: '/app/profile', element: <Self /> },
+      { path: '/app/profile/:id', element: <Other />, loader: profileLoader },
+      { path: '/app/chat', element: <Chats />, loader: chatsLoader },
+      { path: '/app/chat/:id', element: <Chat />, loader: chatLoader }
     ]
   },
-  {
-    path: '/auth/login',
-    element: <LogIn />
-  },
-  {
-    path: '/auth/signup',
-    element: <SignUp />
-  },
-  {
-    path: '/auth/signup/google',
-    element: <SignUpOAuth provider='google' />
-  },
-  {
-    path: '/auth/signup/github',
-    element: <SignUpOAuth provider='github' />
-  },
-  {
-    path: '/auth/signup/email',
-    element: <SignUpEmail />
-  },
-  {
-    path: '/',
-    loader: authLoader
-  }
+  { path: '/auth/login', element: <LogIn /> },
+  { path: '/auth/signup', element: <SignUp /> },
+  { path: '/auth/signup/google', element: <SignUpOAuth provider='google' /> },
+  { path: '/auth/signup/github', element: <SignUpOAuth provider='github' /> },
+  { path: '/auth/signup/email', element: <SignUpEmail /> },
+  { path: '/', loader: authLoader }
 ]
 
 export default routes

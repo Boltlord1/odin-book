@@ -11,7 +11,7 @@ const Chats: FunctionComponent = () => {
 
   return (
     <div className='flex flex-col py-4'>
-      {chats.map(c => (
+      {chats.map((c) => (
         <div className='px-4' key={c.id}>
           <div className='flex justify-between'>
             <Link className='flex gap-2' to={`/app/profile/${c.user.id}`}>
@@ -26,9 +26,7 @@ const Chats: FunctionComponent = () => {
               to={`/app/chat/${c.user.id}`}
             >
               <Icon
-                divProps={{
-                  className: 'text-lg'
-                }}
+                divProps={{ className: 'text-lg' }}
                 Icon={ChatsIcon}
                 iconProps={{
                   fill: '',

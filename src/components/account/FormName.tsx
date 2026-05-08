@@ -10,7 +10,7 @@ const Names: FunctionComponent<EditProps> = ({
   setSelf,
   children
 }) => {
-  const handleSubmit: SubmitEventHandler = async event => {
+  const handleSubmit: SubmitEventHandler = async (event) => {
     event.preventDefault()
     const response = await fetch(
       `${backendUrl}/user`,

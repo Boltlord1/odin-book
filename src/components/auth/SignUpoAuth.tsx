@@ -16,7 +16,7 @@ const SignUpOAuth: FunctionComponent<Props> = ({ provider }) => {
   const username = <Input name='username' type='text' />
   const display = <Input name='display' type='text' />
 
-  const handleSubmit: SubmitEventHandler = async event => {
+  const handleSubmit: SubmitEventHandler = async (event) => {
     event.preventDefault()
 
     const response = await fetch(

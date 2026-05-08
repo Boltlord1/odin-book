@@ -32,18 +32,14 @@ const Slideshow: FunctionComponent<Props> = ({ data }) => {
       const height = `${Math.ceil(width * ratio)}px`
       setHeight(height)
     }
-  }, [
-    ratio
-  ])
+  }, [ratio])
 
   return (
     <div className='flex flex-col gap-2'>
       <div
         className='relative flex w-full items-center justify-center bg-gray-800'
         ref={ref}
-        style={{
-          height
-        }}
+        style={{ height }}
       >
         <button
           className={`${butClass} -left-2`}

@@ -26,9 +26,7 @@ const ProfileFeed: FunctionComponent<Props> = ({ id }) => {
       console.log(response)
     }
     getPosts()
-  }, [
-    path
-  ])
+  }, [path])
 
   return (
     <div>

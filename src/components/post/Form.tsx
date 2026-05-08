@@ -16,7 +16,7 @@ const Form: FunctionComponent<Props> = ({
   placeholder,
   absolute
 }) => {
-  const handleSubmit: SubmitEventHandler = async event => {
+  const handleSubmit: SubmitEventHandler = async (event) => {
     event.preventDefault()
 
     const response = await fetch(path, jsonOptions(event.target))

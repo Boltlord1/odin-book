@@ -6,10 +6,7 @@ import Dashboard from './Dashboard'
 const App: FunctionComponent = () => {
   const data = useLoaderData<SelfData>()
   const [self, setSelf] = useState(data)
-  const context = {
-    self,
-    setSelf
-  }
+  const context = { self, setSelf }
 
   return (
     <>

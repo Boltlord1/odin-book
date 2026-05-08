@@ -51,9 +51,7 @@ const Reply: FunctionComponent<Props> = ({ reply }) => {
 
   const like = (
     <Icon
-      divProps={{
-        onClick: changeLiked
-      }}
+      divProps={{ onClick: changeLiked }}
       Icon={HeartIcon}
       iconProps={{
         className: `${liked ? 'liked' : 'like'}`,

@@ -67,9 +67,7 @@ const Post: FunctionComponent<Props> = ({ post, feed, user }) => {
 
   const like = (
     <Icon
-      divProps={{
-        onClick: changeLiked
-      }}
+      divProps={{ onClick: changeLiked }}
       Icon={HeartIcon}
       iconProps={{
         className: `${liked ? 'liked' : 'like'}`,

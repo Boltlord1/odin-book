@@ -55,18 +55,13 @@ const Comment: FunctionComponent<Props> = ({ comment }) => {
   }
 
   const updateReply = (reply: unknown) =>
-    setReplies([
-      ...replies,
-      reply as ReplyData
-    ])
+    setReplies([...replies, reply as ReplyData])
 
   const openReply: MouseEventHandler = () => setReply(!replyOpen)
 
   const like = (
     <Icon
-      divProps={{
-        onClick: changeLiked
-      }}
+      divProps={{ onClick: changeLiked }}
       Icon={HeartIcon}
       iconProps={{
         className: `${liked ? 'liked' : 'like'}`,
@@ -78,13 +73,9 @@ const Comment: FunctionComponent<Props> = ({ comment }) => {
 
   const reply = (
     <Icon
-      divProps={{
-        onClick: openReply
-      }}
+      divProps={{ onClick: openReply }}
       Icon={ChatCircleIcon}
-      iconProps={{
-        weight: 'bold'
-      }}
+      iconProps={{ weight: 'bold' }}
       text={comment.replies.length}
     />
   )
@@ -122,7 +113,7 @@ const Comment: FunctionComponent<Props> = ({ comment }) => {
       )}
       {replies.length > 0 && (
         <div className='ml-8 flex flex-col gap-2'>
-          {replies.map(r => (
+          {replies.map((r) => (
             <Reply key={r.id} reply={r} />
           ))}
         </div>

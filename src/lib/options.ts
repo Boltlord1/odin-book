@@ -1,16 +1,11 @@
-const options: RequestInit = {
-  method: 'get',
-  credentials: 'include'
-}
+const options: RequestInit = { method: 'get', credentials: 'include' }
 
 function jsonOptions(form: HTMLFormElement, method: 'post' | 'put' = 'post') {
   const data = new FormData(form)
   const obj = Object.fromEntries(data.entries())
   const options: RequestInit = {
     method,
-    headers: {
-      'content-type': 'application/json'
-    },
+    headers: { 'content-type': 'application/json' },
     credentials: 'include',
     body: JSON.stringify(obj)
   }
@@ -20,11 +15,7 @@ function jsonOptions(form: HTMLFormElement, method: 'post' | 'put' = 'post') {
 
 function formOptions(form: HTMLFormElement, method: 'post' | 'put' = 'post') {
   const data = new FormData(form)
-  const options: RequestInit = {
-    method,
-    credentials: 'include',
-    body: data
-  }
+  const options: RequestInit = { method, credentials: 'include', body: data }
 
   return options
 }

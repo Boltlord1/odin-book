@@ -3,9 +3,7 @@ import { backendUrl } from '../lib/variables'
 import type { PostData } from '../types/data'
 
 const feedLoader: LoaderFunction = async () => {
-  const response = await fetch(`${backendUrl}/post`, {
-    credentials: 'include'
-  })
+  const response = await fetch(`${backendUrl}/post`, { credentials: 'include' })
 
   if (!response.ok) {
     return redirect('/auth/login')

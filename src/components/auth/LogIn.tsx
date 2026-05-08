@@ -8,7 +8,7 @@ import Form from './Form'
 const LogIn: FunctionComponent = () => {
   const navigate = useNavigate()
 
-  const handleSubmit: SubmitEventHandler = async event => {
+  const handleSubmit: SubmitEventHandler = async (event) => {
     event.preventDefault()
     const response = await fetch(
       `${backendUrl}/auth/login`,

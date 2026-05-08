@@ -22,15 +22,10 @@ const SinglePost: FunctionComponent = () => {
       }
     }
     getComments()
-  }, [
-    path
-  ])
+  }, [path])
 
   const updateComment = (comment: unknown) =>
-    setComments([
-      comment as CommentData,
-      ...comments
-    ])
+    setComments([comment as CommentData, ...comments])
 
   return (
     <div className='flex flex-col gap-4 py-4'>
@@ -39,7 +34,7 @@ const SinglePost: FunctionComponent = () => {
       <Sort path={path} setSort={setComments} />
       {comments.length > 0 && (
         <div className='flex flex-col gap-2'>
-          {comments.map(c => (
+          {comments.map((c) => (
             <Comment comment={c} key={c.id} />
           ))}
         </div>

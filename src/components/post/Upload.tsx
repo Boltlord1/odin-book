@@ -11,7 +11,7 @@ const Upload: FunctionComponent = () => {
   const navigate = useNavigate()
   const [files, changeFiles] = useFiles()
 
-  const uploadPost: SubmitEventHandler = async event => {
+  const uploadPost: SubmitEventHandler = async (event) => {
     event.preventDefault()
 
     const response = await fetch(

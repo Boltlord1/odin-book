@@ -10,7 +10,7 @@ import Form from './Form'
 const Avatar: FunctionComponent<EditProps> = ({ setEdit, setSelf }) => {
   const [file, changeFile] = useFiles()
 
-  const handleSubmit: SubmitEventHandler = async event => {
+  const handleSubmit: SubmitEventHandler = async (event) => {
     event.preventDefault()
     const response = await fetch(
       `${backendUrl}/user/avatar`,

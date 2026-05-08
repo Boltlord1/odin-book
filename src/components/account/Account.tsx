@@ -41,9 +41,9 @@ const Account: FunctionComponent = () => {
     </Display>
   )
 
-  const email = self.identities.find(i => i.provider === 'Email')
-  const google = self.identities.find(i => i.provider === 'Google')
-  const github = self.identities.find(i => i.provider === 'Github')
+  const email = self.identities.find((i) => i.provider === 'Email')
+  const google = self.identities.find((i) => i.provider === 'Google')
+  const github = self.identities.find((i) => i.provider === 'Github')
 
   return (
     <div>
