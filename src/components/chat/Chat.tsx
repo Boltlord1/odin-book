@@ -1,0 +1,44 @@
+import { AdvancedImage } from '@cloudinary/react'
+import { type FunctionComponent, useState } from 'react'
+import { Link, useLoaderData } from 'react-router'
+import getImg from '../../lib/cloudinary'
+import { reverseMap } from '../../lib/map'
+import { backendUrl } from '../../lib/variables'
+import type { ChatData, MessageData } from '../../types/data'
+import Form from '../post/Form'
+import Message from './Messages'
+
+const Chat: FunctionComponent = () => {
+  const chat = useLoaderData<ChatData>()
+  const [messages, setMessages] = useState(chat.messages)
+
+  const updateMessages = (message: unknown) =>
+    setMessages([
+      message as MessageData,
+      ...messages
+    ])
+
+  return (
+    <div className='flex flex-1 flex-col py-4'>
+      <Link className='flex gap-2 px-4' to={`/app/profile/${chat.user.id}`}>
+        <AdvancedImage
+          className='h-8 w-8 rounded-full'
+          cldImg={getImg(chat.user.avatar)}
+        />
+        <span className='font-semibold text-2xl'>{chat.user.display}</span>
+      </Link>
+      <div className='flex flex-1 flex-col justify-end gap-2 p-4'>
+        {reverseMap(messages, m => (
+          <Message message={m} />
+        ))}
+      </div>
+      <Form
+        path={`${backendUrl}/chat/${chat.id}`}
+        placeholder='message'
+        update={updateMessages}
+      />
+    </div>
+  )
+}
+
+export default Chat

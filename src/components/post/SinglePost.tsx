@@ -1,11 +1,6 @@
-import {
-  type FunctionComponent,
-  type SubmitEventHandler,
-  useEffect,
-  useState
-} from 'react'
+import { type FunctionComponent, useEffect, useState } from 'react'
 import { useLoaderData } from 'react-router'
-import { jsonOptions, options } from '../../lib/options'
+import { options } from '../../lib/options'
 import { backendUrl } from '../../lib/variables'
 import type { CommentData, PostData } from '../../types/data'
 import Comment from './Comment'
@@ -31,30 +26,16 @@ const SinglePost: FunctionComponent = () => {
     path
   ])
 
-  const submitComment: SubmitEventHandler = async event => {
-    event.preventDefault()
-
-    const form = event.target
-    const response = await fetch(
-      `http://localhost:3000/comment/${post.id}`,
-      jsonOptions(form)
-    )
-
-    if (response.ok) {
-      form.reset()
-      const json: CommentData = await response.json()
-      const updated = comments.slice()
-      updated.unshift(json)
-      setComments(updated)
-    }
-
-    console.log(response)
-  }
+  const updateComment = (comment: unknown) =>
+    setComments([
+      comment as CommentData,
+      ...comments
+    ])
 
   return (
     <div className='flex flex-col gap-4 py-4'>
-      <Post feed={false} post={post} user={false} />
-      <Form handleSubmit={submitComment} placeholder='comment' />
+      <Post post={post} />
+      <Form absolute path={path} placeholder='comment' update={updateComment} />
       <Sort path={path} setSort={setComments} />
       {comments.length > 0 && (
         <div className='flex flex-col gap-2'>

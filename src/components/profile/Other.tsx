@@ -4,7 +4,7 @@ import {
   useRef,
   useState
 } from 'react'
-import { useLoaderData, useOutletContext } from 'react-router'
+import { Link, useLoaderData, useOutletContext } from 'react-router'
 import { toggleOptions } from '../../lib/options'
 import { backendUrl } from '../../lib/variables'
 import type { AppContext } from '../../types/app'
@@ -32,7 +32,7 @@ const Other: FunctionComponent = () => {
 
     try {
       const response = await fetch(
-        `${backendUrl}/user/${user.id}`,
+        `${backendUrl}/follow/${user.id}`,
         toggleOptions(changed, controller.signal)
       )
       if (!response.ok) {
@@ -55,7 +55,7 @@ const Other: FunctionComponent = () => {
 
   const follow = (
     <button
-      className='self-start rounded-full bg-gray-200 px-10 py-2 text-center'
+      className='flex-1 rounded-full bg-gray-200 px-10 py-2 text-center'
       onClick={changeFollow}
       type='button'
     >
@@ -63,10 +63,20 @@ const Other: FunctionComponent = () => {
     </button>
   )
 
+  const message = (
+    <Link
+      className='flex-1 rounded-full bg-gray-200 px-10 py-2 text-center'
+      to={`/app/chat/${user.id}`}
+    >
+      Message
+    </Link>
+  )
+
   return (
     <div className='flex flex-col'>
       <Profile data={user} followed={followed}>
         {follow}
+        {message}
       </Profile>
       <ProfileFeed id={user.id} />
     </div>

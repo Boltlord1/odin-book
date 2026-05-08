@@ -18,7 +18,7 @@ const Profile: FunctionComponent<Props> = ({ data, children, followed }) => (
         <p>{data.follows} Following</p>
       </div>
     </div>
-    <div className='flex flex-col'>{children}</div>
+    <div className='flex flex-wrap justify-between gap-4'>{children}</div>
   </div>
 )
 

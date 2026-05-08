@@ -5,18 +5,20 @@ import LogIn from './components/auth/LogIn'
 import SignUp from './components/auth/SignUp'
 import SignUpEmail from './components/auth/SignUpEmail'
 import SignUpOAuth from './components/auth/SignUpoAuth'
+import Chat from './components/chat/Chat'
+import Chats from './components/chat/Chats'
 import FeedMain from './components/post/FeedMain'
 import SinglePost from './components/post/SinglePost'
 import Upload from './components/post/Upload'
 import Other from './components/profile/Other'
 import Self from './components/profile/Self'
-import {
-  feedLoader,
-  indexLoader,
-  postLoader,
-  profileLoader,
-  selfLoader
-} from './lib/loaders'
+import authLoader from './loaders/auth'
+import chatLoader from './loaders/chat'
+import chatsLoader from './loaders/chats'
+import feedLoader from './loaders/feed'
+import postLoader from './loaders/post'
+import profileLoader from './loaders/profile'
+import selfLoader from './loaders/self'
 
 const routes: RouteObject[] = [
   {
@@ -39,6 +41,10 @@ const routes: RouteObject[] = [
         loader: postLoader
       },
       {
+        path: '/app/upload',
+        element: <Upload />
+      },
+      {
         path: '/app/profile',
         element: <Self />
       },
@@ -48,8 +54,14 @@ const routes: RouteObject[] = [
         loader: profileLoader
       },
       {
-        path: '/app/upload',
-        element: <Upload />
+        path: '/app/chat',
+        element: <Chats />,
+        loader: chatsLoader
+      },
+      {
+        path: '/app/chat/:id',
+        element: <Chat />,
+        loader: chatLoader
       }
     ]
   },
@@ -75,7 +87,7 @@ const routes: RouteObject[] = [
   },
   {
     path: '/',
-    loader: indexLoader
+    loader: authLoader
   }
 ]
 

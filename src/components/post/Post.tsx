@@ -15,9 +15,9 @@ import Icon from '../general/Icon'
 import Slideshow from './Slideshow'
 
 interface Props {
-  feed: boolean
+  feed?: boolean
   post: PostData
-  user: boolean
+  user?: boolean
 }
 
 const Post: FunctionComponent<Props> = ({ post, feed, user }) => {

@@ -3,8 +3,6 @@ import type { Identity } from './identity'
 interface UserData {
   avatar: string
   display: string
-  followers: number
-  follows: number
   id: string
   name: string
   posts: number
@@ -57,9 +55,33 @@ interface ImageData {
   width: number
 }
 
+interface MessageData {
+  content: string
+  createdAt: Date
+  id: string
+  sent: boolean
+}
+
+interface ChatData {
+  id: string
+  messageCount: number
+  messages: MessageData[]
+  user: UserData
+}
+
+interface ChatDataMinimal {
+  id: string
+  message: MessageData
+  messageCount: number
+  user: UserData
+}
+
 export type {
+  ChatData,
+  ChatDataMinimal,
   CommentData,
   ImageData,
+  MessageData,
   PostData,
   ProfileData,
   ReplyData,

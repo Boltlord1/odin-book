@@ -3,12 +3,12 @@ import { ChatCircleIcon, HeartIcon } from '@phosphor-icons/react'
 import {
   type FunctionComponent,
   type MouseEventHandler,
-  type SubmitEventHandler,
   useRef,
   useState
 } from 'react'
+import { Link } from 'react-router'
 import getImg from '../../lib/cloudinary'
-import { jsonOptions, toggleOptions } from '../../lib/options'
+import { toggleOptions } from '../../lib/options'
 import { backendUrl } from '../../lib/variables'
 import type { CommentData, ReplyData } from '../../types/data'
 import Icon from '../general/Icon'
@@ -54,25 +54,11 @@ const Comment: FunctionComponent<Props> = ({ comment }) => {
     }
   }
 
-  const submitReply: SubmitEventHandler = async event => {
-    event.preventDefault()
-
-    const form = event.target
-    const response = await fetch(
-      `http://localhost:3000/reply/${comment.id}`,
-      jsonOptions(form)
-    )
-
-    if (response.ok) {
-      form.reset()
-      const json: ReplyData = await response.json()
-      const updated = replies.slice()
-      updated.unshift(json)
-      setReplies(updated)
-    }
-
-    console.log(response)
-  }
+  const updateReply = (reply: unknown) =>
+    setReplies([
+      ...replies,
+      reply as ReplyData
+    ])
 
   const openReply: MouseEventHandler = () => setReply(!replyOpen)
 
@@ -103,6 +89,14 @@ const Comment: FunctionComponent<Props> = ({ comment }) => {
     />
   )
 
+  const author = (
+    <Link to={`/app/profile/${comment.author.id}`}>
+      <h3 className='mb-1 font-semibold leading-none'>
+        {comment.author.display}
+      </h3>
+    </Link>
+  )
+
   return (
     <div className='flex flex-col gap-2 px-4'>
       <div className='flex gap-2'>
@@ -111,9 +105,7 @@ const Comment: FunctionComponent<Props> = ({ comment }) => {
           cldImg={getImg(comment.author.avatar)}
         />
         <div className='mb-1 flex-1'>
-          <p className='mb-1 font-semibold leading-none'>
-            {comment.author.display}
-          </p>
+          {author}
           <p className='wrap-anywhere'>{comment.content}</p>
         </div>
         <div className='flex gap-2'>
@@ -123,9 +115,9 @@ const Comment: FunctionComponent<Props> = ({ comment }) => {
       </div>
       {replyOpen && (
         <Form
-          className={`${replyOpen ? 'mb-10' : ''}`}
-          handleSubmit={submitReply}
+          path={`http://localhost:3000/reply/${comment.id}`}
           placeholder='reply'
+          update={updateReply}
         />
       )}
       {replies.length > 0 && (
