@@ -17,14 +17,14 @@ const Chat: FunctionComponent = () => {
 
   return (
     <>
-      <Link className='flex gap-2 px-4' to={`/app/profile/${chat.user.id}`}>
+      <Link className='flex gap-2' to={`/app/profile/${chat.user.id}`}>
         <AdvancedImage
           className='h-8 w-8 rounded-full'
           cldImg={getImg(chat.user.avatar)}
         />
         <span className='font-semibold text-2xl'>{chat.user.display}</span>
       </Link>
-      <div className='flex flex-1 flex-col justify-end gap-2 p-4'>
+      <div className='flex flex-1 flex-col justify-end gap-2'>
         {reverseMap(messages, (m) => (
           <Message key={m.id} message={m} />
         ))}

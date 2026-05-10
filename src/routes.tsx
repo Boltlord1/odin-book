@@ -12,12 +12,14 @@ import SinglePost from './components/post/SinglePost'
 import Upload from './components/post/Upload'
 import Other from './components/profile/Other'
 import Self from './components/profile/Self'
+import Users from './components/profile/Users'
 import authLoader from './loaders/auth'
 import chatLoader from './loaders/chat'
 import chatsLoader from './loaders/chats'
 import postLoader from './loaders/post'
 import profileLoader from './loaders/profile'
 import selfLoader from './loaders/self'
+import userLoader from './loaders/user'
 
 const routes: RouteObject[] = [
   {
@@ -32,7 +34,8 @@ const routes: RouteObject[] = [
       { path: '/app/profile', element: <Self /> },
       { path: '/app/profile/:id', element: <Other />, loader: profileLoader },
       { path: '/app/chat', element: <Chats />, loader: chatsLoader },
-      { path: '/app/chat/:id', element: <Chat />, loader: chatLoader }
+      { path: '/app/chat/:id', element: <Chat />, loader: chatLoader },
+      { path: '/app/user', element: <Users />, loader: userLoader }
     ]
   },
   { path: '/auth/login', element: <LogIn /> },

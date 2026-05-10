@@ -5,7 +5,7 @@ let user: SelfData | null = null
 
 const getUser = async () => {
   if (!user) {
-    const response = await fetch(`${backendUrl}/user`, {
+    const response = await fetch(`${backendUrl}/user/self`, {
       credentials: 'include'
     })
     if (!response.ok) {

@@ -10,7 +10,7 @@ function signalOptions(controller: AbortController) {
   return options
 }
 
-function jsonOptions(form: HTMLFormElement, method: 'post' | 'put' = 'post') {
+function jsonOptions(form: HTMLFormElement, method: 'post' | 'patch' = 'post') {
   const data = new FormData(form)
   const obj = Object.fromEntries(data.entries())
   const options: RequestInit = {
@@ -23,7 +23,7 @@ function jsonOptions(form: HTMLFormElement, method: 'post' | 'put' = 'post') {
   return options
 }
 
-function formOptions(form: HTMLFormElement, method: 'post' | 'put' = 'post') {
+function formOptions(form: HTMLFormElement, method: 'post' | 'patch' = 'post') {
   const data = new FormData(form)
   const options: RequestInit = { method, credentials: 'include', body: data }
 

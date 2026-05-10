@@ -14,8 +14,11 @@ const Profile: FunctionComponent<Props> = ({ data, children, followed }) => (
       <AdvancedImage className='rounded-full' cldImg={getImg(data.avatar)} />
       <div className='flex-1 self-center text-center'>
         <p className='font-semibold'>{data.display}</p>
-        <p>{followed ? data.followers + 1 : data.followers} Followers</p>
-        <p>{data.follows} Following</p>
+        <p>
+          {followed ? data.followers + 1 : data.followers} Follower
+          {data.followers + 1 === 1 ? '' : 's'}
+        </p>
+        <p>{data.following} Following</p>
       </div>
     </div>
     <div className='flex flex-wrap justify-between gap-4'>{children}</div>

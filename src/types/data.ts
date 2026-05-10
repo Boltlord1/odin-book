@@ -5,21 +5,20 @@ interface UserData {
   display: string
   id: string
   name: string
+}
+
+interface UserExtraData extends UserData {
+  followers: number
+  following: number
   posts: number
 }
 
-interface ProfileData extends UserData {
+interface ProfileData extends UserExtraData {
   followed: boolean
-  followers: number
-  follows: number
-  posts: number
 }
 
-interface SelfData extends UserData {
-  followers: number
-  follows: number
+interface SelfData extends UserExtraData {
   identities: Identity[]
-  posts: number
 }
 
 interface CommentData extends ReplyData {
@@ -86,5 +85,6 @@ export type {
   ProfileData,
   ReplyData,
   SelfData,
-  UserData
+  UserData,
+  UserExtraData
 }

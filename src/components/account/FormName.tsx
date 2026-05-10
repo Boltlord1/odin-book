@@ -14,7 +14,7 @@ const Names: FunctionComponent<EditProps> = ({
     event.preventDefault()
     const response = await fetch(
       `${backendUrl}/user`,
-      jsonOptions(event.target, 'put')
+      jsonOptions(event.target, 'patch')
     )
 
     if (response.ok) {

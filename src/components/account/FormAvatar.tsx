@@ -14,7 +14,7 @@ const Avatar: FunctionComponent<EditProps> = ({ setEdit, setSelf }) => {
     event.preventDefault()
     const response = await fetch(
       `${backendUrl}/user/avatar`,
-      formOptions(event.target, 'put')
+      formOptions(event.target, 'patch')
     )
 
     if (response.ok) {

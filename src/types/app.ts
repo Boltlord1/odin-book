@@ -1,3 +1,4 @@
+import type { Icon } from '@phosphor-icons/react'
 import type { Dispatch, JSX, SetStateAction } from 'react'
 import type { SelfData } from './data'
 
@@ -13,4 +14,9 @@ interface SortObject {
   value: Sorts
 }
 
-export type { AppContext, SortObject, Sorts }
+interface DashboardLink {
+  Icon: Icon
+  id: string
+}
+
+export type { AppContext, DashboardLink, SortObject, Sorts }
