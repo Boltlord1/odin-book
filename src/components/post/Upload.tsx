@@ -2,7 +2,7 @@ import type { FunctionComponent, SubmitEventHandler } from 'react'
 import { useNavigate } from 'react-router'
 import useFiles from '../../hooks/files'
 import adjustHeight from '../../lib/adjustHeight'
-import { formOptions } from '../../lib/options'
+import { formOptions } from '../../lib/fetch'
 import { backendUrl } from '../../lib/variables'
 import File from './../general/File'
 import Label from './../general/Label'
@@ -50,7 +50,7 @@ const Upload: FunctionComponent = () => {
   )
 
   return (
-    <form className='flex flex-col gap-3 p-4' onSubmit={uploadPost}>
+    <form className='flex flex-col gap-4' onSubmit={uploadPost}>
       <Label input={title} label='Title' />
       <Label input={content} label='Content' />
       <File

@@ -1,6 +1,6 @@
 import type { FunctionComponent, SubmitEventHandler } from 'react'
 import useFiles from '../../hooks/files'
-import { formOptions } from '../../lib/options'
+import { formOptions } from '../../lib/fetch'
 import { backendUrl } from '../../lib/variables'
 import type { SelfData } from '../../types/data'
 import type { EditProps } from '../../types/props'

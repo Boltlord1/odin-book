@@ -8,7 +8,7 @@ import type { FunctionComponent } from 'react'
 import { NavLink } from 'react-router'
 
 const Dashboard: FunctionComponent = () => (
-  <nav className='flex px-4 py-2'>
+  <nav className='flex justify-between'>
     <NavLink className='js-active:text-pink-500 text-4xl' to={'/app/post'}>
       <HouseIcon />
     </NavLink>

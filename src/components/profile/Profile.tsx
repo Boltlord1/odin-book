@@ -9,7 +9,7 @@ interface Props extends PropsWithChildren {
 }
 
 const Profile: FunctionComponent<Props> = ({ data, children, followed }) => (
-  <div className='flex flex-col gap-4 p-4'>
+  <>
     <div className='grid grid-cols-2'>
       <AdvancedImage className='rounded-full' cldImg={getImg(data.avatar)} />
       <div className='flex-1 self-center text-center'>
@@ -19,7 +19,7 @@ const Profile: FunctionComponent<Props> = ({ data, children, followed }) => (
       </div>
     </div>
     <div className='flex flex-wrap justify-between gap-4'>{children}</div>
-  </div>
+  </>
 )
 
 export default Profile

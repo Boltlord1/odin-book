@@ -11,17 +11,9 @@ import {
   type SetStateAction,
   useState
 } from 'react'
-import { options } from '../../lib/options'
-import type { CommentData, PostData } from '../../types/data'
+import type { SortObject, Sorts } from '../../types/app'
 
-interface Props {
-  path: string
-  setSort:
-    | Dispatch<SetStateAction<PostData[]>>
-    | Dispatch<SetStateAction<CommentData[]>>
-}
-
-const sorts = [
+const sorts: SortObject[] = [
   {
     value: 'recent',
     element: (
@@ -42,24 +34,23 @@ const sorts = [
   }
 ]
 
-const Sort: FunctionComponent<Props> = ({ path, setSort }) => {
-  const [selected, setSelected] = useState(sorts[0])
-  const handleChange = async (index: number) => {
-    const sort = sorts[index]
-    setSelected(sort)
-    const response = await fetch(`${path}?sort=${sort.value}`, options)
+interface Props {
+  setSort: Dispatch<SetStateAction<Sorts>>
+  sort: Sorts
+}
 
-    if (response.ok) {
-      const json = await response.json()
-      setSort(json)
-      return
-    }
+const Sort: FunctionComponent<Props> = ({ sort, setSort }) => {
+  const [selected, setSelected] = useState(
+    sorts.find((s) => s.value === sort) as SortObject
+  )
 
-    console.log(response)
+  const handleChange = (index: number) => {
+    setSelected(sorts[index])
+    setSort(sorts[index].value)
   }
 
   return (
-    <div className='flex px-4'>
+    <div className='flex'>
       <Listbox defaultValue={0} onChange={handleChange}>
         <ListboxButton className='flex items-center gap-2'>
           <span className='bg-white font-semibold text-lg'>Sort</span>

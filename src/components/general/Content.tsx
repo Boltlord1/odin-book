@@ -1,21 +1,16 @@
 import { PaperPlaneRightIcon } from '@phosphor-icons/react'
-import type { FunctionComponent, SubmitEventHandler } from 'react'
+import type { SubmitEventHandler } from 'react'
 import adjustHeight from '../../lib/adjustHeight'
-import { jsonOptions } from '../../lib/options'
+import { jsonOptions } from '../../lib/fetch'
 
-interface Props {
+interface Props<T> {
   absolute?: boolean
   path: string
   placeholder: string
-  update: (data: unknown) => void
+  update: (data: T) => void
 }
 
-const Form: FunctionComponent<Props> = ({
-  path,
-  update,
-  placeholder,
-  absolute
-}) => {
+const Content = <T,>({ path, update, placeholder, absolute }: Props<T>) => {
   const handleSubmit: SubmitEventHandler = async (event) => {
     event.preventDefault()
 
@@ -25,6 +20,7 @@ const Form: FunctionComponent<Props> = ({
       event.target.reset()
       const json = await response.json()
       update(json)
+      return
     }
 
     console.log(response)
@@ -32,7 +28,7 @@ const Form: FunctionComponent<Props> = ({
 
   return (
     <form
-      className={`${absolute ? 'relative' : 'gap-4'} flex flex-col px-4`}
+      className={`${absolute ? 'relative' : 'gap-4'} flex flex-col`}
       onSubmit={handleSubmit}
     >
       <textarea
@@ -53,4 +49,4 @@ const Form: FunctionComponent<Props> = ({
   )
 }
 
-export default Form
+export default Content

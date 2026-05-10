@@ -1,5 +1,5 @@
 import type { FunctionComponent, SubmitEventHandler } from 'react'
-import { jsonOptions } from '../../lib/options'
+import { jsonOptions } from '../../lib/fetch'
 import { backendUrl } from '../../lib/variables'
 import type { SelfData } from '../../types/data'
 import type { EditProps } from '../../types/props'

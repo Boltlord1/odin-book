@@ -1,5 +1,15 @@
 const options: RequestInit = { method: 'get', credentials: 'include' }
 
+function signalOptions(controller: AbortController) {
+  const options: RequestInit = {
+    method: 'get',
+    credentials: 'include',
+    signal: controller.signal
+  }
+
+  return options
+}
+
 function jsonOptions(form: HTMLFormElement, method: 'post' | 'put' = 'post') {
   const data = new FormData(form)
   const obj = Object.fromEntries(data.entries())
@@ -30,4 +40,4 @@ function toggleOptions(bool: boolean, signal: AbortSignal) {
   return options
 }
 
-export { formOptions, jsonOptions, options, toggleOptions }
+export { formOptions, jsonOptions, options, signalOptions, toggleOptions }

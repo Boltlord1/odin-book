@@ -1,37 +1,35 @@
-import { type FunctionComponent, useEffect, useState } from 'react'
+import { type FunctionComponent, useState } from 'react'
 import { useLoaderData } from 'react-router'
-import { options } from '../../lib/options'
+import useFetch from '../../hooks/fetch'
 import { backendUrl } from '../../lib/variables'
+import type { Sorts } from '../../types/app'
 import type { CommentData, PostData } from '../../types/data'
+import Content from '../general/Content'
 import Comment from './Comment'
-import Form from './Form'
 import Post from './Post'
 import Sort from './Sort'
 
 const SinglePost: FunctionComponent = () => {
   const post = useLoaderData<PostData>()
+  const [sort, setSort] = useState<Sorts>('recent')
   const [comments, setComments] = useState<CommentData[]>([])
 
-  const path = `${backendUrl}/comment/${post.id}`
-  useEffect(() => {
-    async function getComments() {
-      const response = await fetch(path, options)
-      if (response.ok) {
-        const json = await response.json()
-        setComments(json)
-      }
-    }
-    getComments()
-  }, [path])
+  const path = `${backendUrl}/comment/${post.id}?sort=${sort}`
+  useFetch(setComments, path, sort)
 
-  const updateComment = (comment: unknown) =>
-    setComments([comment as CommentData, ...comments])
+  const updateComment = (comment: CommentData) =>
+    setComments([comment, ...comments])
 
   return (
-    <div className='flex flex-col gap-4 py-4'>
+    <>
       <Post post={post} />
-      <Form absolute path={path} placeholder='comment' update={updateComment} />
-      <Sort path={path} setSort={setComments} />
+      <Content
+        absolute
+        path={path}
+        placeholder='comment'
+        update={updateComment}
+      />
+      <Sort setSort={setSort} sort={sort} />
       {comments.length > 0 && (
         <div className='flex flex-col gap-2'>
           {comments.map((c) => (
@@ -39,7 +37,7 @@ const SinglePost: FunctionComponent = () => {
           ))}
         </div>
       )}
-    </div>
+    </>
   )
 }
 

@@ -17,10 +17,10 @@ const ProfileSelf: FunctionComponent = () => {
   )
 
   return (
-    <div className='flex flex-col'>
+    <>
       <Profile data={self}>{settings}</Profile>
       <ProfileFeed id={self.id} />
-    </div>
+    </>
   )
 }
 

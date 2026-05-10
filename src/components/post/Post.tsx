@@ -8,7 +8,7 @@ import {
 } from 'react'
 import { Link } from 'react-router'
 import getImg from '../../lib/cloudinary'
-import { toggleOptions } from '../../lib/options'
+import { toggleOptions } from '../../lib/fetch'
 import { backendUrl } from '../../lib/variables'
 import type { PostData } from '../../types/data'
 import Icon from '../general/Icon'
@@ -54,7 +54,7 @@ const Post: FunctionComponent<Props> = ({ post, feed, user }) => {
   }
 
   const author = (
-    <div className='flex gap-2 px-4'>
+    <div className='flex gap-2'>
       <AdvancedImage
         className='h-8 w-8 rounded-full'
         cldImg={getImg(post.author.avatar)}
@@ -62,7 +62,7 @@ const Post: FunctionComponent<Props> = ({ post, feed, user }) => {
       <p className='text-lg'>{post.author.display}</p>
     </div>
   )
-  const title = <h3 className='px-4 font-semibold text-lg'>{post.title}</h3>
+  const title = <h3 className='font-semibold text-lg'>{post.title}</h3>
   const comments = <Icon Icon={ChatCircleIcon} text={post.comments} />
 
   const like = (
@@ -87,9 +87,9 @@ const Post: FunctionComponent<Props> = ({ post, feed, user }) => {
         )}
         {feed ? <Link to={`/app/post/${post.id}`}>{title}</Link> : title}
         {post.images.length > 0 && <Slideshow data={post.images} />}
-        {post.content && <p className='px-4'>{post.content}</p>}
+        {post.content && <p>{post.content}</p>}
       </div>
-      <div className='flex gap-4 px-4'>
+      <div className='flex gap-4'>
         {like}
         {feed ? <Link to={`/app/post/${post.id}`}>{comments}</Link> : comments}
         <Icon Icon={ShareFatIcon} text='Share' />

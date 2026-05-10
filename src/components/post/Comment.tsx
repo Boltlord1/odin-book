@@ -8,11 +8,11 @@ import {
 } from 'react'
 import { Link } from 'react-router'
 import getImg from '../../lib/cloudinary'
-import { toggleOptions } from '../../lib/options'
+import { toggleOptions } from '../../lib/fetch'
 import { backendUrl } from '../../lib/variables'
 import type { CommentData, ReplyData } from '../../types/data'
+import Content from '../general/Content'
 import Icon from '../general/Icon'
-import Form from './Form'
 import Reply from './Reply'
 
 interface Props {
@@ -54,9 +54,7 @@ const Comment: FunctionComponent<Props> = ({ comment }) => {
     }
   }
 
-  const updateReply = (reply: unknown) =>
-    setReplies([...replies, reply as ReplyData])
-
+  const updateReply = (reply: ReplyData) => setReplies([...replies, reply])
   const openReply: MouseEventHandler = () => setReply(!replyOpen)
 
   const like = (
@@ -89,7 +87,7 @@ const Comment: FunctionComponent<Props> = ({ comment }) => {
   )
 
   return (
-    <div className='flex flex-col gap-2 px-4'>
+    <div className='flex flex-col gap-2'>
       <div className='flex gap-2'>
         <AdvancedImage
           className='h-6 w-6 rounded-full'
@@ -105,7 +103,7 @@ const Comment: FunctionComponent<Props> = ({ comment }) => {
         </div>
       </div>
       {replyOpen && (
-        <Form
+        <Content
           path={`http://localhost:3000/reply/${comment.id}`}
           placeholder='reply'
           update={updateReply}

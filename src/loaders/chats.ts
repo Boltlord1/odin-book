@@ -1,5 +1,5 @@
 import { type LoaderFunction, redirect } from 'react-router'
-import { options } from '../lib/options'
+import { options } from '../lib/fetch'
 import { backendUrl } from '../lib/variables'
 import type { ChatDataMinimal } from '../types/data'
 

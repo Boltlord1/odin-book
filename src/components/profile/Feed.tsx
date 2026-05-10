@@ -1,6 +1,7 @@
-import { type FunctionComponent, useEffect, useState } from 'react'
-import { options } from '../../lib/options'
+import { type FunctionComponent, useState } from 'react'
+import useFetch from '../../hooks/fetch'
 import { backendUrl } from '../../lib/variables'
+import type { Sorts } from '../../types/app'
 import type { PostData } from '../../types/data'
 import Feed from '../post/Feed'
 import Sort from '../post/Sort'
@@ -11,28 +12,16 @@ interface Props {
 
 const ProfileFeed: FunctionComponent<Props> = ({ id }) => {
   const [posts, setPosts] = useState<PostData[]>([])
+  const [sort, setSort] = useState<Sorts>('recent')
 
-  const path = `${backendUrl}/user/${id}/post`
-  useEffect(() => {
-    async function getPosts() {
-      const response = await fetch(path, options)
-
-      if (response.ok) {
-        const json: PostData[] = await response.json()
-        setPosts(json)
-        return
-      }
-
-      console.log(response)
-    }
-    getPosts()
-  }, [path])
+  const path = `${backendUrl}/user/${id}/post?sort=${sort}`
+  useFetch(setPosts, path, sort)
 
   return (
-    <div>
-      <Sort path={path} setSort={setPosts} />
+    <>
+      <Sort setSort={setSort} sort={sort} />
       <Feed posts={posts} user={true} />
-    </div>
+    </>
   )
 }
 

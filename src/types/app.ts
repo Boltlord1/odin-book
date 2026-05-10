@@ -1,4 +1,4 @@
-import type { Dispatch, SetStateAction } from 'react'
+import type { Dispatch, JSX, SetStateAction } from 'react'
 import type { SelfData } from './data'
 
 interface AppContext {
@@ -6,4 +6,11 @@ interface AppContext {
   setSelf: Dispatch<SetStateAction<SelfData>>
 }
 
-export type { AppContext }
+type Sorts = 'recent' | 'top'
+
+interface SortObject {
+  element: JSX.Element
+  value: Sorts
+}
+
+export type { AppContext, SortObject, Sorts }

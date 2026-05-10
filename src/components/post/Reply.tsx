@@ -7,7 +7,7 @@ import {
   useState
 } from 'react'
 import getImg from '../../lib/cloudinary'
-import { toggleOptions } from '../../lib/options'
+import { toggleOptions } from '../../lib/fetch'
 import { backendUrl } from '../../lib/variables'
 import type { ReplyData } from '../../types/data'
 import Icon from '../general/Icon'

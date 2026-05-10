@@ -1,6 +1,6 @@
 import type { FunctionComponent, SubmitEventHandler } from 'react'
 import { Link, useNavigate } from 'react-router'
-import { jsonOptions } from '../../lib/options'
+import { jsonOptions } from '../../lib/fetch'
 import { backendUrl } from '../../lib/variables'
 import type { ResError } from '../../types/response'
 import Form from './Form'

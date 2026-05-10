@@ -5,7 +5,7 @@ import {
   useState
 } from 'react'
 import { Link, useLoaderData, useOutletContext } from 'react-router'
-import { toggleOptions } from '../../lib/options'
+import { toggleOptions } from '../../lib/fetch'
 import { backendUrl } from '../../lib/variables'
 import type { AppContext } from '../../types/app'
 import type { ProfileData } from '../../types/data'
@@ -70,13 +70,13 @@ const Other: FunctionComponent = () => {
   )
 
   return (
-    <div className='flex flex-col'>
+    <>
       <Profile data={user} followed={followed}>
         {follow}
         {message}
       </Profile>
       <ProfileFeed id={user.id} />
-    </div>
+    </>
   )
 }
 

@@ -9,10 +9,10 @@ const App: FunctionComponent = () => {
   const context = { self, setSelf }
 
   return (
-    <>
+    <div className='flex flex-1 flex-col gap-4 p-4'>
       <Dashboard />
       <Outlet context={context} />
-    </>
+    </div>
   )
 }
 

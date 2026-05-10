@@ -15,7 +15,6 @@ import Self from './components/profile/Self'
 import authLoader from './loaders/auth'
 import chatLoader from './loaders/chat'
 import chatsLoader from './loaders/chats'
-import feedLoader from './loaders/feed'
 import postLoader from './loaders/post'
 import profileLoader from './loaders/profile'
 import selfLoader from './loaders/self'
@@ -27,7 +26,7 @@ const routes: RouteObject[] = [
     loader: selfLoader,
     children: [
       { path: '/app/account', element: <Account /> },
-      { path: '/app/post', element: <FeedMain />, loader: feedLoader },
+      { path: '/app/post', element: <FeedMain /> },
       { path: '/app/post/:id', element: <SinglePost />, loader: postLoader },
       { path: '/app/upload', element: <Upload /> },
       { path: '/app/profile', element: <Self /> },

@@ -5,8 +5,8 @@ import getImg from '../../lib/cloudinary'
 import { reverseMap } from '../../lib/map'
 import { backendUrl } from '../../lib/variables'
 import type { ChatData, MessageData } from '../../types/data'
-import Form from '../post/Form'
-import Message from './Messages'
+import Form from '../general/Content'
+import Message from './Message'
 
 const Chat: FunctionComponent = () => {
   const chat = useLoaderData<ChatData>()
@@ -16,7 +16,7 @@ const Chat: FunctionComponent = () => {
     setMessages([message as MessageData, ...messages])
 
   return (
-    <div className='flex flex-1 flex-col py-4'>
+    <>
       <Link className='flex gap-2 px-4' to={`/app/profile/${chat.user.id}`}>
         <AdvancedImage
           className='h-8 w-8 rounded-full'
@@ -26,7 +26,7 @@ const Chat: FunctionComponent = () => {
       </Link>
       <div className='flex flex-1 flex-col justify-end gap-2 p-4'>
         {reverseMap(messages, (m) => (
-          <Message message={m} />
+          <Message key={m.id} message={m} />
         ))}
       </div>
       <Form
@@ -34,7 +34,7 @@ const Chat: FunctionComponent = () => {
         placeholder='message'
         update={updateMessages}
       />
-    </div>
+    </>
   )
 }
 

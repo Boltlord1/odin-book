@@ -28,14 +28,14 @@ const Slideshow: FunctionComponent<Props> = ({ data }) => {
   useLayoutEffect(() => {
     const div = ref.current
     if (div) {
-      const width = div.offsetWidth
+      const width = div.clientWidth
       const height = `${Math.ceil(width * ratio)}px`
       setHeight(height)
     }
   }, [ratio])
 
   return (
-    <div className='flex flex-col gap-2'>
+    <div className='-mx-4 flex flex-col gap-2'>
       <div
         className='relative flex w-full items-center justify-center bg-gray-800'
         ref={ref}
