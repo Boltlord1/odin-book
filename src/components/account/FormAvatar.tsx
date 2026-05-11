@@ -7,14 +7,18 @@ import type { EditProps } from '../../types/props'
 import File from '../general/File'
 import Form from './Form'
 
-const Avatar: FunctionComponent<EditProps> = ({ setEdit, setSelf }) => {
+const Avatar: FunctionComponent<EditProps> = ({
+  setEdit,
+  setSelf,
+  className
+}) => {
   const [file, changeFile] = useFiles()
 
   const handleSubmit: SubmitEventHandler = async (event) => {
     event.preventDefault()
     const response = await fetch(
       `${backendUrl}/user/avatar`,
-      formOptions(event.target, 'patch')
+      formOptions(event.target, 'put')
     )
 
     if (response.ok) {
@@ -26,7 +30,7 @@ const Avatar: FunctionComponent<EditProps> = ({ setEdit, setSelf }) => {
   }
 
   return (
-    <Form handleSubmit={handleSubmit} setEdit={setEdit}>
+    <Form className={className} handleSubmit={handleSubmit} setEdit={setEdit}>
       <File
         accept='image/png, image/jpeg'
         changeFiles={changeFile}

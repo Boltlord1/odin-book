@@ -6,7 +6,7 @@ import {
   useRef,
   useState
 } from 'react'
-import getImg from '../../lib/cloudinary'
+import { getImg } from '../../lib/cloudinary'
 import { toggleOptions } from '../../lib/fetch'
 import { backendUrl } from '../../lib/variables'
 import type { ReplyData } from '../../types/data'

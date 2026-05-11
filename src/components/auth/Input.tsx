@@ -8,7 +8,7 @@ interface Props {
 
 const Input: FunctionComponent<Props> = ({ type, name, placeholder }) => (
   <input
-    className='rounded-xl bg-gray-100 px-6 py-1 outline-none'
+    className='rounded-md border border-gray-700 p-1 pr-4 pl-4 outline-0 focus:border-blue-600 focus:shadow-md'
     id={name}
     name={name}
     placeholder={placeholder}

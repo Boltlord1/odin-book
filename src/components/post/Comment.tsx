@@ -7,7 +7,7 @@ import {
   useState
 } from 'react'
 import { Link } from 'react-router'
-import getImg from '../../lib/cloudinary'
+import { getImg } from '../../lib/cloudinary'
 import { toggleOptions } from '../../lib/fetch'
 import { backendUrl } from '../../lib/variables'
 import type { CommentData, ReplyData } from '../../types/data'

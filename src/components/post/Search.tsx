@@ -8,7 +8,7 @@ interface Props {
 const Search: FunctionComponent<Props> = ({ search, setSearch }) => (
   <>
     <input
-      className='flex-1 rounded-xl bg-gray-100 px-6 py-1 outline-none'
+      className='min-w-0 flex-1 rounded-xl bg-gray-100 px-6 py-1 outline-none'
       onChange={(e) => setSearch(e.target.value)}
       placeholder='Search...'
       type='search'

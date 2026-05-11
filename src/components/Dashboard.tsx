@@ -18,7 +18,7 @@ const links: DashboardLink[] = [
 ]
 
 const Dashboard: FunctionComponent = () => (
-  <nav className='flex justify-between'>
+  <nav className='flex justify-center gap-4 xxs:gap-8'>
     {links.map(({ id, Icon }) => (
       <NavLink
         className='js-active:text-pink-500 text-4xl'

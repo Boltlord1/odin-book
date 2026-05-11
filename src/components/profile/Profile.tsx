@@ -1,6 +1,6 @@
 import { AdvancedImage } from '@cloudinary/react'
 import type { FunctionComponent, PropsWithChildren } from 'react'
-import getImg from '../../lib/cloudinary'
+import { getImg } from '../../lib/cloudinary'
 import type { ProfileData, SelfData } from '../../types/data'
 
 interface Props extends PropsWithChildren {

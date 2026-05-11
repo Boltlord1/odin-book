@@ -1,7 +1,7 @@
 import { AdvancedImage } from '@cloudinary/react'
 import { type FunctionComponent, useState } from 'react'
 import { Link, useLoaderData } from 'react-router'
-import getImg from '../../lib/cloudinary'
+import { getImg } from '../../lib/cloudinary'
 import { reverseMap } from '../../lib/map'
 import { backendUrl } from '../../lib/variables'
 import type { ChatData, MessageData } from '../../types/data'

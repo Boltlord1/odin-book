@@ -4,16 +4,16 @@ import useFiles from '../../hooks/files'
 import { formOptions } from '../../lib/fetch'
 import { backendUrl } from '../../lib/variables'
 import File from '../general/File'
-import Input from '../general/Input'
 import Label from '../general/Label'
 import Form from './Form'
+import Input from './Input'
 
 const SignUp: FunctionComponent = () => {
   const navigate = useNavigate()
   const [file, changeFile] = useFiles()
 
-  const username = <Input name='username' type='text' />
-  const display = <Input name='display' type='text' />
+  const username = <Input name='username' />
+  const display = <Input name='display' />
   const email = <Input name='email' type='email' />
   const password = <Input name='password' type='password' />
   const confirm = <Input name='confirm-password' type='password' />

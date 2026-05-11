@@ -2,9 +2,9 @@ import type { FunctionComponent, SubmitEventHandler } from 'react'
 import { useNavigate } from 'react-router'
 import { jsonOptions } from '../../lib/fetch'
 import { backendUrl } from '../../lib/variables'
-import Input from '../general/Input'
 import Label from '../general/Label'
 import Form from './Form'
+import Input from './Input'
 
 interface Props {
   provider: 'google' | 'github'
@@ -13,8 +13,8 @@ interface Props {
 const SignUpOAuth: FunctionComponent<Props> = ({ provider }) => {
   const navigate = useNavigate()
 
-  const username = <Input name='username' type='text' />
-  const display = <Input name='display' type='text' />
+  const username = <Input name='username' />
+  const display = <Input name='display' />
 
   const handleSubmit: SubmitEventHandler = async (event) => {
     event.preventDefault()

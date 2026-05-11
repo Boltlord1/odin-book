@@ -2,9 +2,9 @@ import type { FunctionComponent, SubmitEventHandler } from 'react'
 import { useNavigate } from 'react-router'
 import { jsonOptions } from '../../lib/fetch'
 import { backendUrl } from '../../lib/variables'
-import Input from '../general/Input'
 import Label from '../general/Label'
 import Form from './Form'
+import Input from './Input'
 
 const SignUpEmail: FunctionComponent = () => {
   const navigate = useNavigate()

@@ -38,8 +38,8 @@ const Other: FunctionComponent = () => {
       if (!response.ok) {
         throw new Error('Failed to follow user.')
       }
-      const follows = self.follows
-      setSelf({ ...self, follows: changed ? follows + 1 : follows - 1 })
+      const follows = self.following
+      setSelf({ ...self, following: changed ? follows + 1 : follows - 1 })
     } catch (err: unknown) {
       if (err instanceof Error && err.name === 'AbortError') {
         return

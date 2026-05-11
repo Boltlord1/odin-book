@@ -1,7 +1,7 @@
 import { AdvancedImage } from '@cloudinary/react'
 import type { FunctionComponent } from 'react'
 import { Link, useLoaderData } from 'react-router'
-import getImg from '../../lib/cloudinary'
+import { getImg } from '../../lib/cloudinary'
 import type { ChatDataMinimal } from '../../types/data'
 
 const Chats: FunctionComponent = () => {

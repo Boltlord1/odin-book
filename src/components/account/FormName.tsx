@@ -8,13 +8,14 @@ import Form from './Form'
 const Names: FunctionComponent<EditProps> = ({
   setEdit,
   setSelf,
-  children
+  children,
+  className
 }) => {
   const handleSubmit: SubmitEventHandler = async (event) => {
     event.preventDefault()
     const response = await fetch(
       `${backendUrl}/user`,
-      jsonOptions(event.target, 'patch')
+      jsonOptions(event.target, 'put')
     )
 
     if (response.ok) {
@@ -26,7 +27,7 @@ const Names: FunctionComponent<EditProps> = ({
   }
 
   return (
-    <Form handleSubmit={handleSubmit} setEdit={setEdit}>
+    <Form className={className} handleSubmit={handleSubmit} setEdit={setEdit}>
       {children}
     </Form>
   )
