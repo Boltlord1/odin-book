@@ -19,7 +19,6 @@ import chatsLoader from './loaders/chats'
 import postLoader from './loaders/post'
 import profileLoader from './loaders/profile'
 import selfLoader from './loaders/self'
-import userLoader from './loaders/user'
 
 const routes: RouteObject[] = [
   {
@@ -35,7 +34,7 @@ const routes: RouteObject[] = [
       { path: '/app/profile/:id', element: <Other />, loader: profileLoader },
       { path: '/app/chat', element: <Chats />, loader: chatsLoader },
       { path: '/app/chat/:id', element: <Chat />, loader: chatLoader },
-      { path: '/app/user', element: <Users />, loader: userLoader }
+      { path: '/app/user', element: <Users /> }
     ]
   },
   { path: '/auth/login', element: <LogIn /> },
