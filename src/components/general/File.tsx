@@ -27,7 +27,7 @@ const File: FunctionComponent<Props> = ({
   changeFiles
 }) => (
   <label
-    className='flex items-center justify-evenly rounded-2xl bg-gray-200 p-2 pr-4 pl-4 text-5xl active:bg-gray-100'
+    className='flex items-center justify-evenly rounded-2xl bg-gray-100 p-2 pr-4 pl-4 text-5xl active:bg-gray-100'
     htmlFor={name}
   >
     <input

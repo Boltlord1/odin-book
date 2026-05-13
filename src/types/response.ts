@@ -1,7 +1,14 @@
-interface ResError {
+interface ClientError {
   msg: string
   name: string
-  type: 'client' | 'server'
+  type: 'client'
 }
 
-export type { ResError }
+interface ServerError {
+  msg: string
+  type: 'server'
+}
+
+type ResError = ClientError | ServerError
+
+export type { ClientError, ResError, ServerError }
