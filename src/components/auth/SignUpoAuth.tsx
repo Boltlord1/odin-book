@@ -7,7 +7,7 @@ import Form from './Form'
 import Input from './Input'
 
 interface Props {
-  provider: 'google' | 'github'
+  provider: 'Google' | 'Github'
 }
 
 const SignUpOAuth: FunctionComponent<Props> = ({ provider }) => {
@@ -20,7 +20,7 @@ const SignUpOAuth: FunctionComponent<Props> = ({ provider }) => {
     event.preventDefault()
 
     const response = await fetch(
-      `${backendUrl}/auth/${provider}/signup`,
+      `${backendUrl}/auth/${provider.toLowerCase()}/signup`,
       jsonOptions(event.target)
     )
     const json = await response.json()
@@ -35,9 +35,15 @@ const SignUpOAuth: FunctionComponent<Props> = ({ provider }) => {
 
   return (
     <Form handleSubmit={handleSubmit}>
+      <h2 className='text-center text-xl'>Create an account with {provider}</h2>
       <Label input={username} label='Username' />
       <Label input={display} label='Display Name' />
-      <button type='submit'>Sign Up</button>
+      <button
+        className='self-center rounded-2xl bg-sky-950 p-2 px-6 text-white active:bg-sky-800'
+        type='submit'
+      >
+        Sign Up
+      </button>
     </Form>
   )
 }

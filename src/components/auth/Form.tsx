@@ -10,7 +10,7 @@ interface Props extends PropsWithChildren {
 
 const Form: FunctionComponent<Props> = ({ handleSubmit, children }) => (
   <form
-    className='flex w-1/2 min-w-3xs flex-col gap-2 p-2'
+    className='flex w-3xs flex-col gap-2 self-center p-2'
     onSubmit={handleSubmit}
   >
     {children}

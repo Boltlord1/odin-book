@@ -39,8 +39,8 @@ const routes: RouteObject[] = [
   },
   { path: '/auth/login', element: <LogIn /> },
   { path: '/auth/signup', element: <SignUp /> },
-  { path: '/auth/signup/google', element: <SignUpOAuth provider='google' /> },
-  { path: '/auth/signup/github', element: <SignUpOAuth provider='github' /> },
+  { path: '/auth/signup/google', element: <SignUpOAuth provider='Google' /> },
+  { path: '/auth/signup/github', element: <SignUpOAuth provider='Github' /> },
   { path: '/auth/signup/email', element: <SignUpEmail /> },
   { path: '/', loader: authLoader }
 ]

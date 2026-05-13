@@ -1,3 +1,4 @@
+import { GithubLogoIcon, GoogleLogoIcon } from '@phosphor-icons/react'
 import type { FunctionComponent, SubmitEventHandler } from 'react'
 import { Link, useNavigate } from 'react-router'
 import useFiles from '../../hooks/files'
@@ -7,6 +8,7 @@ import File from '../general/File'
 import Label from '../general/Label'
 import Form from './Form'
 import Input from './Input'
+import OAuthLink from './OAuthLink'
 
 const SignUp: FunctionComponent = () => {
   const navigate = useNavigate()
@@ -37,25 +39,36 @@ const SignUp: FunctionComponent = () => {
 
   return (
     <Form handleSubmit={handleSubmit}>
+      <h2 className='text-center font-semibold text-2xl'>Sign up</h2>
       <Label input={username} label='Username' />
-      <Label input={display} label='Display Name' />
+      <Label input={display} label='Display Name (Optional)' />
       <Label input={email} label='Email' />
       <Label input={password} label='Password' />
       <Label input={confirm} label='Confirm Password' />
-      <File
-        accept='image/png, image/jpeg'
-        changeFiles={changeFile}
-        files={file}
-        multiple={false}
-        name='avatar'
-      />
-      <button type='submit'>Sign Up</button>
-      <div>
-        <Link to={`${backendUrl}/auth/google`}>Sign in with Google</Link>
-        <Link to={`${backendUrl}/auth/github`}>Sign in with Github</Link>
+      <div className='flex flex-col gap-1'>
+        <label htmlFor='avatar'>Avatar (Optional)</label>
+        <File
+          accept='image/png, image/jpeg'
+          changeFiles={changeFile}
+          files={file}
+          multiple={false}
+          name='avatar'
+        />
       </div>
+      <button
+        className='self-center rounded-2xl bg-sky-950 p-2 px-6 text-white active:bg-sky-800'
+        type='submit'
+      >
+        Sign up
+      </button>
+      <OAuthLink Icon={GoogleLogoIcon} provider='Google' />
+      <OAuthLink Icon={GithubLogoIcon} provider='Github' />
       <p>
-        Already have an account? <Link to='/auth/login'>Log in</Link> instead
+        Already have an account?{' '}
+        <Link className='text-blue-700 underline' to='/auth/login'>
+          Log in
+        </Link>{' '}
+        instead
       </p>
     </Form>
   )
