@@ -17,6 +17,7 @@ interface SortObject {
 interface DashboardLink {
   Icon: Icon
   id: string
+  text: string
 }
 
 export type { AppContext, DashboardLink, SortObject, Sorts }

@@ -1,7 +1,8 @@
 import { type FunctionComponent, useState } from 'react'
 import { Outlet, useLoaderData } from 'react-router'
 import type { SelfData } from '../types/data'
-import Dashboard from './Dashboard'
+import Laptop from './Laptop'
+import Mobile from './Mobile'
 
 const App: FunctionComponent = () => {
   const data = useLoaderData<SelfData>()
@@ -9,8 +10,10 @@ const App: FunctionComponent = () => {
   const context = { self, setSelf }
 
   return (
-    <div className='flex flex-1 flex-col gap-4 p-4'>
-      <Dashboard />
+    <div className='relative flex flex-1 flex-col gap-4 p-4 sm:w-160 sm:self-center'>
+      <Mobile />
+      <Laptop />
+      <div className='lg:hidden' />
       <Outlet context={context} />
     </div>
   )

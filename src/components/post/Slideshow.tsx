@@ -37,7 +37,7 @@ const Slideshow: FunctionComponent<Props> = ({ data }) => {
     'bg-gray-900/50 group-active:bg-gray-800/75 rounded-full p-2'
 
   return (
-    <div className='-mx-4 flex flex-col gap-2'>
+    <div className='-mx-4 flex flex-col gap-4'>
       <div
         className='relative flex w-full items-center justify-center bg-gray-800'
         style={{ height: `${Math.ceil(width * ratio)}px` }}
