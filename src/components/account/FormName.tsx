@@ -1,36 +1,36 @@
-import type { FunctionComponent, SubmitEventHandler } from 'react'
-import { jsonOptions } from '../../lib/fetch'
-import { backendUrl } from '../../lib/variables'
+import type { FunctionComponent } from 'react'
 import type { SelfData } from '../../types/data'
 import type { EditProps } from '../../types/props'
-import Form from './Form'
+import EditInput from '../validate/Edit'
+import Form from '../validate/Form'
+import Buttons from './Form'
 
-const Names: FunctionComponent<EditProps> = ({
+interface Props extends EditProps {
+  displayPlaceholder: string
+  userPlaceholder: string
+}
+
+const NameForm: FunctionComponent<Props> = ({
   setEdit,
   setSelf,
-  children,
-  className
+  userPlaceholder,
+  displayPlaceholder
 }) => {
-  const handleSubmit: SubmitEventHandler = async (event) => {
-    event.preventDefault()
-    const response = await fetch(
-      `${backendUrl}/user`,
-      jsonOptions(event.target, 'put')
-    )
-
-    if (response.ok) {
-      const json: SelfData = await response.json()
-      setSelf(json)
-      setEdit(false)
-      return
-    }
+  function success(json: SelfData) {
+    setSelf(json)
+    setEdit(false)
   }
 
+  const footer = <Buttons setEdit={setEdit} />
+
   return (
-    <Form className={className} handleSubmit={handleSubmit} setEdit={setEdit}>
-      {children}
+    <Form app footer={footer} method='put' path='/user' success={success}>
+      <EditInput
+        displayPlaceholder={displayPlaceholder}
+        userPlaceholder={userPlaceholder}
+      />
     </Form>
   )
 }
 
-export default Names
+export default NameForm

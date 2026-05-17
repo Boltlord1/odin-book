@@ -1,45 +1,30 @@
-import type { FunctionComponent, SubmitEventHandler } from 'react'
-import useFiles from '../../hooks/files'
-import { formOptions } from '../../lib/fetch'
-import { backendUrl } from '../../lib/variables'
+import type { FunctionComponent } from 'react'
 import type { SelfData } from '../../types/data'
 import type { EditProps } from '../../types/props'
-import File from '../general/File'
-import Form from './Form'
+import File from '../validate/File'
+import Form from '../validate/Form'
+import Buttons from './Form'
 
-const Avatar: FunctionComponent<EditProps> = ({
-  setEdit,
-  setSelf,
-  className
-}) => {
-  const [file, changeFile] = useFiles()
-
-  const handleSubmit: SubmitEventHandler = async (event) => {
-    event.preventDefault()
-    const response = await fetch(
-      `${backendUrl}/user/avatar`,
-      formOptions(event.target, 'put')
-    )
-
-    if (response.ok) {
-      const json: SelfData = await response.json()
-      setSelf(json)
-      setEdit(false)
-      return
-    }
+const AvatarForm: FunctionComponent<EditProps> = ({ setEdit, setSelf }) => {
+  function success(json: SelfData) {
+    setSelf(json)
+    setEdit(false)
   }
 
+  const footer = <Buttons setEdit={setEdit} />
+
   return (
-    <Form className={className} handleSubmit={handleSubmit} setEdit={setEdit}>
-      <File
-        accept='image/png, image/jpeg'
-        changeFiles={changeFile}
-        files={file}
-        multiple={false}
-        name='avatar'
-      />
+    <Form
+      app
+      footer={footer}
+      header='Avatar'
+      method='put'
+      path='/user/avatar'
+      success={success}
+    >
+      <File accept='image/png, image/jpeg' label='' name='avatar' required />
     </Form>
   )
 }
 
-export default Avatar
+export default AvatarForm

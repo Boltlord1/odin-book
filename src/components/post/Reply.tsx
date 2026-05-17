@@ -8,7 +8,7 @@ import {
 } from 'react'
 import { getImg } from '../../lib/cloudinary'
 import { toggleOptions } from '../../lib/fetch'
-import { backendUrl } from '../../lib/variables'
+import { BACKEND_URL } from '../../lib/variables'
 import type { ReplyData } from '../../types/data'
 import Icon from '../general/Icon'
 
@@ -33,7 +33,7 @@ const Reply: FunctionComponent<Props> = ({ reply }) => {
 
     try {
       const response = await fetch(
-        `${backendUrl}/like/reply/${reply.id}`,
+        `${BACKEND_URL}/like/reply/${reply.id}`,
         toggleOptions(changed, controller.signal)
       )
       if (!response.ok) {

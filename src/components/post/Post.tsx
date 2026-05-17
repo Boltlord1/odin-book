@@ -9,7 +9,7 @@ import {
 import { Link } from 'react-router'
 import { getImg } from '../../lib/cloudinary'
 import { toggleOptions } from '../../lib/fetch'
-import { backendUrl } from '../../lib/variables'
+import { BACKEND_URL } from '../../lib/variables'
 import type { PostData } from '../../types/data'
 import Icon from '../general/Icon'
 import Slideshow from './Slideshow'
@@ -37,7 +37,7 @@ const Post: FunctionComponent<Props> = ({ post, feed, user }) => {
 
     try {
       const response = await fetch(
-        `${backendUrl}/like/post/${post.id}`,
+        `${BACKEND_URL}/like/post/${post.id}`,
         toggleOptions(changed, controller.signal)
       )
       if (!response.ok) {
@@ -62,7 +62,9 @@ const Post: FunctionComponent<Props> = ({ post, feed, user }) => {
       <p className='text-lg'>{post.author.display}</p>
     </div>
   )
-  const title = <h3 className='font-semibold text-lg'>{post.title}</h3>
+  const title = (
+    <h3 className='wrap-break-word font-semibold text-lg'>{post.title}</h3>
+  )
   const comments = <Icon Icon={ChatCircleIcon} text={post.comments} />
 
   const like = (

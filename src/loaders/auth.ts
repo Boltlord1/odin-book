@@ -1,8 +1,8 @@
 import { type LoaderFunction, redirect } from 'react-router'
-import { backendUrl } from '../lib/variables'
+import { BACKEND_URL } from '../lib/variables'
 
 const authLoader: LoaderFunction = async () => {
-  const response = await fetch(`${backendUrl}/auth/verify`, {
+  const response = await fetch(`${BACKEND_URL}/auth/verify`, {
     credentials: 'include'
   })
 

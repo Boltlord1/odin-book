@@ -2,13 +2,11 @@ import { AdvancedImage } from '@cloudinary/react'
 import { type FunctionComponent, useState } from 'react'
 import { Link, useOutletContext } from 'react-router'
 import { getImg } from '../../lib/cloudinary'
-import { backendUrl } from '../../lib/variables'
+import { BACKEND_URL } from '../../lib/variables'
 import type { AppContext } from '../../types/app'
-import Input from '../general/Input'
-import Label from '../general/Label'
 import Display from './Display'
-import { default as AvatarForm } from './FormAvatar'
-import { default as NameForm } from './FormName'
+import AvatarForm from './FormAvatar'
+import NameForm from './FormName'
 
 const Account: FunctionComponent = () => {
   const { self, setSelf } = useOutletContext<AppContext>()
@@ -16,19 +14,15 @@ const Account: FunctionComponent = () => {
   const [editAvatar, setAvatar] = useState(false)
 
   const names = editNames ? (
-    <NameForm setEdit={setNames} setSelf={setSelf}>
-      <Label
-        input={<Input name='username' placeholder={self.name} type='text' />}
-        label='Username'
-      />
-      <Label
-        input={<Input name='display' placeholder={self.display} type='text' />}
-        label='Display name'
-      />
-    </NameForm>
+    <NameForm
+      displayPlaceholder={self.display}
+      setEdit={setNames}
+      setSelf={setSelf}
+      userPlaceholder={self.name}
+    />
   ) : (
     <Display
-      className='grid grid-cols-[1fr_2fr] gap-2 text-lg'
+      className='grid grid-cols-[auto_1fr] gap-4 text-lg'
       setEdit={setNames}
     >
       <h2 className='font-semibold'>Username</h2>
@@ -57,7 +51,7 @@ const Account: FunctionComponent = () => {
     <div className='flex flex-col gap-4'>
       {names}
       {avatar}
-      <div className='grid grid-cols-[1fr_4fr] gap-2 text-lg'>
+      <div className='grid grid-cols-[auto_1fr] gap-4 text-lg'>
         <h2 className='col-span-2 font-semibold'>Connections:</h2>
         <h2 className='font-semibold'>Email</h2>
         {email ? (
@@ -72,7 +66,7 @@ const Account: FunctionComponent = () => {
           <h2>{google.data.email}</h2>
         ) : (
           <h2>
-            None <Link to={`${backendUrl}/auth/google`}>Connect</Link>
+            None <Link to={`${BACKEND_URL}/auth/google`}>Connect</Link>
           </h2>
         )}
         <h2 className='font-semibold'>Github</h2>
@@ -82,13 +76,13 @@ const Account: FunctionComponent = () => {
           </h2>
         ) : (
           <h2>
-            None <Link to={`${backendUrl}/auth/github`}>Connect</Link>
+            None <Link to={`${BACKEND_URL}/auth/github`}>Connect</Link>
           </h2>
         )}
       </div>
       <Link
         className='self-start rounded-xl bg-gray-100 px-4 py-1'
-        to={`${backendUrl}/auth/logout`}
+        to={`${BACKEND_URL}/auth/logout`}
       >
         Log out
       </Link>

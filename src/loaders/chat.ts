@@ -1,10 +1,10 @@
 import { type LoaderFunction, redirect } from 'react-router'
 import { options } from '../lib/fetch'
-import { backendUrl } from '../lib/variables'
+import { BACKEND_URL } from '../lib/variables'
 import type { ChatData } from '../types/data'
 
 const chatLoader: LoaderFunction = async ({ params }) => {
-  const response = await fetch(`${backendUrl}/chat/${params.id}`, options)
+  const response = await fetch(`${BACKEND_URL}/chat/${params.id}`, options)
 
   if (!response.ok) {
     return redirect('/auth/login')

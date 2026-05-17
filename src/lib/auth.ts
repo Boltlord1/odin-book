@@ -1,11 +1,11 @@
 import type { SelfData } from '../types/data'
-import { backendUrl } from './variables'
+import { BACKEND_URL } from './variables'
 
 let user: SelfData | null = null
 
 const getUser = async () => {
   if (!user) {
-    const response = await fetch(`${backendUrl}/user/self`, {
+    const response = await fetch(`${BACKEND_URL}/user/self`, {
       credentials: 'include'
     })
     if (!response.ok) {

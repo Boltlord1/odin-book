@@ -1,6 +1,7 @@
 import type { Icon } from '@phosphor-icons/react'
 import type { Dispatch, JSX, SetStateAction } from 'react'
 import type { SelfData } from './data'
+import type { ClientError } from './response'
 
 interface AppContext {
   self: SelfData
@@ -20,4 +21,32 @@ interface DashboardLink {
   text: string
 }
 
-export type { AppContext, DashboardLink, SortObject, Sorts }
+type AlertType = string | string[]
+
+interface ValidateProps {
+  setValidate: Dispatch<SetStateAction<SelfData>>
+}
+
+type ValidatorFunction = (errors?: ClientError[]) => void
+
+type Register = (name: string, validate: () => boolean) => void
+type Unregister = (name: string) => void
+
+interface FormContextType {
+  errors: ClientError[]
+  register: Register
+  unregister: Unregister
+}
+
+export type {
+  AlertType,
+  AppContext,
+  DashboardLink,
+  FormContextType,
+  Register,
+  SortObject,
+  Sorts,
+  Unregister,
+  ValidateProps,
+  ValidatorFunction
+}

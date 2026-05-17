@@ -1,7 +1,7 @@
 import { type FunctionComponent, useState } from 'react'
 import useDebounce from '../../hooks/debounce'
 import useFetch from '../../hooks/fetch'
-import { backendUrl } from '../../lib/variables'
+import { BACKEND_URL } from '../../lib/variables'
 import type { Sorts } from '../../types/app'
 import type { PostData } from '../../types/data'
 import Feed from './Feed'
@@ -14,7 +14,7 @@ const FeedMain: FunctionComponent = () => {
   const [search, setSearch] = useState('')
   const debouncedSearch = useDebounce(search, 300)
 
-  const path = `${backendUrl}/post?sort=${sort}&search=${debouncedSearch}`
+  const path = `${BACKEND_URL}/post?sort=${sort}&search=${debouncedSearch}`
   useFetch(setPosts, path, sort, debouncedSearch)
 
   return (

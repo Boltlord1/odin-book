@@ -9,7 +9,7 @@ import {
 import { Link } from 'react-router'
 import { getImg } from '../../lib/cloudinary'
 import { toggleOptions } from '../../lib/fetch'
-import { backendUrl } from '../../lib/variables'
+import { BACKEND_URL } from '../../lib/variables'
 import type { CommentData, ReplyData } from '../../types/data'
 import Content from '../general/Content'
 import Icon from '../general/Icon'
@@ -38,7 +38,7 @@ const Comment: FunctionComponent<Props> = ({ comment }) => {
 
     try {
       const response = await fetch(
-        `${backendUrl}/like/comment/${comment.id}`,
+        `${BACKEND_URL}/like/comment/${comment.id}`,
         toggleOptions(changed, controller.signal)
       )
       if (!response.ok) {

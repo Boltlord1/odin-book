@@ -1,69 +1,48 @@
-import type { FunctionComponent, SubmitEventHandler } from 'react'
+import type { FunctionComponent } from 'react'
 import { useNavigate } from 'react-router'
-import useFiles from '../../hooks/files'
-import adjustHeight from '../../lib/adjustHeight'
-import { formOptions } from '../../lib/fetch'
-import { backendUrl } from '../../lib/variables'
-import File from './../general/File'
-import Label from './../general/Label'
+import File from '../validate/File'
+import Form from '../validate/Form'
+import TextInput from '../validate/Text'
 
 const Upload: FunctionComponent = () => {
   const navigate = useNavigate()
-  const [files, changeFiles] = useFiles()
-
-  const uploadPost: SubmitEventHandler = async (event) => {
-    event.preventDefault()
-
-    const response = await fetch(
-      `${backendUrl}/post`,
-      formOptions(event.target)
-    )
-    const json = await response.json()
-
-    if (typeof json === 'string') {
-      navigate(`/app/post/${json}`)
-      return
-    }
-
-    console.log(json)
+  function success(json: string) {
+    navigate(`/app/post/${json}`)
   }
 
-  const title = (
-    <textarea
-      className='resize-none rounded-2xl bg-gray-200 p-2 pr-4 pl-4 outline-0 focus:shadow-lg focus:ring-1 focus:ring-gray-800'
-      id='title'
-      name='title'
-      onChange={adjustHeight}
-      required={true}
-      rows={1}
-    />
-  )
-
-  const content = (
-    <textarea
-      className='resize-none rounded-2xl bg-gray-200 p-2 pr-4 pl-4 outline-0 focus:shadow-lg focus:ring-1 focus:ring-gray-800'
-      id='content'
-      name='content'
-      onChange={adjustHeight}
-      rows={4}
-    />
+  const footer = (
+    <button className='self-end' type='submit'>
+      Create Post
+    </button>
   )
 
   return (
-    <form className='flex flex-col gap-4' onSubmit={uploadPost}>
-      <Label input={title} label='Title' />
-      <Label input={content} label='Content' />
+    <Form app footer={footer} path='/post' success={success}>
+      <TextInput
+        label='Title'
+        max={256}
+        name='title'
+        oneLine
+        placeholder='Add a title...'
+        required
+        rows={1}
+        textarea
+      />
+      <TextInput
+        label='Content'
+        max={2000}
+        name='content'
+        placeholder='Add post content...'
+        rows={4}
+        textarea
+      />
       <File
         accept='image/png, image/jpeg, image/gif'
-        changeFiles={changeFiles}
-        files={files}
+        label='Images (Up to 5)'
         multiple={true}
         name='images'
       />
-      <button className='self-end' type='submit'>
-        Create Post
-      </button>
-    </form>
+    </Form>
   )
 }
 

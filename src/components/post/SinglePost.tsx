@@ -1,7 +1,7 @@
 import { type FunctionComponent, useState } from 'react'
 import { useLoaderData } from 'react-router'
 import useFetch from '../../hooks/fetch'
-import { backendUrl } from '../../lib/variables'
+import { BACKEND_URL } from '../../lib/variables'
 import type { Sorts } from '../../types/app'
 import type { CommentData, PostData } from '../../types/data'
 import Content from '../general/Content'
@@ -14,7 +14,7 @@ const SinglePost: FunctionComponent = () => {
   const [sort, setSort] = useState<Sorts>('recent')
   const [comments, setComments] = useState<CommentData[]>([])
 
-  const path = `${backendUrl}/comment/${post.id}?sort=${sort}`
+  const path = `${BACKEND_URL}/comment/${post.id}?sort=${sort}`
   useFetch(setComments, path, sort)
 
   const updateComment = (comment: CommentData) =>

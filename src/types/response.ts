@@ -9,6 +9,6 @@ interface ServerError {
   type: 'server'
 }
 
-type ResError = ClientError | ServerError
+type ResError = ClientError[] | ServerError
 
 export type { ClientError, ResError, ServerError }

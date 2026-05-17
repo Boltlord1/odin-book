@@ -36,40 +36,48 @@ const Slideshow: FunctionComponent<Props> = ({ data }) => {
   const caretClass =
     'bg-gray-900/50 group-active:bg-gray-800/75 rounded-full p-2'
 
+  const multiple = data.length > 1
+
+  const buttons = multiple && (
+    <>
+      <button
+        className={`${butClass} left-2`}
+        onClick={() =>
+          setCurrent(current === 0 ? data.length - 1 : current - 1)
+        }
+        type='button'
+      >
+        <CaretLeftIcon
+          className={caretClass}
+          color='white'
+          size={36}
+          weight='bold'
+        />
+      </button>
+      <button
+        className={`${butClass} right-2`}
+        onClick={() =>
+          setCurrent(current === data.length - 1 ? 0 : current + 1)
+        }
+        type='button'
+      >
+        <CaretRightIcon
+          className={caretClass}
+          color='white'
+          size={36}
+          weight='bold'
+        />
+      </button>
+    </>
+  )
+
   return (
     <div className='-mx-4 flex flex-col gap-4'>
       <div
         className='relative flex w-full items-center justify-center bg-gray-800'
         style={{ height: `${Math.ceil(width * ratio)}px` }}
       >
-        <button
-          className={`${butClass} left-2`}
-          onClick={() =>
-            setCurrent(current === 0 ? data.length - 1 : current - 1)
-          }
-          type='button'
-        >
-          <CaretLeftIcon
-            className={caretClass}
-            color='white'
-            size={36}
-            weight='bold'
-          />
-        </button>
-        <button
-          className={`${butClass} right-2`}
-          onClick={() =>
-            setCurrent(current === data.length - 1 ? 0 : current + 1)
-          }
-          type='button'
-        >
-          <CaretRightIcon
-            className={caretClass}
-            color='white'
-            size={36}
-            weight='bold'
-          />
-        </button>
+        {buttons}
         {data.map((img, ind) => (
           <AdvancedImage
             className={`${ind === current ? '' : 'hidden'} max-h-full w-auto`}
@@ -78,16 +86,18 @@ const Slideshow: FunctionComponent<Props> = ({ data }) => {
           />
         ))}
       </div>
-      <div className='flex items-center justify-center gap-4'>
-        {data.map((img, ind) => (
-          <button
-            className={`h-3 w-3 rounded-full bg-gray-200 js-active:bg-gray-500 ${ind === current ? 'active' : ''}`}
-            key={img.id}
-            onClick={() => setCurrent(ind)}
-            type='button'
-          />
-        ))}
-      </div>
+      {multiple && (
+        <div className='flex items-center justify-center gap-4'>
+          {data.map((img, ind) => (
+            <button
+              className={`h-3 w-3 rounded-full bg-gray-200 js-active:bg-gray-500 ${ind === current ? 'active' : ''}`}
+              key={img.id}
+              onClick={() => setCurrent(ind)}
+              type='button'
+            />
+          ))}
+        </div>
+      )}
     </div>
   )
 }

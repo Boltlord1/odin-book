@@ -6,7 +6,7 @@ import {
 } from 'react'
 import { Link, useLoaderData, useOutletContext } from 'react-router'
 import { toggleOptions } from '../../lib/fetch'
-import { backendUrl } from '../../lib/variables'
+import { BACKEND_URL } from '../../lib/variables'
 import type { AppContext } from '../../types/app'
 import type { ProfileData } from '../../types/data'
 import ProfileFeed from './Feed'
@@ -32,7 +32,7 @@ const Other: FunctionComponent = () => {
 
     try {
       const response = await fetch(
-        `${backendUrl}/follow/${user.id}`,
+        `${BACKEND_URL}/follow/${user.id}`,
         toggleOptions(changed, controller.signal)
       )
       if (!response.ok) {

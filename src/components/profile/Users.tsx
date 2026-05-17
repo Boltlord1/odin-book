@@ -4,7 +4,7 @@ import { Link, useOutletContext } from 'react-router'
 import useDebounce from '../../hooks/debounce'
 import useFetch from '../../hooks/fetch'
 import { getImg } from '../../lib/cloudinary'
-import { backendUrl } from '../../lib/variables'
+import { BACKEND_URL } from '../../lib/variables'
 import type { AppContext } from '../../types/app'
 import type { UserExtraData } from '../../types/data'
 import Search from '../post/Search'
@@ -15,7 +15,7 @@ const Users: FunctionComponent = () => {
   const { self } = useOutletContext<AppContext>()
   const debouncedSearch = useDebounce(search, 300)
 
-  const path = `${backendUrl}/user?search=${debouncedSearch}`
+  const path = `${BACKEND_URL}/user?search=${debouncedSearch}`
   useFetch(setUsers, path, debouncedSearch)
 
   return (

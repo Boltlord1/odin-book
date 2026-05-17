@@ -1,10 +1,8 @@
-import type { FunctionComponent, SubmitEventHandler } from 'react'
+import type { FunctionComponent } from 'react'
 import { useNavigate } from 'react-router'
-import { jsonOptions } from '../../lib/fetch'
-import { backendUrl } from '../../lib/variables'
-import Label from '../general/Label'
-import Form from './Form'
-import Input from './Input'
+import Form from '../validate/Form'
+import NameInput from '../validate/Name'
+import TextInput from '../validate/Text'
 
 interface Props {
   provider: 'Google' | 'Github'
@@ -12,38 +10,28 @@ interface Props {
 
 const SignUpOAuth: FunctionComponent<Props> = ({ provider }) => {
   const navigate = useNavigate()
-
-  const username = <Input name='username' />
-  const display = <Input name='display' />
-
-  const handleSubmit: SubmitEventHandler = async (event) => {
-    event.preventDefault()
-
-    const response = await fetch(
-      `${backendUrl}/auth/${provider.toLowerCase()}/signup`,
-      jsonOptions(event.target)
-    )
-    const json = await response.json()
-
-    if (json === true) {
-      navigate('/app/post')
-      return
-    }
-
-    console.log(json)
+  function success() {
+    navigate('/app/post')
   }
 
+  const footer = (
+    <button
+      className='self-center rounded-2xl bg-sky-950 p-2 px-6 text-white active:bg-sky-800'
+      type='submit'
+    >
+      Sign Up
+    </button>
+  )
+
   return (
-    <Form handleSubmit={handleSubmit}>
-      <h2 className='text-center text-xl'>Create an account with {provider}</h2>
-      <Label input={username} label='Username' />
-      <Label input={display} label='Display Name' />
-      <button
-        className='self-center rounded-2xl bg-sky-950 p-2 px-6 text-white active:bg-sky-800'
-        type='submit'
-      >
-        Sign Up
-      </button>
+    <Form
+      footer={footer}
+      header={`Create an account with ${provider}`}
+      path={`/auth/${provider.toLowerCase()}/signup`}
+      success={success}
+    >
+      <NameInput />
+      <TextInput label='Display name' min={2} name='display' />
     </Form>
   )
 }

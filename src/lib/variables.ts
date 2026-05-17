@@ -7,7 +7,7 @@ import {
 } from '@phosphor-icons/react'
 import type { DashboardLink } from '../types/app'
 
-const backendUrl: string = import.meta.env.VITE_API_URL
+const BACKEND_URL: string = import.meta.env.VITE_API_URL
 
 const dashboardLinks: DashboardLink[] = [
   { id: 'post', text: 'Feed', Icon: HouseIcon },
@@ -17,4 +17,4 @@ const dashboardLinks: DashboardLink[] = [
   { id: 'profile', text: 'Profile', Icon: UserIcon }
 ]
 
-export { backendUrl, dashboardLinks }
+export { BACKEND_URL, dashboardLinks }

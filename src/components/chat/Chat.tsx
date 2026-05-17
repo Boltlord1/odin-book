@@ -1,9 +1,9 @@
 import { AdvancedImage } from '@cloudinary/react'
 import { type FunctionComponent, useState } from 'react'
 import { Link, useLoaderData } from 'react-router'
+import { reverseMap } from '../../lib/array'
 import { getImg } from '../../lib/cloudinary'
-import { reverseMap } from '../../lib/map'
-import { backendUrl } from '../../lib/variables'
+import { BACKEND_URL } from '../../lib/variables'
 import type { ChatData, MessageData } from '../../types/data'
 import Form from '../general/Content'
 import Message from './Message'
@@ -30,7 +30,7 @@ const Chat: FunctionComponent = () => {
         ))}
       </div>
       <Form
-        path={`${backendUrl}/chat/${chat.id}`}
+        path={`${BACKEND_URL}/chat/${chat.id}`}
         placeholder='message'
         update={updateMessages}
       />

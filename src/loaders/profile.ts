@@ -1,6 +1,6 @@
 import { type LoaderFunction, redirect } from 'react-router'
 import getUser from '../lib/auth'
-import { backendUrl } from '../lib/variables'
+import { BACKEND_URL } from '../lib/variables'
 import type { ProfileData } from '../types/data'
 
 const profileLoader: LoaderFunction = async ({ params }) => {
@@ -13,7 +13,7 @@ const profileLoader: LoaderFunction = async ({ params }) => {
     return redirect('/app/profile')
   }
 
-  const response = await fetch(`${backendUrl}/user/${params.id}`, {
+  const response = await fetch(`${BACKEND_URL}/user/${params.id}`, {
     credentials: 'include'
   })
 
