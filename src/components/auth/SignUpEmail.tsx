@@ -6,7 +6,13 @@ import PasswordInput from '../validate/Password'
 
 const SignUpEmail: FunctionComponent = () => {
   const navigate = useNavigate()
-  function success() {
+  function success(json?: true) {
+    if (json) {
+      setTimeout(() => {
+        navigate('/auth/login')
+      }, 5000)
+      return
+    }
     navigate('/auth/login')
   }
 

@@ -8,7 +8,7 @@ import { FormContext } from '../../hooks/form'
 import { formOptions } from '../../lib/fetch'
 import { BACKEND_URL } from '../../lib/variables'
 import type { AlertType } from '../../types/app'
-import type { ClientError, ResError } from '../../types/response'
+import type { ClientError, ResError, ServerError } from '../../types/response'
 import Alert from '../general/Alert'
 
 interface Props<T> extends PropsWithChildren {
@@ -42,6 +42,7 @@ const Form = <T,>({
     delete validators.current[name]
   }
 
+  // biome-ignore lint/complexity/noExcessiveCognitiveComplexity: Complexity required to handle all types of responses
   const handleSubmit: SubmitEventHandler = async (event) => {
     event.preventDefault()
 
@@ -78,10 +79,25 @@ const Form = <T,>({
     }
 
     if (response.status === 401) {
-      const json: ResError = await response.json()
-      if (!Array.isArray(json)) {
-        setAlert(json.msg)
-        return
+      const type = response.headers.get('content-type')
+      if (type?.includes('application/json')) {
+        const json: ResError = await response.json()
+        if (!Array.isArray(json)) {
+          setAlert(json.msg)
+          return
+        }
+      }
+
+      success(true as T)
+      setAlert('You are not authorized. Redirecting...')
+      return
+    }
+
+    if (response.status === 502) {
+      const json: ServerError = await response.json()
+      setAlert(json.msg)
+      if (json.msg.toLowerCase().includes('redirecting')) {
+        success(json as T)
       }
     }
   }

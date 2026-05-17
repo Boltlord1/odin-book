@@ -6,7 +6,13 @@ import TextInput from '../validate/Text'
 
 const Upload: FunctionComponent = () => {
   const navigate = useNavigate()
-  function success(json: string) {
+  function success(json: string | true) {
+    if (json === true) {
+      setTimeout(() => {
+        navigate('/auth/login')
+      }, 5000)
+      return
+    }
     navigate(`/app/post/${json}`)
   }
 

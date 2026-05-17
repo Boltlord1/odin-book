@@ -1,5 +1,6 @@
 import type { FunctionComponent } from 'react'
 import { Link, useNavigate } from 'react-router'
+import type { ServerError } from '../../types/response'
 import EmailInput from '../validate/Email'
 import File from '../validate/File'
 import Form from '../validate/Form'
@@ -10,7 +11,13 @@ import OAuthLinks from './OAuthLinks'
 
 const SignUp: FunctionComponent = () => {
   const navigate = useNavigate()
-  function success() {
+  function success(json?: ServerError) {
+    if (json) {
+      setTimeout(() => {
+        navigate('/app/post')
+      }, 5000)
+      return
+    }
     navigate('/app/post')
   }
 
