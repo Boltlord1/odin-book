@@ -1,7 +1,7 @@
 import type { Identity } from './identity'
 
 interface UserData {
-  avatar: string
+  avatar: string | null
   display: string
   id: string
   name: string

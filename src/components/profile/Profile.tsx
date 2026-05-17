@@ -1,7 +1,6 @@
-import { AdvancedImage } from '@cloudinary/react'
 import type { FunctionComponent, PropsWithChildren } from 'react'
-import { getImg } from '../../lib/cloudinary'
 import type { ProfileData, SelfData } from '../../types/data'
+import { BigAvatar } from '../general/Avatar'
 
 interface Props extends PropsWithChildren {
   data: ProfileData | SelfData
@@ -11,7 +10,7 @@ interface Props extends PropsWithChildren {
 const Profile: FunctionComponent<Props> = ({ data, children, followed }) => (
   <>
     <div className='grid grid-cols-2'>
-      <AdvancedImage className='rounded-full' cldImg={getImg(data.avatar)} />
+      <BigAvatar publicId={data.avatar} />
       <div className='flex-1 self-center text-center'>
         <p className='font-semibold'>{data.display}</p>
         <p>

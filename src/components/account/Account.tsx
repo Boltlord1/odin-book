@@ -1,9 +1,8 @@
-import { AdvancedImage } from '@cloudinary/react'
 import { type FunctionComponent, useState } from 'react'
 import { Link, useOutletContext } from 'react-router'
-import { getImg } from '../../lib/cloudinary'
 import { BACKEND_URL } from '../../lib/variables'
 import type { AppContext } from '../../types/app'
+import { MedAvatar } from '../general/Avatar'
 import Display from './Display'
 import AvatarForm from './FormAvatar'
 import NameForm from './FormName'
@@ -36,10 +35,7 @@ const Account: FunctionComponent = () => {
   ) : (
     <Display className='flex flex-col gap-4 text-lg' setEdit={setAvatar}>
       <h2 className='font-semibold'>Avatar</h2>
-      <AdvancedImage
-        className='h-24 w-24 rounded-full'
-        cldImg={getImg(self.avatar)}
-      />
+      <MedAvatar publicId={self.avatar} />
     </Display>
   )
 

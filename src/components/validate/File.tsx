@@ -69,11 +69,11 @@ const File: FunctionComponent<Props> = ({
   useRegister('avatar', register, unregister, () => {
     const alert = getFileAlert(files, multiple)
     setAlert(alert)
-    const notEmpty = !!required && files !== null
-    if (alert === '' && !notEmpty) {
+    const missing = files === null && !!required
+    if (alert === '' && missing) {
       setAlert('Avatar is required')
     }
-    return !alert && notEmpty
+    return !(alert || missing)
   })
 
   const changeFiles: ChangeEventHandler<HTMLInputElement> = (event) => {

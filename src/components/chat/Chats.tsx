@@ -1,22 +1,29 @@
-import { AdvancedImage } from '@cloudinary/react'
+import { ChatSlashIcon } from '@phosphor-icons/react'
 import type { FunctionComponent } from 'react'
-import { Link, useLoaderData } from 'react-router'
-import { getImg } from '../../lib/cloudinary'
+import { Link } from 'react-router'
 import type { ChatDataMinimal } from '../../types/data'
+import { Avatar } from '../general/Avatar'
 
 const Chats: FunctionComponent = () => {
-  const chats = useLoaderData<ChatDataMinimal[]>()
+  const chats: ChatDataMinimal[] = []
 
+  if (chats.length === 0) {
+    return (
+      <div className='flex flex-col items-center gap-4'>
+        <ChatSlashIcon fill='#333' size={256} weight='thin' />
+        <h2 className='w-2/3 text-center text-lg'>
+          No chats found. Message a user to create a chat.
+        </h2>
+      </div>
+    )
+  }
   return (
     <div className='flex flex-col gap-4'>
       {chats.map((c) => (
         <div key={c.id}>
           <div className='flex gap-2'>
             <Link to={`/app/profile/${c.user.id}`}>
-              <AdvancedImage
-                className='h-8 w-8 rounded-full'
-                cldImg={getImg(c.user.avatar)}
-              />
+              <Avatar publicId={c.user.avatar} />
             </Link>
             <div className='flex-1'>
               <Link to={`/app/profile/${c.user.id}`}>

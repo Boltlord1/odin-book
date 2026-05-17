@@ -1,12 +1,11 @@
-import { AdvancedImage } from '@cloudinary/react'
 import { type FunctionComponent, useState } from 'react'
 import { Link, useOutletContext } from 'react-router'
 import useDebounce from '../../hooks/debounce'
 import useFetch from '../../hooks/fetch'
-import { getImg } from '../../lib/cloudinary'
 import { BACKEND_URL } from '../../lib/variables'
 import type { AppContext } from '../../types/app'
 import type { UserExtraData } from '../../types/data'
+import { Avatar } from '../general/Avatar'
 import Search from '../post/Search'
 
 const Users: FunctionComponent = () => {
@@ -28,10 +27,7 @@ const Users: FunctionComponent = () => {
           <div key={u.id}>
             <div className='flex gap-2'>
               <Link to={`/app/profile/${u.id}`}>
-                <AdvancedImage
-                  className='h-8 w-8 rounded-full'
-                  cldImg={getImg(u.avatar)}
-                />
+                <Avatar publicId={u.avatar} />
               </Link>
               <div className='flex flex-1 flex-col items-start'>
                 <Link to={`/app/profile/${u.id}`}>
