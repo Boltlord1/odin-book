@@ -78,10 +78,10 @@ const EditInput: FunctionComponent<Props> = ({
     <>
       <Label
         alert={userAlert}
-        blur={blurUsername}
-        change={changeWithAvailable}
         label='Username'
         name='username'
+        onBlur={blurUsername}
+        onChange={changeWithAvailable}
         placeholder={userPlaceholder}
         type='text'
         value={username}
@@ -90,10 +90,10 @@ const EditInput: FunctionComponent<Props> = ({
       </Label>
       <Label
         alert={displayAlert}
-        blur={blurDisplay}
-        change={changeDisplay}
         label='Display name'
         name='display'
+        onBlur={blurDisplay}
+        onChange={changeDisplay}
         placeholder={displayPlaceholder}
         type='text'
         value={display}

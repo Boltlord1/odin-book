@@ -1,51 +1,57 @@
 import { PaperPlaneRightIcon } from '@phosphor-icons/react'
-import type { SubmitEventHandler } from 'react'
-import adjustHeight from '../../lib/adjustHeight'
-import { jsonOptions } from '../../lib/fetch'
+import { type Dispatch, type SetStateAction, useState } from 'react'
+import ContentInput from '../validate/Content'
+import Form from '../validate/Form'
 
 interface Props<T> {
-  absolute?: boolean
+  label: string
   path: string
   placeholder: string
-  update: (data: T) => void
+  setState: Dispatch<SetStateAction<T[]>>
 }
 
-const Content = <T,>({ path, update, placeholder, absolute }: Props<T>) => {
-  const handleSubmit: SubmitEventHandler = async (event) => {
-    event.preventDefault()
+const Content = <T,>({ label, path, setState, placeholder }: Props<T>) => {
+  const [value, setValue] = useState('')
+  const [focus, setFocus] = useState(false)
 
-    const response = await fetch(path, jsonOptions(event.target))
-
-    if (response.ok) {
-      event.target.reset()
-      const json = await response.json()
-      update(json)
-      return
-    }
-
-    console.log(response)
+  function success(json: T) {
+    setState((prev) => [...prev, json])
   }
 
-  return (
-    <form
-      className={`${absolute ? 'relative' : 'gap-4'} flex flex-col`}
-      onSubmit={handleSubmit}
-    >
-      <textarea
-        className='resize-none rounded-lg bg-gray-100 p-2 text-sm outline-0'
-        name='content'
-        onChange={adjustHeight}
-        placeholder={`add a ${placeholder}...`}
-        rows={2}
-      />
+  function reset() {
+    setValue('')
+    setFocus(false)
+  }
+
+  const footer = focus && (
+    <div className='flex gap-2 self-end'>
       <button
-        className={`${absolute ? 'absolute right-4 -bottom-12' : 'self-end'} flex gap-2 rounded-lg bg-gray-100 px-4 py-1`}
+        className='flex gap-2 rounded-lg bg-gray-100 px-4 py-1'
+        onClick={reset}
+        type='button'
+      >
+        <span className='font-semibold'>Cancel</span>
+      </button>
+      <button
+        className='flex gap-2 rounded-lg bg-gray-100 px-4 py-1'
         type='submit'
       >
         <span className='font-semibold'>Send</span>
         <PaperPlaneRightIcon className='h-6 w-6' weight='bold' />
       </button>
-    </form>
+    </div>
+  )
+
+  return (
+    <Form app footer={footer} path={path} success={success}>
+      <ContentInput
+        label={label}
+        placeholder={placeholder}
+        setFocus={setFocus}
+        setValue={setValue}
+        value={value}
+      />
+    </Form>
   )
 }
 

@@ -35,10 +35,10 @@ const EmailInput: FunctionComponent = () => {
   return (
     <Label
       alert={alert}
-      blur={blur}
-      change={change}
       label='Email'
       name='email'
+      onBlur={blur}
+      onChange={change}
       required
       type='email'
       value={value}

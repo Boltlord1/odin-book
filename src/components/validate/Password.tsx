@@ -57,20 +57,20 @@ const PasswordInput: FunctionComponent = () => {
     <>
       <Label
         alert={passAlert}
-        blur={blurPassword}
-        change={changePassword}
         label='Password'
         name='password'
+        onBlur={blurPassword}
+        onChange={changePassword}
         required
         type='password'
         value={pass}
       />
       <Label
         alert={confAlert}
-        blur={blurConfirm}
-        change={changeConfirm}
         label='Confirm Password'
         name='confirm'
+        onBlur={blurConfirm}
+        onChange={changeConfirm}
         required
         type='password'
         value={conf}

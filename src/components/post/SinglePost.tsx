@@ -1,6 +1,7 @@
 import { type FunctionComponent, useState } from 'react'
 import { useLoaderData } from 'react-router'
 import useFetch from '../../hooks/fetch'
+import { reverseMap } from '../../lib/array'
 import { BACKEND_URL } from '../../lib/variables'
 import type { Sorts } from '../../types/app'
 import type { CommentData, PostData } from '../../types/data'
@@ -17,22 +18,19 @@ const SinglePost: FunctionComponent = () => {
   const path = `${BACKEND_URL}/comment/${post.id}?sort=${sort}`
   useFetch(setComments, path, sort)
 
-  const updateComment = (comment: CommentData) =>
-    setComments([comment, ...comments])
-
   return (
     <>
       <Post post={post} />
       <Content
-        absolute
-        path={path}
-        placeholder='comment'
-        update={updateComment}
+        label='Comment'
+        path={`/comment/${post.id}`}
+        placeholder='Add a comment...'
+        setState={setComments}
       />
       <Sort setSort={setSort} sort={sort} />
       {comments.length > 0 && (
         <div className='flex flex-col gap-2'>
-          {comments.map((c) => (
+          {reverseMap(comments, (c) => (
             <Comment comment={c} key={c.id} />
           ))}
         </div>

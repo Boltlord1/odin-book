@@ -1,18 +1,11 @@
-import { AdvancedImage } from '@cloudinary/react'
-import { ChatCircleIcon, HeartIcon } from '@phosphor-icons/react'
-import {
-  type FunctionComponent,
-  type MouseEventHandler,
-  useRef,
-  useState
-} from 'react'
+import { ChatCircleIcon } from '@phosphor-icons/react'
+import { type FunctionComponent, type MouseEventHandler, useState } from 'react'
 import { Link } from 'react-router'
-import { getImg } from '../../lib/cloudinary'
-import { toggleOptions } from '../../lib/fetch'
-import { BACKEND_URL } from '../../lib/variables'
-import type { CommentData, ReplyData } from '../../types/data'
+import type { CommentData } from '../../types/data'
+import { Avatar } from '../general/Avatar'
 import Content from '../general/Content'
 import Icon from '../general/Icon'
+import Like from '../general/Like'
 import Reply from './Reply'
 
 interface Props {
@@ -20,54 +13,10 @@ interface Props {
 }
 
 const Comment: FunctionComponent<Props> = ({ comment }) => {
-  const abortRef = useRef<AbortController | null>(null)
-  const [liked, setLiked] = useState(comment.liked)
   const [replies, setReplies] = useState(comment.replies)
   const [replyOpen, setReply] = useState(false)
 
-  const changeLiked: MouseEventHandler = async () => {
-    const changed = !liked
-    setLiked(changed)
-
-    if (abortRef.current) {
-      abortRef.current.abort()
-    }
-
-    const controller = new AbortController()
-    abortRef.current = controller
-
-    try {
-      const response = await fetch(
-        `${BACKEND_URL}/like/comment/${comment.id}`,
-        toggleOptions(changed, controller.signal)
-      )
-      if (!response.ok) {
-        throw new Error('Failed to like comment.')
-      }
-    } catch (err: unknown) {
-      if (err instanceof Error && err.name === 'AbortError') {
-        return
-      }
-
-      setLiked(!changed)
-      console.log('Failed to like comment.')
-    }
-  }
-
-  const updateReply = (reply: ReplyData) => setReplies([...replies, reply])
   const openReply: MouseEventHandler = () => setReply(!replyOpen)
-
-  const like = (
-    <Icon
-      divProps={{ onClick: changeLiked }}
-      Icon={HeartIcon}
-      iconProps={{
-        className: `${liked ? 'liked' : 'like'}`,
-        weight: liked ? 'fill' : 'bold'
-      }}
-      text={liked ? comment.likes + 1 : comment.likes}
-    />
-  )
 
   const reply = (
     <Icon
@@ -89,24 +38,26 @@ const Comment: FunctionComponent<Props> = ({ comment }) => {
   return (
     <div className='flex flex-col gap-2'>
       <div className='flex gap-2'>
-        <AdvancedImage
-          className='h-6 w-6 rounded-full'
-          cldImg={getImg(comment.author.avatar)}
-        />
+        <Avatar publicId={comment.author.avatar} />
         <div className='mb-1 flex-1'>
           {author}
           <p className='wrap-anywhere'>{comment.content}</p>
         </div>
         <div className='flex gap-2'>
           {reply}
-          {like}
+          <Like
+            initial={comment.liked}
+            likes={comment.likes}
+            path={`/like/comment/${comment.id}`}
+          />
         </div>
       </div>
       {replyOpen && (
         <Content
-          path={`http://localhost:3000/reply/${comment.id}`}
+          label='Reply'
+          path={`/reply/${comment.id}`}
           placeholder='reply'
-          update={updateReply}
+          setState={setReplies}
         />
       )}
       {replies.length > 0 && (

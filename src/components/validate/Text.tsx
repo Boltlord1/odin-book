@@ -17,6 +17,7 @@ interface Props {
   max?: number
   min?: number
   name: string
+  noLabel?: true
   placeholder?: string
   required?: boolean
 }
@@ -33,7 +34,8 @@ interface TextAreaProps extends Props {
 }
 
 const TextInput: FunctionComponent<InputProps | TextAreaProps> = (props) => {
-  const { textarea, name, label, placeholder, required, min, max } = props
+  const { textarea, name, label, placeholder, required, noLabel, min, max } =
+    props
 
   const [value, setValue] = useState('')
   const [alert, setAlert] = useState<AlertType>('')
@@ -49,45 +51,43 @@ const TextInput: FunctionComponent<InputProps | TextAreaProps> = (props) => {
     return !alert
   })
 
-  const change: ChangeEventHandler<HTMLInputElement> = (event) => {
+  const change: ChangeEventHandler<HTMLInputElement | HTMLTextAreaElement> = (
+    event
+  ) => {
     setValue(event.target.value)
     setAlert(
       validate('change', event.target.value, label, required, realMin, realMax)
     )
   }
 
-  const blur: FocusEventHandler<HTMLInputElement> = (event) => {
+  const blur: FocusEventHandler<HTMLInputElement | HTMLTextAreaElement> = (
+    event
+  ) => {
     setAlert(
       validate('blur', event.target.value, label, required, realMin, realMax)
     )
   }
 
+  const common = {
+    alert,
+    onBlur: blur,
+    onChange: change,
+    name,
+    placeholder,
+    value,
+    noLabel,
+    label: required ? label : `${label} (Optional)`
+  }
+
   return textarea ? (
     <Label
-      alert={alert}
-      blur={blur}
-      change={change}
-      label={required ? label : `${label} (Optional)`}
-      name={name}
+      {...common}
       oneLine={props.oneLine}
-      placeholder={placeholder}
-      required={required}
       rows={props.rows ?? 2}
       textarea
-      value={value}
     />
   ) : (
-    <Label
-      alert={alert}
-      blur={blur}
-      change={change}
-      label={required ? label : `${label} (Optional)`}
-      name={name}
-      placeholder={placeholder}
-      required={required}
-      type={props.type ?? 'text'}
-      value={value}
-    />
+    <Label {...common} type={props.type ?? 'text'} />
   )
 }
 

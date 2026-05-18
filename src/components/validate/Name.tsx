@@ -39,10 +39,10 @@ const NameInput: FunctionComponent = () => {
   return (
     <Label
       alert={alert}
-      blur={blur}
-      change={changeWithAvailable}
       label='Username'
       name='username'
+      onBlur={blur}
+      onChange={changeWithAvailable}
       type='text'
       value={value}
     >
