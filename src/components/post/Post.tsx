@@ -1,4 +1,4 @@
-import { ChatCircleIcon, ShareFatIcon } from '@phosphor-icons/react'
+import { ChatCircleIcon } from '@phosphor-icons/react'
 import type { FunctionComponent } from 'react'
 import { Link } from 'react-router'
 import shorten from '../../lib/shorten'
@@ -6,6 +6,7 @@ import type { PostData } from '../../types/data'
 import { Avatar } from '../general/Avatar'
 import Icon from '../general/Icon'
 import Like from '../general/Like'
+import Share from '../general/Share'
 import Slideshow from './Slideshow'
 
 interface Props {
@@ -47,7 +48,7 @@ const Post: FunctionComponent<Props> = ({ post, feed, user }) => {
           path={`/like/post/${post.id}`}
         />
         {feed ? <Link to={`/app/post/${post.id}`}>{comments}</Link> : comments}
-        <Icon Icon={ShareFatIcon} text='Share' />
+        <Share id={post.id} />
       </div>
     </div>
   )
