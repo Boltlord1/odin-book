@@ -1,18 +1,14 @@
 import { type FunctionComponent, useState } from 'react'
 import { Link, useLoaderData } from 'react-router'
 import { reverseMap } from '../../lib/array'
-import { BACKEND_URL } from '../../lib/variables'
-import type { ChatData, MessageData } from '../../types/data'
+import type { ChatData } from '../../types/data'
 import { Avatar } from '../general/Avatar'
-import Form from '../general/Content'
+import Content from '../general/Content'
 import Message from './Message'
 
 const Chat: FunctionComponent = () => {
   const chat = useLoaderData<ChatData>()
   const [messages, setMessages] = useState(chat.messages)
-
-  const updateMessages = (message: unknown) =>
-    setMessages([message as MessageData, ...messages])
 
   return (
     <>
@@ -25,10 +21,11 @@ const Chat: FunctionComponent = () => {
           <Message key={m.id} message={m} />
         ))}
       </div>
-      <Form
-        path={`${BACKEND_URL}/chat/${chat.id}`}
+      <Content
+        label='Message'
+        path={`/chat/${chat.id}`}
         placeholder='message'
-        update={updateMessages}
+        setState={setMessages}
       />
     </>
   )

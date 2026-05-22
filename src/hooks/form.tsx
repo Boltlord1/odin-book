@@ -6,7 +6,7 @@ const FormContext = createContext<FormContextType | null>(null)
 const useFormContext = () => {
   const context = useContext(FormContext)
   if (!context) {
-    throw new Error('Input must be used within a Form')
+    throw new Error('Context is missing provider')
   }
   return context
 }

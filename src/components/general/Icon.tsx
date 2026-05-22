@@ -14,13 +14,13 @@ const Icon: FunctionComponent<Props> = ({
   divProps,
   iconProps
 }) => {
-  const divClass = `flex gap-2 items-center min-w-12 ${divProps?.className ?? ''}`
+  const divClass = `flex gap-2 items-center min-w-12 font-semibold ${divProps?.className ?? ''}`
   const iconClass = `w-6 h-6 icon ${iconProps?.className ?? ''}`
 
   return (
     <div {...divProps} className={divClass}>
       <Icon weight='bold' {...iconProps} className={iconClass} />
-      <span className='font-semibold'>{text}</span>
+      <span>{text}</span>
     </div>
   )
 }

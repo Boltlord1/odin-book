@@ -1,6 +1,7 @@
 import type { FunctionComponent } from 'react'
 import type { ReplyData } from '../../types/data'
 import { Avatar } from '../general/Avatar'
+import Delete from '../general/Delete'
 import Like from '../general/Like'
 
 interface Props {
@@ -15,6 +16,7 @@ const Reply: FunctionComponent<Props> = ({ reply }) => (
       <p className='wrap-anywhere'>{reply.content}</p>
     </div>
     <div className='flex gap-2'>
+      <Delete id={reply.id} type='reply' userId={reply.author.id} />
       <Like
         initial={reply.liked}
         likes={reply.likes}

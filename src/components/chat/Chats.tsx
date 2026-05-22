@@ -1,11 +1,11 @@
 import { ChatSlashIcon } from '@phosphor-icons/react'
 import type { FunctionComponent } from 'react'
-import { Link } from 'react-router'
+import { Link, useLoaderData } from 'react-router'
 import type { ChatDataMinimal } from '../../types/data'
 import { Avatar } from '../general/Avatar'
 
 const Chats: FunctionComponent = () => {
-  const chats: ChatDataMinimal[] = []
+  const chats: ChatDataMinimal[] = useLoaderData()
 
   if (chats.length === 0) {
     return (
@@ -17,6 +17,7 @@ const Chats: FunctionComponent = () => {
       </div>
     )
   }
+
   return (
     <div className='flex flex-col gap-4'>
       {chats.map((c) => (

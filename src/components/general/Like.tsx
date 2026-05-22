@@ -10,14 +10,30 @@ import { BACKEND_URL } from '../../lib/variables'
 import Icon from './Icon'
 
 interface Props {
+  disabled?: boolean
   initial: boolean
   likes: number
   path: string
 }
 
-const Like: FunctionComponent<Props> = ({ initial, likes, path }) => {
+const Like: FunctionComponent<Props> = ({ initial, likes, path, disabled }) => {
   const [liked, setLiked] = useState(initial)
   const abortRef = useRef<AbortController | null>(null)
+
+  const icon = (
+    <Icon
+      Icon={HeartIcon}
+      iconProps={{
+        className: `${liked ? 'liked' : 'like'}`,
+        weight: liked ? 'fill' : 'bold'
+      }}
+      text={liked ? likes + 1 : likes}
+    />
+  )
+
+  if (disabled) {
+    return icon
+  }
 
   const changeLiked: MouseEventHandler = async () => {
     const changed = !liked
@@ -49,15 +65,9 @@ const Like: FunctionComponent<Props> = ({ initial, likes, path }) => {
   }
 
   return (
-    <Icon
-      divProps={{ onClick: changeLiked }}
-      Icon={HeartIcon}
-      iconProps={{
-        className: `${liked ? 'liked' : 'like'}`,
-        weight: liked ? 'fill' : 'bold'
-      }}
-      text={liked ? likes + 1 : likes}
-    />
+    <button onClick={changeLiked} type='button'>
+      {icon}
+    </button>
   )
 }
 

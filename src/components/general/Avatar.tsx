@@ -4,7 +4,7 @@ import type { FunctionComponent } from 'react'
 import { getAvatar, getBigAvatar, getMedAvatar } from '../../lib/cloudinary'
 
 interface Props {
-  publicId: string | null
+  publicId: string | null | undefined
 }
 
 const Avatar: FunctionComponent<Props> = ({ publicId }) => {

@@ -3,16 +3,15 @@ import type { Dispatch, JSX, SetStateAction } from 'react'
 import type { SelfData } from './data'
 import type { ClientError } from './response'
 
-interface AppContext {
-  self: SelfData
-  setSelf: Dispatch<SetStateAction<SelfData>>
+interface ConfirmOptions {
+  confirm: () => void
+  message: string
 }
 
-type Sorts = 'recent' | 'top'
-
-interface SortObject {
-  element: JSX.Element
-  value: Sorts
+interface AppContext {
+  self: SelfData
+  setOptions: Dispatch<SetStateAction<ConfirmOptions>>
+  setSelf: Dispatch<SetStateAction<SelfData>>
 }
 
 interface DashboardLink {
@@ -22,6 +21,13 @@ interface DashboardLink {
 }
 
 type AlertType = string | string[]
+type DeleteType = 'user' | 'post' | 'comment' | 'reply'
+type SortType = 'recent' | 'top'
+
+interface SortObject {
+  element: JSX.Element
+  value: SortType
+}
 
 interface ValidateProps {
   setValidate: Dispatch<SetStateAction<SelfData>>
@@ -38,14 +44,24 @@ interface FormContextType {
   unregister: Unregister
 }
 
+interface DeleteContextType {
+  comment?: (id: string) => void
+  post?: (id: string) => void
+  reply?: (id: string) => void
+  user?: (id: string) => void
+}
+
 export type {
   AlertType,
   AppContext,
+  ConfirmOptions,
   DashboardLink,
+  DeleteContextType,
+  DeleteType,
   FormContextType,
   Register,
   SortObject,
-  Sorts,
+  SortType,
   Unregister,
   ValidateProps,
   ValidatorFunction

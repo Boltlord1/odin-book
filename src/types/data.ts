@@ -21,12 +21,8 @@ interface SelfData extends UserExtraData {
   identities: Identity[]
 }
 
-interface CommentData extends ReplyData {
-  replies: ReplyData[]
-}
-
-interface ReplyData {
-  author: UserData
+interface ContentData {
+  author: UserData | null
   content: string
   createdAt: string
   id: string
@@ -34,8 +30,16 @@ interface ReplyData {
   likes: number
 }
 
-interface PostData {
+interface ReplyData extends ContentData {
   author: UserData
+}
+
+interface CommentData extends ContentData {
+  replies: ReplyData[]
+}
+
+interface PostData {
+  author: UserData | null
   comments: number
   content: string | null
   createdAt: string
