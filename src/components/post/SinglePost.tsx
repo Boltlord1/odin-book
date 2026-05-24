@@ -1,7 +1,7 @@
 import { type FunctionComponent, useState } from 'react'
 import { useLoaderData, useNavigate } from 'react-router'
 import { DeleteContext } from '../../hooks/delete'
-import useFetch from '../../hooks/fetch'
+import useFeed from '../../hooks/feed'
 import { reverseMap } from '../../lib/array'
 import { BACKEND_URL } from '../../lib/variables'
 import type { SortType } from '../../types/app'
@@ -16,8 +16,13 @@ const SinglePost: FunctionComponent = () => {
   const [sort, setSort] = useState<SortType>('recent')
   const [comments, setComments] = useState<CommentData[]>([])
 
-  const path = `${BACKEND_URL}/comment/${post.id}?sort=${sort}`
-  useFetch(setComments, path, sort)
+  const cursor = comments.at(-1)?.id || ''
+  const [loader, sentinel] = useFeed(
+    setComments,
+    `/comment/${post.id}`,
+    cursor,
+    { sort }
+  )
 
   async function deleteComment(id: string) {
     const response = await fetch(`${BACKEND_URL}/comment/${id}`, {
@@ -46,6 +51,9 @@ const SinglePost: FunctionComponent = () => {
     }
   }
 
+  const first = comments.slice(3)
+  const last = comments.slice(0, 3)
+
   return (
     <>
       <DeleteContext.Provider value={{ post: deletePost }}>
@@ -61,12 +69,17 @@ const SinglePost: FunctionComponent = () => {
       {comments.length > 0 && (
         <DeleteContext.Provider value={{ comment: deleteComment }}>
           <div className='flex flex-col gap-4'>
-            {reverseMap(comments, (c) => (
+            {reverseMap(first, (c) => (
+              <Comment comment={c} key={c.id} />
+            ))}
+            <div ref={sentinel} />
+            {reverseMap(last, (c) => (
               <Comment comment={c} key={c.id} />
             ))}
           </div>
         </DeleteContext.Provider>
       )}
+      {comments.length === 0 ? <h2>No comments</h2> : loader}
     </>
   )
 }

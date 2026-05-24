@@ -1,7 +1,7 @@
 import { type ChangeEventHandler, useState } from 'react'
 import { BACKEND_URL } from '../lib/variables'
 import useDebounce from './debounce'
-import useFetch from './fetch'
+import useFetch from './feed'
 
 function useAvailable(change: ChangeEventHandler) {
   const [available, setAvailable] = useState(true)

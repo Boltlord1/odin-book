@@ -23,7 +23,7 @@ const Comment: FunctionComponent<Props> = ({ comment }) => {
     <Icon
       Icon={ChatCircleIcon}
       iconProps={{ weight: 'bold' }}
-      text={comment.replies.length}
+      text={comment.reply}
     />
   )
 
@@ -44,6 +44,18 @@ const Comment: FunctionComponent<Props> = ({ comment }) => {
     if (response.ok) {
       const filtered = replies.filter((r) => r.id !== id)
       setReplies(filtered)
+    }
+  }
+
+  async function getMore() {
+    const cursor = replies.at(-1)?.id || ''
+    const response = await fetch(
+      `${BACKEND_URL}/reply/${comment.id}?cursor=${cursor}`
+    )
+
+    if (response.ok) {
+      const json = await response.json()
+      setReplies([...replies, ...json])
     }
   }
 
@@ -87,6 +99,11 @@ const Comment: FunctionComponent<Props> = ({ comment }) => {
               ))}
             </div>
           </DeleteContext.Provider>
+        )}
+        {comment.reply > replies.length && (
+          <button onClick={getMore} type='button'>
+            Load more ({comment.reply - replies.length})
+          </button>
         )}
       </div>
     </div>

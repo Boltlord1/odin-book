@@ -36,6 +36,7 @@ interface ReplyData extends ContentData {
 
 interface CommentData extends ContentData {
   replies: ReplyData[]
+  reply: number
 }
 
 interface PostData {

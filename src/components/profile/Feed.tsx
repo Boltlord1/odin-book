@@ -1,6 +1,6 @@
 import { type FunctionComponent, useState } from 'react'
 import { DeleteContext } from '../../hooks/delete'
-import useFetch from '../../hooks/fetch'
+import useFeed from '../../hooks/feed'
 import { BACKEND_URL } from '../../lib/variables'
 import type { SortType } from '../../types/app'
 import type { PostData } from '../../types/data'
@@ -15,8 +15,10 @@ const ProfileFeed: FunctionComponent<Props> = ({ id }) => {
   const [posts, setPosts] = useState<PostData[]>([])
   const [sort, setSort] = useState<SortType>('recent')
 
-  const path = `${BACKEND_URL}/user/${id}/post?sort=${sort}`
-  useFetch(setPosts, path, sort)
+  const cursor = posts.at(-1)?.id || ''
+  const [loader, sentinel] = useFeed(setPosts, `/user/${id}/post`, cursor, {
+    sort
+  })
 
   async function deletePost(id: string) {
     const response = await fetch(`${BACKEND_URL}/post/${id}`, {
@@ -30,11 +32,19 @@ const ProfileFeed: FunctionComponent<Props> = ({ id }) => {
     }
   }
 
+  const first = posts.slice(0, -3)
+  const last = posts.slice(-3)
+
   return (
-    <DeleteContext.Provider value={{ post: deletePost }}>
+    <>
       <Sort setSort={setSort} sort={sort} />
-      <Feed posts={posts} user={true} />
-    </DeleteContext.Provider>
+      <DeleteContext.Provider value={{ post: deletePost }}>
+        <Feed posts={first} user={true} />
+        {posts.length > 1 && <div className='-my-2' ref={sentinel} />}
+        <Feed posts={last} user={true} />
+      </DeleteContext.Provider>
+      {loader}
+    </>
   )
 }
 

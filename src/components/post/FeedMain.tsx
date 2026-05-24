@@ -1,7 +1,6 @@
 import { type FunctionComponent, useState } from 'react'
-import useDebounce from '../../hooks/debounce'
 import { DeleteContext } from '../../hooks/delete'
-import useFetch from '../../hooks/fetch'
+import useFeed from '../../hooks/feed'
 import { BACKEND_URL } from '../../lib/variables'
 import type { SortType } from '../../types/app'
 import type { PostData } from '../../types/data'
@@ -13,10 +12,12 @@ const FeedMain: FunctionComponent = () => {
   const [posts, setPosts] = useState<PostData[]>([])
   const [sort, setSort] = useState<SortType>('recent')
   const [search, setSearch] = useState('')
-  const debouncedSearch = useDebounce(search, 300)
 
-  const path = `${BACKEND_URL}/post?sort=${sort}&search=${debouncedSearch}`
-  useFetch(setPosts, path, sort, debouncedSearch)
+  const cursor = posts.at(-1)?.id || ''
+  const [loader, sentinel] = useFeed(setPosts, '/post', cursor, {
+    sort,
+    search
+  })
 
   async function deletePost(id: string) {
     const response = await fetch(`${BACKEND_URL}/post/${id}`, {
@@ -30,6 +31,9 @@ const FeedMain: FunctionComponent = () => {
     }
   }
 
+  const first = posts.slice(0, -3)
+  const last = posts.slice(-3)
+
   return (
     <>
       <div className='flex gap-4'>
@@ -37,8 +41,11 @@ const FeedMain: FunctionComponent = () => {
         {search.length === 0 && <Sort setSort={setSort} sort={sort} />}
       </div>
       <DeleteContext.Provider value={{ post: deletePost }}>
-        <Feed posts={posts} user={false} />
+        <Feed posts={first} user={false} />
+        {posts.length > 1 && <div className='-my-2' ref={sentinel} />}
+        <Feed posts={last} user={false} />
       </DeleteContext.Provider>
+      {loader}
     </>
   )
 }

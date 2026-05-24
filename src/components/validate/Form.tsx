@@ -55,7 +55,7 @@ const Form = <T,>({
     }
 
     const response = await fetch(
-      `${BACKEND_URL}${path}`,
+      BACKEND_URL + path,
       formOptions(event.target, method)
     )
 
