@@ -4,7 +4,6 @@ import {
   type FunctionComponent,
   type UIEventHandler,
   useEffect,
-  useLayoutEffect,
   useMemo,
   useRef,
   useState
@@ -28,6 +27,18 @@ const Slideshow: FunctionComponent<Props> = ({ data }) => {
     [data, breakpoint]
   )
 
+  const ref = useRef<HTMLDivElement>(null)
+  function moveTo(curr: number) {
+    const div = ref.current
+    setCurrent(curr)
+    if (div) {
+      const scroll = div.clientWidth * curr
+      requestAnimationFrame(() => {
+        div.scrollTo({ left: scroll, behavior: 'smooth' })
+      })
+    }
+  }
+
   useEffect(() => {
     const onResize = () => {
       const width = Math.min(window.innerWidth, 640)
@@ -48,9 +59,7 @@ const Slideshow: FunctionComponent<Props> = ({ data }) => {
     <>
       <button
         className={`${butClass} left-2`}
-        onClick={() =>
-          setCurrent(current === 0 ? data.length - 1 : current - 1)
-        }
+        onClick={() => moveTo(current === 0 ? data.length - 1 : current - 1)}
         type='button'
       >
         <CaretLeftIcon
@@ -62,9 +71,7 @@ const Slideshow: FunctionComponent<Props> = ({ data }) => {
       </button>
       <button
         className={`${butClass} right-2`}
-        onClick={() =>
-          setCurrent(current === data.length - 1 ? 0 : current + 1)
-        }
+        onClick={() => moveTo(current === data.length - 1 ? 0 : current + 1)}
         type='button'
       >
         <CaretRightIcon
@@ -77,40 +84,13 @@ const Slideshow: FunctionComponent<Props> = ({ data }) => {
     </>
   )
 
-  const ref = useRef<HTMLDivElement>(null)
-  // biome-ignore lint/correctness/useExhaustiveDependencies: the scroll animation needs to occur every time current changes
-  useLayoutEffect(() => {
-    const div = ref.current
-    if (!div) {
-      return
-    }
-
-    requestAnimationFrame(() =>
-      div.scrollTo({ left: div.clientWidth, behavior: 'instant' })
-    )
-  }, [current])
-
   const scroll: UIEventHandler<HTMLDivElement> = (event) => {
     const target = event.currentTarget
-    if (!target) {
-      return
-    }
-
+    const scroll = target.scrollLeft
     const width = target.clientWidth
-    if (target.scrollLeft > width * 1.5) {
-      setCurrent(current === data.length - 1 ? 0 : current + 1)
-    } else if (target.scrollLeft < width * 0.5) {
-      setCurrent(current === 0 ? data.length - 1 : current - 1)
-    } else {
-      target.scrollTo({ left: target.clientWidth, behavior: 'instant' })
-    }
+    const rounded = Math.round(scroll / width)
+    setCurrent(rounded)
   }
-
-  const slides = [
-    { index: current === 0 ? data.length - 1 : current - 1, role: 'prev' },
-    { index: current, role: 'curr' },
-    { index: current === data.length - 1 ? 0 : current + 1, role: 'next' }
-  ]
 
   return (
     <div className='-mx-4 flex flex-col gap-4'>
@@ -118,16 +98,16 @@ const Slideshow: FunctionComponent<Props> = ({ data }) => {
         {buttons}
         {multiple ? (
           <div
-            className='flex w-full touch-pan-x items-center overflow-x-auto bg-gray-800 [scrollbar-width:none] [&::-webkit-scrollbar]:hidden'
+            className='flex w-full touch-pan-x snap-x snap-mandatory items-center overflow-x-auto bg-gray-800 [scrollbar-width:none] [&::-webkit-scrollbar]:hidden'
             onScrollEnd={scroll}
             ref={ref}
             style={{ height: `${Math.ceil(width * ratio)}px` }}
           >
-            {slides.map(({ index, role }) => (
+            {data.map((img, ind) => (
               <AdvancedImage
-                className='max-h-full w-auto'
-                cldImg={cldImages[index]}
-                key={role}
+                className='max-h-full w-auto snap-center'
+                cldImg={cldImages[ind]}
+                key={img.id}
               />
             ))}
           </div>
@@ -149,7 +129,7 @@ const Slideshow: FunctionComponent<Props> = ({ data }) => {
             <button
               className={`h-3 w-3 rounded-full bg-gray-200 js-active:bg-gray-500 ${ind === current ? 'active' : ''}`}
               key={img.id}
-              onClick={() => setCurrent(ind)}
+              onClick={() => moveTo(ind)}
               type='button'
             />
           ))}
