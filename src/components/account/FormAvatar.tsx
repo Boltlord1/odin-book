@@ -19,7 +19,7 @@ const AvatarForm: FunctionComponent<EditProps> = ({ setEdit, setSelf }) => {
       footer={footer}
       header='Avatar'
       method='put'
-      path='/user/avatar'
+      path='/user'
       success={success}
     >
       <File accept='image/png, image/jpeg' label='' name='avatar' required />

@@ -2,7 +2,7 @@ import type { FunctionComponent } from 'react'
 
 interface Props {
   available: boolean
-  name: string
+  name?: string
 }
 
 const Available: FunctionComponent<Props> = ({ name, available }) => (

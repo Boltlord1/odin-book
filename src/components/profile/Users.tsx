@@ -2,12 +2,12 @@ import { type FunctionComponent, useState } from 'react'
 import { useOutletContext } from 'react-router'
 import useFeed from '../../hooks/feed'
 import type { AppContext } from '../../types/app'
-import type { UserExtraData } from '../../types/data'
+import type { UserData } from '../../types/data'
 import Search from '../post/Search'
 import User from './User'
 
 const Users: FunctionComponent = () => {
-  const [users, setUsers] = useState<UserExtraData[]>([])
+  const [users, setUsers] = useState<UserData[]>([])
   const [search, setSearch] = useState('')
   const { self } = useOutletContext<AppContext>()
 

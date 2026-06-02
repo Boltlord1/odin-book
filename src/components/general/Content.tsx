@@ -1,5 +1,5 @@
 import { PaperPlaneRightIcon } from '@phosphor-icons/react'
-import { type Dispatch, type SetStateAction, useState } from 'react'
+import { useState } from 'react'
 import ContentInput from '../validate/Content'
 import Form from '../validate/Form'
 
@@ -7,20 +7,21 @@ interface Props<T> {
   label: string
   path: string
   placeholder: string
-  setState: Dispatch<SetStateAction<T[]>>
+  success: (data: T) => void
 }
 
-const Content = <T,>({ label, path, setState, placeholder }: Props<T>) => {
+const Content = <T,>({ label, path, success, placeholder }: Props<T>) => {
   const [value, setValue] = useState('')
   const [focus, setFocus] = useState(false)
-
-  function success(json: T) {
-    setState((prev) => [...prev, json])
-  }
 
   function reset() {
     setValue('')
     setFocus(false)
+  }
+
+  function successAndReset(data: T) {
+    success(data)
+    reset()
   }
 
   const footer = focus && (
@@ -43,7 +44,7 @@ const Content = <T,>({ label, path, setState, placeholder }: Props<T>) => {
   )
 
   return (
-    <Form app footer={footer} path={path} success={success}>
+    <Form app footer={footer} path={path} success={successAndReset}>
       <ContentInput
         label={label}
         placeholder={placeholder}

@@ -1,10 +1,10 @@
 import type { FunctionComponent } from 'react'
 import { Link } from 'react-router'
-import type { UserExtraData } from '../../types/data'
+import type { UserData } from '../../types/data'
 import { Avatar } from '../general/Avatar'
 
 interface Props {
-  data: UserExtraData
+  data: UserData
   selfId: string
 }
 
@@ -20,10 +20,10 @@ const User: FunctionComponent<Props> = ({ data, selfId }) => (
         </Link>
         <div className='grid grid-cols-[minmax(100px,1fr)_minmax(100px,1fr)]'>
           <p>
-            {data.followers} Follower{data.followers === 1 ? '' : 's'}
+            {data.followerCount} Follower{data.followerCount === 1 ? '' : 's'}
           </p>
           <p>
-            {data.posts} Post{data.posts === 1 ? '' : 's'}
+            {data.postCount} Post{data.postCount === 1 ? '' : 's'}
           </p>
         </div>
       </div>

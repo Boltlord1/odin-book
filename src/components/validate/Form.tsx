@@ -49,7 +49,6 @@ const Form = <T,>({
     const results = Object.values(validators.current).map((v) => v())
     const valid = results.every((valid) => valid === true)
 
-    console.log(valid)
     if (!valid) {
       return
     }

@@ -1,57 +1,62 @@
 import type { Identity } from './identity'
 
-interface UserData {
+export interface UserData {
   avatar: string | null
+  commentCount: number
+  deleted: boolean
   display: string
+  followerCount: number
+  followingCount: number
   id: string
   name: string
+  postCount: number
+  replyCount: number
 }
 
-interface UserExtraData extends UserData {
-  followers: number
-  following: number
-  posts: number
-}
-
-interface ProfileData extends UserExtraData {
+export interface ProfileData extends UserData {
   followed: boolean
 }
 
-interface SelfData extends UserExtraData {
+export interface SelfData extends UserData {
   identities: Identity[]
 }
 
-interface ContentData {
+interface ContentBase {
+  authorId: string
+  createdAt: string
+  deleted: boolean
+  id: string
+}
+
+interface ContentData extends ContentBase {
   author: UserData | null
   content: string
-  createdAt: string
-  id: string
+  likeCount: number
   liked: boolean
-  likes: number
 }
 
-interface ReplyData extends ContentData {
+export interface ReplyData extends ContentData {
   author: UserData
+  commentId: string
 }
 
-interface CommentData extends ContentData {
-  replies: ReplyData[]
-  reply: number
+export interface CommentData extends ContentData {
+  postId: string
+  replyCount: number
 }
 
-interface PostData {
+export interface PostData extends ContentBase {
   author: UserData | null
-  comments: number
+  commentCount: number
   content: string | null
-  createdAt: string
-  id: string
   images: ImageData[]
+  likeCount: number
   liked: boolean
-  likes: number
+  replyCount: number
   title: string
 }
 
-interface ImageData {
+export interface ImageData {
   height: number
   id: string
   postId: string
@@ -59,37 +64,33 @@ interface ImageData {
   width: number
 }
 
-interface MessageData {
+export interface MessageData extends ContentBase {
+  authorId: string
+  chatId: string
   content: string
-  createdAt: Date
+  createdAt: string
+  deleted: boolean
   id: string
   sent: boolean
 }
 
-interface ChatData {
+interface ChatBase {
   id: string
-  messageCount: number
-  messages: MessageData[]
-  user: UserData
-}
-
-interface ChatDataMinimal {
-  id: string
-  message: MessageData
   messageCount: number
   user: UserData
 }
 
-export type {
-  ChatData,
-  ChatDataMinimal,
-  CommentData,
-  ImageData,
-  MessageData,
-  PostData,
-  ProfileData,
-  ReplyData,
-  SelfData,
-  UserData,
-  UserExtraData
+export interface PrivateChatData extends ChatBase {
+  type: 'Private'
 }
+
+export interface GroupChatData extends ChatBase {
+  name: string
+  type: 'Group'
+}
+
+export type ChatData = PrivateChatData | GroupChatData
+
+export type ChatDataMinimal =
+  | (PrivateChatData & { message: MessageData })
+  | (GroupChatData & { message: MessageData })

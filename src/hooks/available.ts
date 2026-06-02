@@ -1,7 +1,6 @@
-import { type ChangeEventHandler, useState } from 'react'
+import { type ChangeEventHandler, useEffect, useState } from 'react'
 import { BACKEND_URL } from '../lib/variables'
 import useDebounce from './debounce'
-import useFetch from './feed'
 
 function useAvailable(change: ChangeEventHandler) {
   const [available, setAvailable] = useState(true)
@@ -9,7 +8,16 @@ function useAvailable(change: ChangeEventHandler) {
   const debouncedName = useDebounce(name, 200)
 
   const path = `${BACKEND_URL}/user/name?name=${debouncedName}`
-  useFetch(setAvailable, path, debouncedName)
+  useEffect(() => {
+    async function getAvailable() {
+      const response = await fetch(path)
+      if (response.ok) {
+        const json = await response.json()
+        setAvailable(json)
+      }
+    }
+    getAvailable()
+  }, [path])
 
   const changeUsername: ChangeEventHandler<HTMLInputElement> = (event) => {
     setName(event.target.value)

@@ -11,7 +11,7 @@ import {
   type SetStateAction,
   useState
 } from 'react'
-import type { SortObject, Sorts } from '../../types/app'
+import type { SortObject, SortType } from '../../types/app'
 
 const sorts: SortObject[] = [
   {
@@ -35,8 +35,8 @@ const sorts: SortObject[] = [
 ]
 
 interface Props {
-  setSort: Dispatch<SetStateAction<Sorts>>
-  sort: Sorts
+  setSort: Dispatch<SetStateAction<SortType>>
+  sort: SortType
 }
 
 const Sort: FunctionComponent<Props> = ({ sort, setSort }) => {

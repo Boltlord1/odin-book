@@ -31,7 +31,9 @@ const Post: FunctionComponent<Props> = ({ post, feed, user }) => {
   const title = (
     <h3 className='wrap-break-word font-semibold text-lg'>{post.title}</h3>
   )
-  const comments = <Icon Icon={ChatCircleIcon} text={post.comments} />
+  const comments = (
+    <Icon Icon={ChatCircleIcon} text={post.commentCount + post.replyCount} />
+  )
   const content = feed ? shorten(post.content, 300) : post.content
 
   return (
@@ -49,7 +51,7 @@ const Post: FunctionComponent<Props> = ({ post, feed, user }) => {
       <div className='flex gap-4'>
         <Like
           initial={post.liked}
-          likes={post.likes}
+          likes={post.likeCount}
           path={`/like/post/${post.id}`}
         />
         {feed ? <Link to={`/app/post/${post.id}`}>{comments}</Link> : comments}

@@ -14,10 +14,10 @@ const Profile: FunctionComponent<Props> = ({ data, children, followed }) => (
       <div className='flex-1 self-center text-center'>
         <p className='font-semibold'>{data.display}</p>
         <p>
-          {followed ? data.followers + 1 : data.followers} Follower
-          {data.followers + 1 === 1 ? '' : 's'}
+          {followed ? data.followerCount + 1 : data.followerCount} Follower
+          {data.followerCount + 1 === 1 ? '' : 's'}
         </p>
-        <p>{data.following} Following</p>
+        <p>{data.followerCount} Following</p>
       </div>
     </div>
     <div className='flex flex-wrap justify-between gap-4'>{children}</div>

@@ -3,7 +3,7 @@ import { type FunctionComponent, useState } from 'react'
 import { Link } from 'react-router'
 import { DeleteContext } from '../../hooks/delete'
 import { BACKEND_URL } from '../../lib/variables'
-import type { CommentData } from '../../types/data'
+import type { CommentData, ReplyData } from '../../types/data'
 import { Avatar } from '../general/Avatar'
 import Content from '../general/Content'
 import Delete from '../general/Delete'
@@ -16,15 +16,12 @@ interface Props {
 }
 
 const Comment: FunctionComponent<Props> = ({ comment }) => {
-  const [replies, setReplies] = useState(comment.replies)
+  const [replies, setReplies] = useState<ReplyData[]>([])
+  const [count, setCount] = useState(comment.replyCount)
   const [replyOpen, setReply] = useState(false)
 
   const reply = (
-    <Icon
-      Icon={ChatCircleIcon}
-      iconProps={{ weight: 'bold' }}
-      text={comment.reply}
-    />
+    <Icon Icon={ChatCircleIcon} iconProps={{ weight: 'bold' }} text={count} />
   )
 
   const author = comment.author ? (
@@ -35,6 +32,11 @@ const Comment: FunctionComponent<Props> = ({ comment }) => {
     <h3 className='font-semibold leading-none'>Deleted</h3>
   )
 
+  function success(data: ReplyData) {
+    setReplies([...replies, data])
+    setCount(count + 1)
+  }
+
   async function deleteReply(id: string) {
     const response = await fetch(`${BACKEND_URL}/reply/${id}`, {
       credentials: 'include',
@@ -43,6 +45,7 @@ const Comment: FunctionComponent<Props> = ({ comment }) => {
 
     if (response.ok) {
       const filtered = replies.filter((r) => r.id !== id)
+      setCount(count - 1)
       setReplies(filtered)
     }
   }
@@ -71,7 +74,7 @@ const Comment: FunctionComponent<Props> = ({ comment }) => {
           <Like
             disabled={!comment.author}
             initial={comment.liked}
-            likes={comment.likes}
+            likes={comment.likeCount}
             path={`/like/comment/${comment.id}`}
           />
           {comment.author ? (
@@ -86,9 +89,9 @@ const Comment: FunctionComponent<Props> = ({ comment }) => {
         {replyOpen && (
           <Content
             label='Reply'
-            path={`/reply/${comment.id}`}
+            path={`/reply/${comment.id}?post=${comment.postId}`}
             placeholder='Add a reply...'
-            setState={setReplies}
+            success={success}
           />
         )}
         {replies.length > 0 && (
@@ -100,9 +103,9 @@ const Comment: FunctionComponent<Props> = ({ comment }) => {
             </div>
           </DeleteContext.Provider>
         )}
-        {comment.reply > replies.length && (
-          <button onClick={getMore} type='button'>
-            Load more ({comment.reply - replies.length})
+        {count > replies.length && (
+          <button className='text-left' onClick={getMore} type='button'>
+            Load replies ({count - replies.length})
           </button>
         )}
       </div>
