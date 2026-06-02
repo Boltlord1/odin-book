@@ -20,7 +20,7 @@ interface DashboardLink {
   text: string
 }
 
-type AlertType = string | string[]
+type AlertType = string | string[] | undefined | null | false
 type DeleteType = 'user' | 'post' | 'comment' | 'reply'
 type SortType = 'recent' | 'top'
 

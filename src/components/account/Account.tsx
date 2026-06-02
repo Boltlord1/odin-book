@@ -1,7 +1,8 @@
-import { type FunctionComponent, useState } from 'react'
-import { Link, useOutletContext } from 'react-router'
+import { type FunctionComponent, useEffect, useState } from 'react'
+import { Link, useOutletContext, useSearchParams } from 'react-router'
 import { BACKEND_URL } from '../../lib/variables'
 import type { AppContext } from '../../types/app'
+import Alert from '../general/Alert'
 import { MedAvatar } from '../general/Avatar'
 import Display from './Display'
 import AvatarForm from './FormAvatar'
@@ -11,6 +12,19 @@ const Account: FunctionComponent = () => {
   const { self, setSelf } = useOutletContext<AppContext>()
   const [editNames, setNames] = useState(false)
   const [editAvatar, setAvatar] = useState(false)
+
+  const [searchParams, setSearchParams] = useSearchParams()
+  const [alert, setAlert] = useState('')
+
+  const query = '?path=/app/account'
+  useEffect(() => {
+    const alert = searchParams.get('error')
+    if (alert) {
+      setAlert(alert)
+      searchParams.delete('error')
+      setSearchParams(searchParams)
+    }
+  }, [searchParams, setSearchParams])
 
   const names = editNames ? (
     <NameForm
@@ -62,7 +76,7 @@ const Account: FunctionComponent = () => {
           <h2>{google.data.email}</h2>
         ) : (
           <h2>
-            None <Link to={`${BACKEND_URL}/auth/google`}>Connect</Link>
+            None <Link to={`${BACKEND_URL}/auth/google${query}`}>Connect</Link>
           </h2>
         )}
         <h2 className='font-semibold'>Github</h2>
@@ -72,7 +86,7 @@ const Account: FunctionComponent = () => {
           </h2>
         ) : (
           <h2>
-            None <Link to={`${BACKEND_URL}/auth/github`}>Connect</Link>
+            None <Link to={`${BACKEND_URL}/auth/github${query}`}>Connect</Link>
           </h2>
         )}
       </div>
@@ -82,6 +96,7 @@ const Account: FunctionComponent = () => {
       >
         Log out
       </Link>
+      <Alert alert={alert} />
     </div>
   )
 }

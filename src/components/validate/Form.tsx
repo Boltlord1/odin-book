@@ -1,9 +1,11 @@
 import React, {
   type PropsWithChildren,
   type SubmitEventHandler,
+  useEffect,
   useRef,
   useState
 } from 'react'
+import { useSearchParams } from 'react-router'
 import { FormContext } from '../../hooks/form'
 import { formOptions } from '../../lib/fetch'
 import { BACKEND_URL } from '../../lib/variables'
@@ -31,6 +33,16 @@ const Form = <T,>({
 }: Props<T>) => {
   const [errors, setErrors] = useState<ClientError[]>([])
   const [alert, setAlert] = useState<AlertType>('')
+
+  const [searchParams, setSearchParams] = useSearchParams()
+  useEffect(() => {
+    const alert = searchParams.get('error')
+    if (alert) {
+      setAlert(alert)
+      searchParams.delete('error')
+      setSearchParams(searchParams)
+    }
+  }, [searchParams, setSearchParams])
 
   const validators = useRef<Record<string, () => boolean>>({})
 
