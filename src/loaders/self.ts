@@ -1,7 +1,7 @@
 import { type LoaderFunction, redirect } from 'react-router'
 import getUser from '../lib/auth'
 
-const selfLoader: LoaderFunction = async () => {
+export const selfLoader: LoaderFunction = async () => {
   const user = await getUser()
 
   if (user === null) {
@@ -10,5 +10,3 @@ const selfLoader: LoaderFunction = async () => {
 
   return user
 }
-
-export default selfLoader

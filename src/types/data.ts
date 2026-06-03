@@ -71,7 +71,6 @@ export interface MessageData extends ContentBase {
   createdAt: string
   deleted: boolean
   id: string
-  sent: boolean
 }
 
 interface ChatBase {

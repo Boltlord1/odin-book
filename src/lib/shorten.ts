@@ -1,8 +1,8 @@
 const newLine = /\r?\n/
 
 function shorten(content: string | null, length: number) {
-  if (content === null) {
-    return null
+  if (content === null || content.length <= length) {
+    return content
   }
 
   let string = content

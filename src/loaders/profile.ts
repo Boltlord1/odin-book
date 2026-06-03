@@ -3,7 +3,7 @@ import getUser from '../lib/auth'
 import { BACKEND_URL } from '../lib/variables'
 import type { ProfileData } from '../types/data'
 
-const profileLoader: LoaderFunction = async ({ params }) => {
+export const profileLoader: LoaderFunction = async ({ params }) => {
   const user = await getUser()
   if (user === null) {
     return redirect('/auth/login')
@@ -24,5 +24,3 @@ const profileLoader: LoaderFunction = async ({ params }) => {
   const json: ProfileData = await response.json()
   return json
 }
-
-export default profileLoader
