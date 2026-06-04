@@ -65,7 +65,7 @@ function useFeed<T>(
   const getMore = useMemo(
     () => async () => {
       const response = await fetch(
-        `${BACKEND_URL + path}?cursor=${cursor}&search=${debounced || ''}`,
+        `${BACKEND_URL + path}?cursor=${cursor}&sort=${sort}&search=${debounced || ''}`,
         options
       )
 
@@ -81,7 +81,7 @@ function useFeed<T>(
 
       setFetching(false)
     },
-    [setData, path, cursor, debounced]
+    [setData, path, cursor, sort, debounced]
   )
 
   useEffect(() => {

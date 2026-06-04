@@ -30,10 +30,10 @@ const SinglePost: FunctionComponent = () => {
   }
 
   async function deleteComment(id: string) {
-    const response = await fetch(`${BACKEND_URL}/comment/${id}`, {
-      credentials: 'include',
-      method: 'delete'
-    })
+    const response = await fetch(
+      `${BACKEND_URL}/comment/${id}?post=${post.id}`,
+      { credentials: 'include', method: 'delete' }
+    )
 
     if (response.ok) {
       const index = comments.findIndex((r) => r.id === id)

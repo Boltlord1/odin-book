@@ -19,7 +19,7 @@ const Reply: FunctionComponent<Props> = ({ reply }) => (
       <Delete id={reply.id} type='reply' userId={reply.author.id} />
       <Like
         initial={reply.liked}
-        likes={reply.likes}
+        likes={reply.likeCount}
         path={`/like/reply/${reply.id}`}
       />
     </div>
