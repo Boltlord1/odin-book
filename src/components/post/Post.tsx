@@ -31,9 +31,7 @@ const Post: FunctionComponent<Props> = ({ post, feed, user }) => {
   const title = (
     <h3 className='wrap-break-word font-semibold text-lg'>{post.title}</h3>
   )
-  const comments = (
-    <Icon Icon={ChatCircleIcon} text={post.commentCount + post.replyCount} />
-  )
+  const comments = <Icon Icon={ChatCircleIcon} text={post.commentCount} />
   const content = feed ? shorten(post.content, 300) : post.content
 
   return (

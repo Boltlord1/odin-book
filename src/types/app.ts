@@ -44,19 +44,11 @@ interface FormContextType {
   unregister: Unregister
 }
 
-interface DeleteContextType {
-  comment?: (id: string) => void
-  post?: (id: string) => void
-  reply?: (id: string) => void
-  user?: (id: string) => void
-}
-
 export type {
   AlertType,
   AppContext,
   ConfirmOptions,
   DashboardLink,
-  DeleteContextType,
   DeleteType,
   FormContextType,
   Register,

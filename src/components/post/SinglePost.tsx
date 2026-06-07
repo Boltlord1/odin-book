@@ -75,11 +75,11 @@ const SinglePost: FunctionComponent = () => {
         <DeleteContext.Provider value={{ comment: deleteComment }}>
           <div className='flex flex-col gap-4'>
             {first.map((c) => (
-              <Comment comment={c} key={c.id} />
+              <Comment comment={c} key={c.id} layer={0} sort={sort} />
             ))}
             <div ref={sentinel} />
             {last.map((c) => (
-              <Comment comment={c} key={c.id} />
+              <Comment comment={c} key={c.id} layer={0} sort={sort} />
             ))}
           </div>
         </DeleteContext.Provider>

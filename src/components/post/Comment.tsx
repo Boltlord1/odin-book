@@ -1,27 +1,65 @@
 import { ChatCircleIcon } from '@phosphor-icons/react'
-import { type FunctionComponent, useState } from 'react'
+import { type FunctionComponent, useEffect, useState } from 'react'
 import { Link } from 'react-router'
-import { DeleteContext } from '../../hooks/delete'
 import { BACKEND_URL } from '../../lib/variables'
-import type { CommentData, ReplyData } from '../../types/data'
+import type { SortType } from '../../types/app'
+import type { CommentData } from '../../types/data'
 import { Avatar } from '../general/Avatar'
 import Content from '../general/Content'
 import Delete from '../general/Delete'
 import Icon from '../general/Icon'
 import Like from '../general/Like'
-import Reply from './Reply'
 
 interface Props {
   comment: CommentData
+  layer: number
+  sort: SortType
 }
 
-const Comment: FunctionComponent<Props> = ({ comment }) => {
-  const [replies, setReplies] = useState<ReplyData[]>([])
-  const [count, setCount] = useState(comment.replyCount)
+const Comment: FunctionComponent<Props> = ({ comment, layer, sort }) => {
+  const [children, setChildren] = useState(comment.children)
   const [replyOpen, setReply] = useState(false)
 
+  useEffect(() => {
+    setChildren(comment.children)
+  }, [comment.children])
+
+  function success(data: CommentData) {
+    setChildren([data, ...children])
+  }
+
+  // async function deleteReply(id: string) {
+  //   const response = await fetch(`${BACKEND_URL}/reply/${id}`, {
+  //     credentials: 'include',
+  //     method: 'delete'
+  //   })
+
+  //   if (response.ok) {
+  //     const index = children.findIndex((r) => r.id === id)
+  //     const sliced = children.slice()
+
+  //     sliced[index].author = null
+  //     sliced[index].content = null
+  //     sliced[index].deletedAt = Date.now().toString()
+  //     setCount(count - 1)
+  //     setChildren(sliced)
+  //   }
+  // }
+
+  async function getMore() {
+    const cursor = children.at(-1)?.id
+    const response = await fetch(
+      `${BACKEND_URL}/comment/${comment.id}/reply?cursor=${cursor}&sort=${sort}`
+    )
+
+    if (response.ok) {
+      const json = await response.json()
+      setChildren([...children, ...json])
+    }
+  }
+
   const reply = (
-    <Icon Icon={ChatCircleIcon} iconProps={{ weight: 'bold' }} text={count} />
+    <Icon Icon={ChatCircleIcon} iconProps={{ weight: 'bold' }} text={'Reply'} />
   )
 
   const author = comment.author ? (
@@ -32,83 +70,52 @@ const Comment: FunctionComponent<Props> = ({ comment }) => {
     <h3 className='font-semibold leading-none'>Deleted</h3>
   )
 
-  function success(data: ReplyData) {
-    setReplies([...replies, data])
-    setCount(count + 1)
-  }
-
-  async function deleteReply(id: string) {
-    const response = await fetch(`${BACKEND_URL}/reply/${id}`, {
-      credentials: 'include',
-      method: 'delete'
-    })
-
-    if (response.ok) {
-      const filtered = replies.filter((r) => r.id !== id)
-      setCount(count - 1)
-      setReplies(filtered)
-    }
-  }
-
-  async function getMore() {
-    const cursor = replies.at(-1)?.id || ''
-    const response = await fetch(
-      `${BACKEND_URL}/reply/${comment.id}?cursor=${cursor}`
-    )
-
-    if (response.ok) {
-      const json = await response.json()
-      setReplies([...replies, ...json])
-    }
-  }
-
   return (
-    <div className='flex gap-2'>
+    <div
+      className='flex flex-1 flex-col gap-2'
+      style={{ marginLeft: layer * 4 }}
+    >
       <Avatar publicId={comment.author?.avatar} />
-      <div className='flex flex-1 flex-col gap-2'>
-        <div className='flex flex-col gap-1'>
-          {author}
-          <p className='wrap-break-word'>{comment.content}</p>
-        </div>
-        <div className='flex gap-2'>
-          <Like
-            disabled={!comment.author}
-            initial={comment.liked}
-            likes={comment.likeCount}
-            path={`/like/comment/${comment.id}`}
-          />
-          {comment.author ? (
-            <button onClick={() => setReply(!replyOpen)} type='button'>
-              {reply}
-            </button>
-          ) : (
-            reply
-          )}
-          <Delete id={comment.id} type='comment' userId={comment.author?.id} />
-        </div>
-        {replyOpen && (
-          <Content
-            label='Reply'
-            path={`/reply/${comment.id}?post=${comment.postId}`}
-            placeholder='Add a reply...'
-            success={success}
-          />
-        )}
-        {replies.length > 0 && (
-          <DeleteContext.Provider value={{ reply: deleteReply }}>
-            <div className='mt-2 flex flex-col gap-2'>
-              {replies.map((r) => (
-                <Reply key={r.id} reply={r} />
-              ))}
-            </div>
-          </DeleteContext.Provider>
-        )}
-        {count > replies.length && (
-          <button className='text-left' onClick={getMore} type='button'>
-            Load replies ({count - replies.length})
-          </button>
-        )}
+      <div className='flex flex-col gap-1'>
+        {author}
+        <p className='wrap-break-word'>{comment.content}</p>
       </div>
+      <div className='flex gap-2'>
+        <Like
+          disabled={!comment.author}
+          initial={comment.liked}
+          likes={comment.likeCount}
+          path={`/like/comment/${comment.id}`}
+        />
+        {comment.author ? (
+          <button onClick={() => setReply(!replyOpen)} type='button'>
+            {reply}
+          </button>
+        ) : (
+          reply
+        )}
+        <Delete id={comment.id} type='comment' userId={comment.author?.id} />
+      </div>
+      {replyOpen && (
+        <Content
+          label='Reply'
+          path={`/comment/${comment.postId}?post=${comment.postId}&parent=${comment.id}`}
+          placeholder='Add a reply...'
+          success={success}
+        />
+      )}
+      {children.length > 0 && (
+        <div className='mt-2 flex flex-col gap-2'>
+          {children.map((c) => (
+            <Comment comment={c} key={c.id} layer={layer + 1} sort={sort} />
+          ))}
+        </div>
+      )}
+      {comment.childCount > children.length && (
+        <button className='text-left' onClick={getMore} type='button'>
+          Load replies ({comment.childCount - children.length})
+        </button>
+      )}
     </div>
   )
 }

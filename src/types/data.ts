@@ -10,7 +10,6 @@ export interface UserData {
   id: string
   name: string
   postCount: number
-  replyCount: number
 }
 
 export interface ProfileData extends UserData {
@@ -22,37 +21,26 @@ export interface SelfData extends UserData {
 }
 
 interface ContentBase {
-  authorId: string
-  createdAt: string
-  deleted: boolean
-  id: string
-}
-
-interface ContentData extends ContentBase {
   author: UserData | null
-  content: string
+  authorId: string
+  content: string | null
+  createdAt: string
+  deletedAt: string
+  id: string
   likeCount: number
   liked: boolean
 }
 
-export interface ReplyData extends ContentData {
-  author: UserData
-  commentId: string
-}
-
-export interface CommentData extends ContentData {
+export interface CommentData extends ContentBase {
+  childCount: number
+  children: CommentData[]
+  parentId: string | null
   postId: string
-  replyCount: number
 }
 
 export interface PostData extends ContentBase {
-  author: UserData | null
   commentCount: number
-  content: string | null
   images: ImageData[]
-  likeCount: number
-  liked: boolean
-  replyCount: number
   title: string
 }
 
