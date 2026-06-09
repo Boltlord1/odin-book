@@ -1,9 +1,8 @@
 import { type FunctionComponent, useState } from 'react'
-import { useLoaderData, useNavigate } from 'react-router'
-import { DeleteContext } from '../../hooks/delete'
+import { useLoaderData, useNavigate, useOutletContext } from 'react-router'
 import useFeed from '../../hooks/feed'
 import { BACKEND_URL } from '../../lib/variables'
-import type { SortType } from '../../types/app'
+import type { AppContext, SortType } from '../../types/app'
 import type { CommentData, PostData } from '../../types/data'
 import Content from '../general/Content'
 import Comment from './Comment'
@@ -11,6 +10,7 @@ import Post from './Post'
 import Sort from './Sort'
 
 const SinglePost: FunctionComponent = () => {
+  const { self } = useOutletContext<AppContext>()
   const post = useLoaderData<PostData>()
   const [sort, setSort] = useState<SortType>('recent')
   const [comments, setComments] = useState<CommentData[]>([])
@@ -19,6 +19,7 @@ const SinglePost: FunctionComponent = () => {
   const cursor = comments.at(-1)?.id || ''
   const [loader, sentinel] = useFeed(
     setComments,
+    10,
     `/comment/${post.id}`,
     cursor,
     { sort }
@@ -29,7 +30,7 @@ const SinglePost: FunctionComponent = () => {
     setCount(count + 1)
   }
 
-  async function deleteComment(id: string) {
+  const deleteComment = async (id: string) => {
     const response = await fetch(
       `${BACKEND_URL}/comment/${id}?post=${post.id}`,
       { credentials: 'include', method: 'delete' }
@@ -39,8 +40,9 @@ const SinglePost: FunctionComponent = () => {
       const index = comments.findIndex((r) => r.id === id)
       const sliced = comments.slice()
       sliced[index].author = null
-      sliced[index].content = 'Comment was deleted.'
+      sliced[index].content = null
       setComments(sliced)
+      setCount(count - 1)
     }
   }
 
@@ -61,9 +63,11 @@ const SinglePost: FunctionComponent = () => {
 
   return (
     <>
-      <DeleteContext.Provider value={{ post: deletePost }}>
-        <Post post={post} />
-      </DeleteContext.Provider>
+      <Post
+        commentCount={count}
+        deleter={post.authorId === self.id && deletePost}
+        post={post}
+      />
       <Content
         label='Comment'
         path={`/comment/${post.id}`}
@@ -72,17 +76,27 @@ const SinglePost: FunctionComponent = () => {
       />
       <Sort setSort={setSort} sort={sort} />
       {comments.length > 0 && (
-        <DeleteContext.Provider value={{ comment: deleteComment }}>
-          <div className='flex flex-col gap-4'>
-            {first.map((c) => (
-              <Comment comment={c} key={c.id} layer={0} sort={sort} />
-            ))}
-            <div ref={sentinel} />
-            {last.map((c) => (
-              <Comment comment={c} key={c.id} layer={0} sort={sort} />
-            ))}
-          </div>
-        </DeleteContext.Provider>
+        <div className='flex flex-col gap-4'>
+          {first.map((c) => (
+            <Comment
+              comment={c}
+              deleter={deleteComment}
+              key={c.id}
+              layer={0}
+              sort={sort}
+            />
+          ))}
+          <div ref={sentinel} />
+          {last.map((c) => (
+            <Comment
+              comment={c}
+              deleter={deleteComment}
+              key={c.id}
+              layer={0}
+              sort={sort}
+            />
+          ))}
+        </div>
       )}
       {comments.length === 0 ? <h2>No comments</h2> : loader}
     </>

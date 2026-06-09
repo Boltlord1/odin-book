@@ -12,12 +12,19 @@ import Like from '../general/Like'
 
 interface Props {
   comment: CommentData
+  deleter: (id: string) => void
   layer: number
   sort: SortType
 }
 
-const Comment: FunctionComponent<Props> = ({ comment, layer, sort }) => {
+const Comment: FunctionComponent<Props> = ({
+  comment,
+  layer,
+  sort,
+  deleter
+}) => {
   const [children, setChildren] = useState(comment.children)
+  const [childCount, setChildCount] = useState(comment.childCount)
   const [replyOpen, setReply] = useState(false)
 
   useEffect(() => {
@@ -26,34 +33,18 @@ const Comment: FunctionComponent<Props> = ({ comment, layer, sort }) => {
 
   function success(data: CommentData) {
     setChildren([data, ...children])
+    setChildCount(childCount + 1)
   }
-
-  // async function deleteReply(id: string) {
-  //   const response = await fetch(`${BACKEND_URL}/reply/${id}`, {
-  //     credentials: 'include',
-  //     method: 'delete'
-  //   })
-
-  //   if (response.ok) {
-  //     const index = children.findIndex((r) => r.id === id)
-  //     const sliced = children.slice()
-
-  //     sliced[index].author = null
-  //     sliced[index].content = null
-  //     sliced[index].deletedAt = Date.now().toString()
-  //     setCount(count - 1)
-  //     setChildren(sliced)
-  //   }
-  // }
 
   async function getMore() {
     const cursor = children.at(-1)?.id
     const response = await fetch(
-      `${BACKEND_URL}/comment/${comment.id}/reply?cursor=${cursor}&sort=${sort}`
+      `${BACKEND_URL}/comment/${comment.id}/reply?cursor=${cursor}&sort=${sort}`,
+      { credentials: 'include' }
     )
 
     if (response.ok) {
-      const json = await response.json()
+      const json: CommentData[] = await response.json()
       setChildren([...children, ...json])
     }
   }
@@ -70,6 +61,22 @@ const Comment: FunctionComponent<Props> = ({ comment, layer, sort }) => {
     <h3 className='font-semibold leading-none'>Deleted</h3>
   )
 
+  const deleteComment = async (id: string) => {
+    const response = await fetch(
+      `${BACKEND_URL}/comment/${id}?post=${comment.postId}&parent=${comment.id}`,
+      { credentials: 'include', method: 'delete' }
+    )
+
+    if (response.ok) {
+      const index = children.findIndex((r) => r.id === id)
+      const sliced = children.slice()
+      sliced[index].author = null
+      sliced[index].content = null
+      setChildren(sliced)
+      setChildCount(childCount - 1)
+    }
+  }
+
   return (
     <div
       className='flex flex-1 flex-col gap-2'
@@ -78,7 +85,11 @@ const Comment: FunctionComponent<Props> = ({ comment, layer, sort }) => {
       <Avatar publicId={comment.author?.avatar} />
       <div className='flex flex-col gap-1'>
         {author}
-        <p className='wrap-break-word'>{comment.content}</p>
+        {comment.content ? (
+          <p className='wrap-break-word'>{comment.content}</p>
+        ) : (
+          <p>Comment was deleted</p>
+        )}
       </div>
       <div className='flex gap-2'>
         <Like
@@ -94,7 +105,7 @@ const Comment: FunctionComponent<Props> = ({ comment, layer, sort }) => {
         ) : (
           reply
         )}
-        <Delete id={comment.id} type='comment' userId={comment.author?.id} />
+        <Delete confirm={() => deleter(comment.id)} msg='this comment' />
       </div>
       {replyOpen && (
         <Content
@@ -107,13 +118,19 @@ const Comment: FunctionComponent<Props> = ({ comment, layer, sort }) => {
       {children.length > 0 && (
         <div className='mt-2 flex flex-col gap-2'>
           {children.map((c) => (
-            <Comment comment={c} key={c.id} layer={layer + 1} sort={sort} />
+            <Comment
+              comment={c}
+              deleter={deleteComment}
+              key={c.id}
+              layer={layer + 1}
+              sort={sort}
+            />
           ))}
         </div>
       )}
-      {comment.childCount > children.length && (
+      {childCount > children.length && (
         <button className='text-left' onClick={getMore} type='button'>
-          Load replies ({comment.childCount - children.length})
+          Load more ({comment.childCount - children.length})
         </button>
       )}
     </div>

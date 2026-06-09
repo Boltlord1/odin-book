@@ -18,6 +18,7 @@ interface Params {
 
 function useFeed<T>(
   setData: Dispatch<SetStateAction<T[]>>,
+  length: number,
   path: string,
   cursor: string,
   { sort, search }: Params
@@ -40,7 +41,7 @@ function useFeed<T>(
 
         if (response.ok) {
           const json: T[] = await response.json()
-          if (json.length < 10) {
+          if (json.length < length) {
             setMore(false)
           }
           setData(json)
@@ -60,7 +61,7 @@ function useFeed<T>(
     return () => {
       controller.abort()
     }
-  }, [setData, path, sort, debounced])
+  }, [setData, length, path, sort, debounced])
 
   const getMore = useMemo(
     () => async () => {
@@ -71,7 +72,7 @@ function useFeed<T>(
 
       if (response.ok) {
         const json: T[] = await response.json()
-        if (json.length < 10) {
+        if (json.length < length) {
           setMore(false)
         }
         setData((prev) => [...prev, ...json])
@@ -81,7 +82,7 @@ function useFeed<T>(
 
       setFetching(false)
     },
-    [setData, path, cursor, sort, debounced]
+    [setData, length, path, cursor, sort, debounced]
   )
 
   useEffect(() => {

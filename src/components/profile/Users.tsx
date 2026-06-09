@@ -12,7 +12,7 @@ const Users: FunctionComponent = () => {
   const { self } = useOutletContext<AppContext>()
 
   const cursor = users.at(-1)?.id || ''
-  const [loader, sentinel] = useFeed(setUsers, '/user', cursor, { search })
+  const [loader, sentinel] = useFeed(setUsers, 10, '/user', cursor, { search })
 
   const first = users.slice(0, -3)
   const last = users.slice(-3)

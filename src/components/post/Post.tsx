@@ -11,12 +11,20 @@ import Share from '../general/Share'
 import Slideshow from './Slideshow'
 
 interface Props {
+  commentCount: number
+  deleter?: ((id: string) => void) | false
   feed?: boolean
   post: PostData
   user?: boolean
 }
 
-const Post: FunctionComponent<Props> = ({ post, feed, user }) => {
+const Post: FunctionComponent<Props> = ({
+  commentCount,
+  deleter,
+  post,
+  feed,
+  user
+}) => {
   const author = post.author ? (
     <div className='flex gap-2'>
       <Avatar publicId={post.author.avatar} />
@@ -31,7 +39,7 @@ const Post: FunctionComponent<Props> = ({ post, feed, user }) => {
   const title = (
     <h3 className='wrap-break-word font-semibold text-lg'>{post.title}</h3>
   )
-  const comments = <Icon Icon={ChatCircleIcon} text={post.commentCount} />
+  const comments = <Icon Icon={ChatCircleIcon} text={commentCount} />
   const content = feed ? shorten(post.content, 300) : post.content
 
   return (
@@ -54,7 +62,7 @@ const Post: FunctionComponent<Props> = ({ post, feed, user }) => {
         />
         {feed ? <Link to={`/app/post/${post.id}`}>{comments}</Link> : comments}
         <Share id={post.id} />
-        <Delete id={post.id} type='post' userId={post.author?.id} />
+        {deleter && <Delete confirm={() => deleter(post.id)} msg='this post' />}
       </div>
     </div>
   )

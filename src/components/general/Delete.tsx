@@ -1,35 +1,17 @@
 import { TrashIcon } from '@phosphor-icons/react'
 import type { FunctionComponent } from 'react'
 import { useOutletContext } from 'react-router'
-import { useDeleteContext } from '../../hooks/delete'
-import type { AppContext, DeleteType } from '../../types/app'
+import type { AppContext } from '../../types/app'
 import Icon from './Icon'
 
 interface Props {
-  id: string
-  type: DeleteType
-  userId?: string
+  confirm: () => void
+  msg: string
 }
 
-const Delete: FunctionComponent<Props> = ({ id, type, userId }) => {
-  const { self, setOptions } = useOutletContext<AppContext>()
-  const context = useDeleteContext()
-
-  if (self.id !== userId) {
-    return
-  }
-
-  const confirm = () => {
-    const func = context[type]
-    if (func) {
-      func(id)
-    }
-  }
-
-  const message =
-    type === 'user'
-      ? 'Are you sure you want to delete your account?'
-      : `Are you sure you want to delete this ${type}?`
+const Delete: FunctionComponent<Props> = ({ confirm, msg }) => {
+  const { setOptions } = useOutletContext<AppContext>()
+  const message = `Are you sure you want to delete this ${msg}?`
 
   return (
     <button onClick={() => setOptions({ message, confirm })} type='button'>

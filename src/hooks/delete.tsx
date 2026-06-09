@@ -1,7 +1,6 @@
 import { createContext, useContext } from 'react'
-import type { DeleteContextType } from '../types/app'
 
-const DeleteContext = createContext<DeleteContextType | null>(null)
+const DeleteContext = createContext<((id: string) => void) | null>(null)
 
 const useDeleteContext = () => {
   const context = useContext(DeleteContext)

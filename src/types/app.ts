@@ -21,7 +21,6 @@ interface DashboardLink {
 }
 
 type AlertType = string | string[] | undefined | null | false
-type DeleteType = 'user' | 'post' | 'comment' | 'reply'
 type SortType = 'recent' | 'top'
 
 interface SortObject {
@@ -49,7 +48,6 @@ export type {
   AppContext,
   ConfirmOptions,
   DashboardLink,
-  DeleteType,
   FormContextType,
   Register,
   SortObject,
