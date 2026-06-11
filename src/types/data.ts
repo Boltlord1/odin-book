@@ -34,6 +34,7 @@ interface ContentBase {
 export interface CommentData extends ContentBase {
   childCount: number
   children: CommentData[]
+  collapsed: boolean
   parentId: string | null
   postId: string
 }

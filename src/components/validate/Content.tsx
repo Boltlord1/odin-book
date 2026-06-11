@@ -59,6 +59,7 @@ const ContentInput: FunctionComponent<Props> = ({
       alert={alert}
       label={label}
       name='content'
+      noLabel
       onBlur={blur}
       onChange={change}
       onFocus={focus}
