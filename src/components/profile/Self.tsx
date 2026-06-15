@@ -1,6 +1,7 @@
 import type { FunctionComponent } from 'react'
 import { Link, useOutletContext } from 'react-router'
 import type { AppContext } from '../../types/app'
+import Guard from '../general/Guard'
 import ProfileFeed from './Feed'
 import Profile from './Profile'
 
@@ -15,6 +16,10 @@ const ProfileSelf: FunctionComponent = () => {
       Settings
     </Link>
   )
+
+  if (!self) {
+    return <Guard msg='view your profile' />
+  }
 
   return (
     <>

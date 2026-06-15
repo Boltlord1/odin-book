@@ -58,6 +58,15 @@ const SinglePost: FunctionComponent = () => {
     }
   }
 
+  const commentForm = self && (
+    <Content
+      label='Comment'
+      path={`/comment/${post.id}`}
+      placeholder='Add a comment...'
+      success={success}
+    />
+  )
+
   const first = comments.slice(0, -3)
   const last = comments.slice(-3)
 
@@ -65,15 +74,10 @@ const SinglePost: FunctionComponent = () => {
     <>
       <Post
         commentCount={count}
-        deleter={post.authorId === self.id && deletePost}
+        deleter={post.authorId === self?.id && deletePost}
         post={post}
       />
-      <Content
-        label='Comment'
-        path={`/comment/${post.id}`}
-        placeholder='Add a comment...'
-        success={success}
-      />
+      {commentForm}
       <Sort setSort={setSort} sort={sort} />
       {comments.length > 0 && (
         <div className='flex flex-col gap-4'>
@@ -86,7 +90,7 @@ const SinglePost: FunctionComponent = () => {
               sort={sort}
             />
           ))}
-          <div ref={sentinel} />
+          <div className='-my-2' ref={sentinel} />
           {last.map((c) => (
             <Comment
               comment={c}

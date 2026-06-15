@@ -2,6 +2,7 @@ import { type FunctionComponent, useEffect, useState } from 'react'
 import { Link, useOutletContext, useSearchParams } from 'react-router'
 import { BACKEND_URL } from '../../lib/variables'
 import type { AppContext } from '../../types/app'
+import type { SelfData } from '../../types/data'
 import Alert from '../general/Alert'
 import { MedAvatar } from '../general/Avatar'
 import Display from './Display'
@@ -9,7 +10,9 @@ import AvatarForm from './FormAvatar'
 import NameForm from './FormName'
 
 const Account: FunctionComponent = () => {
-  const { self, setSelf } = useOutletContext<AppContext>()
+  const { self, setSelf } = useOutletContext() as AppContext & {
+    self: SelfData
+  }
   const [editNames, setNames] = useState(false)
   const [editAvatar, setAvatar] = useState(false)
 

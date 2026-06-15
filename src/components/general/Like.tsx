@@ -5,8 +5,10 @@ import {
   useRef,
   useState
 } from 'react'
+import { useOutletContext } from 'react-router'
 import { toggleOptions } from '../../lib/fetch'
 import { BACKEND_URL } from '../../lib/variables'
+import type { AppContext } from '../../types/app'
 import Icon from './Icon'
 
 interface Props {
@@ -17,6 +19,7 @@ interface Props {
 }
 
 const Like: FunctionComponent<Props> = ({ initial, likes, path, disabled }) => {
+  const { self } = useOutletContext<AppContext>()
   const [liked, setLiked] = useState(initial)
   const abortRef = useRef<AbortController | null>(null)
 
@@ -31,7 +34,7 @@ const Like: FunctionComponent<Props> = ({ initial, likes, path, disabled }) => {
     />
   )
 
-  if (disabled) {
+  if (disabled || !self) {
     return icon
   }
 

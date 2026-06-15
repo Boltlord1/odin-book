@@ -1,8 +1,8 @@
 import { ChatCircleIcon, PlusCircleIcon } from '@phosphor-icons/react'
 import { type FunctionComponent, useEffect, useState } from 'react'
-import { Link } from 'react-router'
+import { Link, useOutletContext } from 'react-router'
 import { BACKEND_URL } from '../../lib/variables'
-import type { SortType } from '../../types/app'
+import type { AppContext, SortType } from '../../types/app'
 import type { CommentData } from '../../types/data'
 import { Avatar } from '../general/Avatar'
 import Content from '../general/Content'
@@ -23,6 +23,7 @@ const Comment: FunctionComponent<Props> = ({
   sort,
   deleter
 }) => {
+  const { self } = useOutletContext<AppContext>()
   const [children, setChildren] = useState(comment.children)
   const [childCount, setChildCount] = useState(comment.childCount)
   const [replyOpen, setReply] = useState(false)
@@ -164,13 +165,18 @@ const Comment: FunctionComponent<Props> = ({
             path={`/like/comment/${comment.id}`}
           />
           {comment.author ? (
-            <button onClick={() => setReply(!replyOpen)} type='button'>
+            <button
+              onClick={() => setReply(!!self && !replyOpen)}
+              type='button'
+            >
               {reply}
             </button>
           ) : (
             reply
           )}
-          <Delete confirm={() => deleter(comment.id)} msg='this comment' />
+          {self?.id === comment.authorId && (
+            <Delete confirm={() => deleter(comment.id)} msg='this comment' />
+          )}
         </div>
         {replyOpen && replyForm}
       </div>

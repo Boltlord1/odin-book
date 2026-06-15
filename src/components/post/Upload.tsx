@@ -1,11 +1,19 @@
 import type { FunctionComponent } from 'react'
-import { useNavigate } from 'react-router'
+import { useNavigate, useOutletContext } from 'react-router'
+import type { AppContext } from '../../types/app'
+import Guard from '../general/Guard'
 import File from '../validate/File'
 import Form from '../validate/Form'
 import TextInput from '../validate/Text'
 
 const Upload: FunctionComponent = () => {
   const navigate = useNavigate()
+  const { self } = useOutletContext<AppContext>()
+
+  if (!self) {
+    return <Guard msg='upload posts' />
+  }
+
   function success(json: string | true) {
     if (json === true) {
       setTimeout(() => {

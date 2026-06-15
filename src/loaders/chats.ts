@@ -1,4 +1,4 @@
-import { type LoaderFunction, redirect } from 'react-router'
+import type { LoaderFunction } from 'react-router'
 import { options } from '../lib/fetch'
 import { BACKEND_URL } from '../lib/variables'
 import type { ChatDataMinimal } from '../types/data'
@@ -7,7 +7,7 @@ export const chatsLoader: LoaderFunction = async () => {
   const response = await fetch(`${BACKEND_URL}/chat`, options)
 
   if (!response.ok) {
-    return redirect('/auth/login')
+    return []
   }
 
   const json: ChatDataMinimal[] = await response.json()

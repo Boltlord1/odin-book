@@ -20,6 +20,10 @@ const Other: FunctionComponent = () => {
   const abortRef = useRef<AbortController | null>(null)
 
   const changeFollow: MouseEventHandler = async () => {
+    if (!self) {
+      return
+    }
+
     const changed = !followed
     setFollowed(changed)
 
@@ -72,8 +76,8 @@ const Other: FunctionComponent = () => {
   return (
     <>
       <Profile data={user} followed={followed}>
-        {follow}
-        {message}
+        {self && follow}
+        {self && message}
       </Profile>
       <ProfileFeed id={user.id} />
     </>

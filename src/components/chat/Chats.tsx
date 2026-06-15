@@ -1,11 +1,18 @@
 import { ChatSlashIcon } from '@phosphor-icons/react'
 import { type FunctionComponent, useState } from 'react'
-import { useLoaderData } from 'react-router'
+import { useLoaderData, useOutletContext } from 'react-router'
+import type { AppContext } from '../../types/app'
 import type { ChatDataMinimal } from '../../types/data'
+import Guard from '../general/Guard'
 import ChatListItem from './ChatList'
 
 const Chats: FunctionComponent = () => {
+  const { self } = useOutletContext<AppContext>()
   const [chats, setChats] = useState(useLoaderData<ChatDataMinimal[]>())
+
+  if (!self) {
+    return <Guard msg='view your chats' />
+  }
 
   if (chats.length === 0) {
     return (

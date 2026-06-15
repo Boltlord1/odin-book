@@ -5,11 +5,8 @@ import type { ProfileData } from '../types/data'
 
 export const profileLoader: LoaderFunction = async ({ params }) => {
   const user = await getUser()
-  if (user === null) {
-    return redirect('/auth/login')
-  }
 
-  if (user.id === params.id) {
+  if (user?.id === params.id) {
     return redirect('/app/profile')
   }
 

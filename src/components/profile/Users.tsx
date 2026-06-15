@@ -24,11 +24,11 @@ const Users: FunctionComponent = () => {
       </div>
       <div className='flex flex-col gap-4'>
         {first.map((u) => (
-          <User data={u} key={u.id} selfId={self.id} />
+          <User data={u} key={u.id} selfId={self?.id} />
         ))}
         <div ref={sentinel} />
         {last.map((u) => (
-          <User data={u} key={u.id} selfId={self.id} />
+          <User data={u} key={u.id} selfId={self?.id} />
         ))}
       </div>
       {loader}

@@ -9,7 +9,7 @@ interface ConfirmOptions {
 }
 
 interface AppContext {
-  self: SelfData
+  self: SelfData | null
   setOptions: Dispatch<SetStateAction<ConfirmOptions>>
   setSelf: Dispatch<SetStateAction<SelfData>>
 }

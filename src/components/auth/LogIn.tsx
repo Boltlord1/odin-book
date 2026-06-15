@@ -21,10 +21,22 @@ const LogIn: FunctionComponent = () => {
       <OAuthLinks />
       <p>
         Don't have an account?{' '}
-        <Link className='text-blue-800 underline' to='/auth/signup'>
+        <Link
+          className='text-blue-800 underline underline-offset-2 visited:text-indigo-800'
+          to='/auth/signup'
+        >
           Sign up
         </Link>{' '}
         instead
+      </p>
+      <p>
+        <Link
+          className='text-blue-800 underline underline-offset-2 visited:text-indigo-800'
+          to='/app/post'
+        >
+          Enter
+        </Link>{' '}
+        without signing in
       </p>
     </>
   )

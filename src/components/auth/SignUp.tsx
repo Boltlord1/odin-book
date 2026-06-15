@@ -33,7 +33,10 @@ const SignUp: FunctionComponent = () => {
       <OAuthLinks />
       <p>
         Already have an account?{' '}
-        <Link className='text-blue-700 underline' to='/auth/login'>
+        <Link
+          className='text-blue-800 underline underline-offset-2 visited:text-indigo-800'
+          to='/auth/login'
+        >
           Log in
         </Link>{' '}
         instead

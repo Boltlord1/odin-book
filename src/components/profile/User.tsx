@@ -5,7 +5,7 @@ import { Avatar } from '../general/Avatar'
 
 interface Props {
   data: UserData
-  selfId: string
+  selfId?: string
 }
 
 const User: FunctionComponent<Props> = ({ data, selfId }) => (
@@ -19,7 +19,7 @@ const User: FunctionComponent<Props> = ({ data, selfId }) => (
     {selfId !== data.id && (
       <Link
         className='self-start rounded-xl bg-gray-100 px-4 py-1 font-semibold'
-        to={`/app/message/${data.id}`}
+        to={selfId ? `/app/message/${data.id}` : '/app/chat'}
       >
         Message
       </Link>

@@ -13,6 +13,7 @@ import Upload from './components/post/Upload'
 import Other from './components/profile/Other'
 import Self from './components/profile/Self'
 import Users from './components/profile/Users'
+import { accountLoader } from './loaders/account'
 import { authLoader } from './loaders/auth'
 import { chatsLoader } from './loaders/chats'
 import { postLoader } from './loaders/post'
@@ -26,7 +27,7 @@ const routes: RouteObject[] = [
     element: <App />,
     loader: selfLoader,
     children: [
-      { path: '/app/account', element: <Account /> },
+      { path: '/app/account', element: <Account />, loader: accountLoader },
       { path: '/app/post', element: <FeedMain /> },
       { path: '/app/post/:id', element: <SinglePost />, loader: postLoader },
       { path: '/app/upload', element: <Upload /> },
