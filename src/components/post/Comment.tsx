@@ -115,7 +115,7 @@ const Comment: FunctionComponent<Props> = ({
             <div className='flex gap-4'>
               {author}
               <button
-                className='flex-1 bg-linear-to-b from-gray-200 via-gray-100 to-gray-200'
+                className='flex-1 not-dark:bg-linear-to-b from-gray-200 via-gray-100 to-gray-200 dark:bg-zinc-800'
                 onClick={collapse}
                 type='button'
               />
@@ -151,7 +151,7 @@ const Comment: FunctionComponent<Props> = ({
         <div className='flex gap-4'>
           {author}
           <button
-            className='flex-1 bg-linear-to-b from-gray-100 via-gray-50 to-gray-100'
+            className='flex-1 not-dark:bg-linear-to-b from-gray-100 via-gray-50 to-gray-100 dark:bg-zinc-800'
             onClick={collapse}
             type='button'
           />

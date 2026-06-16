@@ -12,14 +12,14 @@ interface Props extends PropsWithChildren {
 const Buttons: FunctionComponent<Props> = ({ setEdit }) => (
   <div className='flex gap-4'>
     <button
-      className='rounded-xl bg-gray-100 px-4 py-1 text-base'
+      className='rounded-xl bg-gray-100 px-4 py-1 text-base dark:bg-zinc-700'
       onClick={() => setEdit(false)}
       type='button'
     >
       Cancel
     </button>
     <button
-      className='rounded-xl bg-gray-100 px-4 py-1 text-base'
+      className='rounded-xl bg-gray-100 px-4 py-1 text-base dark:bg-zinc-700'
       type='submit'
     >
       Save

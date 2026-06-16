@@ -25,7 +25,7 @@ const Mobile: FunctionComponent = () => {
 
   return (
     <nav
-      className={`sticky top-0 z-50 -m-4 flex justify-center gap-2 xxs:gap-8 border-pink-500 border-b-2 bg-white p-2 transition-transform duration-300 lg:hidden ${hidden ? '-translate-y-full' : 'translate-y-0'}`}
+      className={`sticky top-0 z-50 -m-4 flex justify-center gap-2 xxs:gap-8 border-pink-500 border-b-2 bg-white p-2 transition-transform duration-300 lg:hidden dark:bg-zinc-900 ${hidden ? '-translate-y-full' : 'translate-y-0'}`}
     >
       {dashboardLinks.map(({ id, Icon }) => (
         <NavLink

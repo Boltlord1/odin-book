@@ -1,6 +1,7 @@
 @import "tailwindcss";
 
 @custom-variant js-active (&.active);
+@custom-variant dark (&:where(.dark, .dark *));
 
 @layer base {
   input[type="search"]::-webkit-search-cancel-button,
@@ -34,20 +35,4 @@
   display: flex;
   flex-direction: column;
   min-height: 100vh;
-}
-
-.icon.like path {
-  fill: black;
-}
-
-.icon.liked path {
-  fill: var(--color-pink-600);
-}
-
-.icon.upload path {
-  fill: var(--color-gray-400);
-}
-
-.icon.uploaded path {
-  fill: var(--color-gray-800);
 }

@@ -1,6 +1,7 @@
 import { type FunctionComponent, useEffect, useRef, useState } from 'react'
 import { Outlet, useLoaderData } from 'react-router'
-import type { ConfirmOptions } from '../types/app'
+import { getTheme } from '../lib/preference'
+import type { AppContext, ConfirmOptions } from '../types/app'
 import type { SelfData } from '../types/data'
 import Laptop from './Laptop'
 import Mobile from './Mobile'
@@ -8,6 +9,8 @@ import Mobile from './Mobile'
 const App: FunctionComponent = () => {
   const data = useLoaderData<SelfData>()
   const [self, setSelf] = useState(data)
+
+  const theme = getTheme()
 
   const [options, setOptions] = useState<ConfirmOptions | null>(null)
   const dialog = useRef<HTMLDialogElement>(null)
@@ -18,7 +21,7 @@ const App: FunctionComponent = () => {
     }
   }, [options])
 
-  const context = { self, setSelf, setOptions }
+  const context: AppContext = { self, setSelf, setOptions, theme }
 
   return (
     <div className='relative flex flex-1 flex-col gap-4 p-4 sm:w-160 sm:self-center'>

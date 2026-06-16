@@ -11,7 +11,7 @@ const Avatar: FunctionComponent<Props> = ({ publicId }) => {
   if (publicId) {
     return (
       <AdvancedImage
-        className='aspect-square h-8 w-8 rounded-full bg-gray-50'
+        className='aspect-square h-8 w-8 rounded-full bg-gray-50 dark:bg-zinc-800'
         cldImg={getAvatar(publicId)}
       />
     )
@@ -23,7 +23,7 @@ const MedAvatar: FunctionComponent<Props> = ({ publicId }) => {
   if (publicId) {
     return (
       <AdvancedImage
-        className='aspect-square h-24 w-24 rounded-full bg-gray-50'
+        className='aspect-square h-24 w-24 rounded-full bg-gray-50 dark:bg-zinc-800'
         cldImg={getMedAvatar(publicId)}
       />
     )
@@ -35,7 +35,7 @@ const BigAvatar: FunctionComponent<Props> = ({ publicId }) => {
   if (publicId) {
     return (
       <AdvancedImage
-        className='aspect-square h-full max-h-64 w-full max-w-64 rounded-full bg-gray-50'
+        className='aspect-square h-full max-h-64 w-full max-w-64 rounded-full bg-gray-50 dark:bg-zinc-800'
         cldImg={getBigAvatar(publicId)}
       />
     )

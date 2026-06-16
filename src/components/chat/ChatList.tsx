@@ -42,14 +42,14 @@ const ChatListItem: FunctionComponent<Props> = ({ chat, remove }) => {
         </Link>
         <div className='flex items-start'>
           <Link
-            className='self-start rounded-l-xl bg-gray-100 px-4 py-1 font-semibold'
+            className='self-start rounded-l-xl bg-gray-100 px-4 py-1 font-semibold dark:bg-zinc-700'
             to={`/app/message/${chat.user.id}`}
           >
             Message
           </Link>
           <button onClick={hideChat} type='button'>
             <XIcon
-              className='rounded-r-xl bg-gray-50 p-1 text-red-400'
+              className='rounded-r-xl bg-gray-50 p-1 text-red-400 dark:bg-zinc-800'
               size={32}
             />
           </button>

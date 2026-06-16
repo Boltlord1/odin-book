@@ -10,7 +10,7 @@ const ProfileSelf: FunctionComponent = () => {
 
   const settings = (
     <Link
-      className='self-start rounded-full bg-gray-100 px-10 py-2 text-center'
+      className='self-start rounded-full bg-gray-100 px-10 py-2 text-center dark:bg-zinc-700'
       to={'/app/account'}
     >
       Settings

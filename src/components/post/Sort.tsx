@@ -53,14 +53,16 @@ const Sort: FunctionComponent<Props> = ({ sort, setSort }) => {
     <div className='flex'>
       <Listbox defaultValue={0} onChange={handleChange}>
         <ListboxButton className='flex items-center gap-2'>
-          <span className='bg-white font-semibold text-lg'>Sort</span>
-          <div className='flex items-center gap-2 rounded-lg bg-gray-100 px-4 py-1 font-semibold'>
+          <span className='bg-white font-semibold text-lg dark:bg-zinc-900'>
+            Sort
+          </span>
+          <div className='flex items-center gap-2 rounded-lg bg-gray-100 px-4 py-1 font-semibold dark:bg-zinc-700'>
             {selected.element}
           </div>
         </ListboxButton>
         <ListboxOptions
           anchor={{ to: 'bottom end', gap: 8 }}
-          className='flex flex-col rounded-xl bg-gray-100 px-4 py-2'
+          className='flex flex-col rounded-xl bg-gray-100 px-4 py-2 dark:bg-zinc-700'
           modal={false}
         >
           {sorts.map((s, i) => (

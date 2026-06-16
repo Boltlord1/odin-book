@@ -1,6 +1,7 @@
 import { ArrowsClockwiseIcon, MoonIcon, SunIcon } from '@phosphor-icons/react'
 import { type FunctionComponent, useEffect, useState } from 'react'
 import { Link, useOutletContext, useSearchParams } from 'react-router'
+import type { Theme } from '../../lib/preference'
 import { BACKEND_URL } from '../../lib/variables'
 import type { AppContext } from '../../types/app'
 import type { SelfData } from '../../types/data'
@@ -35,16 +36,16 @@ const Account: FunctionComponent = () => {
 
   const butClass = 'flex-1 rounded-xl py-2 font-semibold'
   const header = (
-    <div className='flex rounded-xl bg-gray-50'>
+    <div className='flex rounded-xl bg-gray-50 dark:bg-zinc-800'>
       <button
-        className={`${butClass} ${tab === 0 ? 'bg-gray-100' : ''}`}
+        className={`${butClass} ${tab === 0 ? 'bg-gray-100 dark:bg-zinc-700' : ''}`}
         onClick={() => setTab(0)}
         type='button'
       >
         Account
       </button>
       <button
-        className={`${butClass} ${tab === 1 ? 'bg-gray-100' : ''}`}
+        className={`${butClass} ${tab === 1 ? 'bg-gray-100 dark:bg-zinc-700' : ''}`}
         onClick={() => setTab(1)}
         type='button'
       >
@@ -54,17 +55,18 @@ const Account: FunctionComponent = () => {
   )
 
   if (tab === 1) {
+    const theme = (localStorage.getItem('theme') as Theme) || 'auto'
     const themeOptions: OptionTuple = [
-      { name: 'Auto', icon: ArrowsClockwiseIcon },
-      { name: 'Light', icon: SunIcon },
-      { name: 'Dark', icon: MoonIcon }
+      { name: 'auto', icon: ArrowsClockwiseIcon },
+      { name: 'light', icon: SunIcon },
+      { name: 'dark', icon: MoonIcon }
     ]
 
     return (
       <>
         {header}
         <div className='flex flex-col gap-4'>
-          <Select options={themeOptions} selected='Auto' title='Theme' />
+          <Select options={themeOptions} selected={theme} title='Theme' />
         </div>
       </>
     )
@@ -139,7 +141,7 @@ const Account: FunctionComponent = () => {
           )}
         </div>
         <Link
-          className='self-start rounded-xl bg-gray-100 px-4 py-1'
+          className='self-start rounded-xl bg-gray-100 px-4 py-1 dark:bg-zinc-700'
           to={`${BACKEND_URL}/auth/logout`}
         >
           Log out

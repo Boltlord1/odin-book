@@ -45,7 +45,7 @@ const Share: FunctionComponent<Props> = ({ id }) => {
       {toast && (
         <p
           aria-live='polite'
-          className='absolute -top-9 left-1/2 w-max -translate-x-1/2 animate-[toast_1s_ease_forwards] rounded-xl bg-gray-100 px-4 py-1 text-sm'
+          className='absolute -top-9 left-1/2 w-max -translate-x-1/2 animate-[toast_1s_ease_forwards] rounded-xl bg-gray-100 px-4 py-1 text-sm dark:bg-zinc-700'
           role='status'
         >
           {toast}

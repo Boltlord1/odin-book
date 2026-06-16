@@ -127,7 +127,7 @@ const Slideshow: FunctionComponent<Props> = ({ data }) => {
         <div className='flex items-center justify-center gap-4'>
           {data.map((img, ind) => (
             <button
-              className={`h-3 w-3 rounded-full bg-gray-200 js-active:bg-gray-500 ${ind === current ? 'active' : ''}`}
+              className={`h-3 w-3 rounded-full bg-gray-200 js-active:bg-gray-50 dark:bg-zinc-8000 ${ind === current ? 'active' : ''}`}
               key={img.id}
               onClick={() => moveTo(ind)}
               type='button'

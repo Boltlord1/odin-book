@@ -18,7 +18,7 @@ const User: FunctionComponent<Props> = ({ data, selfId }) => (
     </Link>
     {selfId !== data.id && (
       <Link
-        className='self-start rounded-xl bg-gray-100 px-4 py-1 font-semibold'
+        className='self-start rounded-xl bg-gray-100 px-4 py-1 font-semibold dark:bg-zinc-700'
         to={selfId ? `/app/message/${data.id}` : '/app/chat'}
       >
         Message

@@ -19,15 +19,16 @@ interface Props {
 }
 
 const Like: FunctionComponent<Props> = ({ initial, likes, path, disabled }) => {
-  const { self } = useOutletContext<AppContext>()
+  const { self, theme } = useOutletContext<AppContext>()
   const [liked, setLiked] = useState(initial)
   const abortRef = useRef<AbortController | null>(null)
 
+  const color = theme === 'dark' ? 'white' : 'black'
   const icon = (
     <Icon
       Icon={HeartIcon}
       iconProps={{
-        className: `${liked ? 'liked' : 'like'}`,
+        fill: liked ? 'oklch(59.2% 0.249 0.584)' : color,
         weight: liked ? 'fill' : 'bold'
       }}
       text={liked ? likes + 1 : likes}

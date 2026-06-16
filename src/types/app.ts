@@ -10,8 +10,9 @@ interface ConfirmOptions {
 
 interface AppContext {
   self: SelfData | null
-  setOptions: Dispatch<SetStateAction<ConfirmOptions>>
+  setOptions: Dispatch<SetStateAction<ConfirmOptions | null>>
   setSelf: Dispatch<SetStateAction<SelfData>>
+  theme: 'dark' | 'light'
 }
 
 interface DashboardLink {

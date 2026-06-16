@@ -27,14 +27,14 @@ const Content = <T,>({ label, path, success, placeholder }: Props<T>) => {
   const footer = focus && (
     <div className='flex gap-2 self-end'>
       <button
-        className='flex gap-2 rounded-lg bg-gray-100 px-4 py-1'
+        className='flex gap-2 rounded-lg bg-gray-100 px-4 py-1 dark:bg-zinc-700'
         onClick={reset}
         type='button'
       >
         <span className='font-semibold'>Cancel</span>
       </button>
       <button
-        className='flex gap-2 rounded-lg bg-gray-100 px-4 py-1'
+        className='flex gap-2 rounded-lg bg-gray-100 px-4 py-1 dark:bg-zinc-700'
         type='submit'
       >
         <span className='font-semibold'>Send</span>

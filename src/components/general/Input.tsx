@@ -18,7 +18,7 @@ const Input: FunctionComponent<Props> = ({
   handleChange
 }) => (
   <input
-    className='rounded-lg bg-gray-100 px-6 py-1 outline-none focus:shadow-md'
+    className='rounded-lg bg-gray-100 px-6 py-1 outline-none focus:shadow-md dark:bg-zinc-700'
     id={name}
     name={name}
     onChange={handleChange}

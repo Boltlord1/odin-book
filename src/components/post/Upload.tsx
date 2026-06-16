@@ -25,7 +25,10 @@ const Upload: FunctionComponent = () => {
   }
 
   const footer = (
-    <button className='self-end' type='submit'>
+    <button
+      className='mt-2 self-end rounded-lg bg-gray-50 px-4 py-1 font-semibold dark:bg-zinc-700'
+      type='submit'
+    >
       Create Post
     </button>
   )

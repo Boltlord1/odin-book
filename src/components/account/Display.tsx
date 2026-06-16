@@ -9,7 +9,7 @@ const Display: FunctionComponent<DisplayProps> = ({
   <div className={className}>
     {children}
     <button
-      className='self-start justify-self-start rounded-xl bg-gray-100 px-4 py-1 text-base'
+      className='self-start justify-self-start rounded-xl bg-gray-100 px-4 py-1 text-base dark:bg-zinc-700'
       onClick={() => setEdit(true)}
       type='button'
     >

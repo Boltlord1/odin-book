@@ -28,7 +28,7 @@ const Label: FunctionComponent<Props> = (props) => {
     element = (
       <textarea
         {...properties}
-        className='resize-none rounded-lg bg-gray-100 p-2 pr-4 pl-4 outline-0 focus:shadow-lg'
+        className='resize-none rounded-lg bg-gray-100 p-2 pr-4 pl-4 outline-0 focus:shadow-lg dark:bg-zinc-700'
         id={name}
         name={name}
         onChange={(event) => {
@@ -50,7 +50,7 @@ const Label: FunctionComponent<Props> = (props) => {
     element = (
       <input
         {...properties}
-        className='rounded-lg bg-gray-100 px-6 py-1 outline-none focus:shadow-md'
+        className='rounded-lg bg-gray-100 px-6 py-1 outline-none focus:shadow-md dark:bg-zinc-700'
         id={name}
         name={name}
         type={props.type || 'text'}

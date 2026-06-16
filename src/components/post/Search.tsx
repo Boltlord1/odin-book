@@ -8,7 +8,7 @@ interface Props {
 const Search: FunctionComponent<Props> = ({ search, setSearch }) => (
   <>
     <input
-      className='min-w-0 flex-1 rounded-xl bg-gray-100 px-6 py-1 outline-none'
+      className='min-w-0 flex-1 rounded-xl bg-gray-100 px-6 py-1 outline-none dark:bg-zinc-700'
       onChange={(e) => setSearch(e.target.value)}
       placeholder='Search...'
       type='search'
@@ -16,7 +16,7 @@ const Search: FunctionComponent<Props> = ({ search, setSearch }) => (
     />
     {search && (
       <button
-        className='rounded-xl bg-gray-100 px-6 py-1 font-semibold'
+        className='rounded-xl bg-gray-100 px-6 py-1 font-semibold dark:bg-zinc-700'
         onClick={() => setSearch('')}
         type='button'
       >

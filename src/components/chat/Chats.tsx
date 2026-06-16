@@ -7,7 +7,7 @@ import Guard from '../general/Guard'
 import ChatListItem from './ChatList'
 
 const Chats: FunctionComponent = () => {
-  const { self } = useOutletContext<AppContext>()
+  const { self, theme } = useOutletContext<AppContext>()
   const [chats, setChats] = useState(useLoaderData<ChatDataMinimal[]>())
 
   if (!self) {
@@ -17,7 +17,11 @@ const Chats: FunctionComponent = () => {
   if (chats.length === 0) {
     return (
       <div className='flex flex-col items-center gap-4'>
-        <ChatSlashIcon fill='#333' size={256} weight='thin' />
+        <ChatSlashIcon
+          fill={theme === 'dark' ? '#fff' : '#333'}
+          size={256}
+          weight='thin'
+        />
         <h2 className='w-2/3 text-center text-lg'>
           No chats found. Message a user to create a chat.
         </h2>

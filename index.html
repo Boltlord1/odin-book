@@ -1,12 +1,25 @@
 <!doctype html>
-<html lang="en">
+<html lang="en" class="dark:bg-zinc-900 dark:text-white">
   <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>odin-book</title>
   </head>
   <body>
-    <div id="root"></div>
+    <div id="root" class=""></div>
+    <script>
+    'use strict'
+    const theme = localStorage.getItem('theme')
+    if (
+      theme === 'dark' ||
+      ((theme === null || theme === 'auto') &&
+        window.matchMedia('(prefers-color-scheme: dark)').matches)
+    ) {
+      document.documentElement.classList.add('dark')
+    } else {
+      document.documentElement.classList.remove('dark')
+    }
+    </script>
     <script type="module" src="/src/main.tsx"></script>
   </body>
 </html>
