@@ -1,5 +1,6 @@
 import type { Icon } from '@phosphor-icons/react'
 import type { Dispatch, JSX, SetStateAction } from 'react'
+import type { ThemeNoAuto } from '../lib/preference'
 import type { SelfData } from './data'
 import type { ClientError } from './response'
 
@@ -12,7 +13,8 @@ interface AppContext {
   self: SelfData | null
   setOptions: Dispatch<SetStateAction<ConfirmOptions | null>>
   setSelf: Dispatch<SetStateAction<SelfData>>
-  theme: 'dark' | 'light'
+  setTheme: Dispatch<SetStateAction<ThemeNoAuto>>
+  theme: ThemeNoAuto
 }
 
 interface DashboardLink {

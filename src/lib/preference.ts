@@ -1,4 +1,5 @@
 export type Theme = 'dark' | 'light' | 'auto'
+export type ThemeNoAuto = ReturnType<typeof getTheme>
 export function getTheme() {
   const theme = localStorage.getItem('theme') as Theme
   if (theme && theme !== 'auto') {
