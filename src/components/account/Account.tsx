@@ -1,7 +1,7 @@
 import { ArrowsClockwiseIcon, MoonIcon, SunIcon } from '@phosphor-icons/react'
 import { type FunctionComponent, useEffect, useState } from 'react'
 import { Link, useOutletContext, useSearchParams } from 'react-router'
-import type { Theme } from '../../lib/preference'
+import { getTheme, type Theme } from '../../lib/preference'
 import { BACKEND_URL } from '../../lib/variables'
 import type { AppContext } from '../../types/app'
 import type { SelfData } from '../../types/data'
@@ -13,7 +13,7 @@ import AvatarForm from './FormAvatar'
 import NameForm from './FormName'
 
 const Account: FunctionComponent = () => {
-  const { self, setSelf } = useOutletContext() as AppContext & {
+  const { self, setSelf, setTheme } = useOutletContext() as AppContext & {
     self: SelfData
   }
   const [editNames, setNames] = useState(false)
@@ -56,17 +56,26 @@ const Account: FunctionComponent = () => {
 
   if (tab === 1) {
     const theme = (localStorage.getItem('theme') as Theme) || 'auto'
-    const themeOptions: OptionTuple = [
+    const themeOptions: OptionTuple<Theme> = [
       { name: 'auto', icon: ArrowsClockwiseIcon },
       { name: 'light', icon: SunIcon },
       { name: 'dark', icon: MoonIcon }
     ]
+    function changeTheme(theme: Theme) {
+      localStorage.setItem('theme', theme)
+      setTheme(getTheme())
+    }
 
     return (
       <>
         {header}
         <div className='flex flex-col gap-4'>
-          <Select options={themeOptions} selected={theme} title='Theme' />
+          <Select
+            onChange={changeTheme}
+            options={themeOptions}
+            selected={theme}
+            title='theme'
+          />
         </div>
       </>
     )

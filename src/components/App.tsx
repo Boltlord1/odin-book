@@ -10,7 +10,16 @@ const App: FunctionComponent = () => {
   const data = useLoaderData<SelfData>()
   const [self, setSelf] = useState(data)
 
-  const theme = getTheme()
+  const [theme, setTheme] = useState(getTheme())
+  console.log(theme)
+
+  useEffect(() => {
+    if (theme === 'dark') {
+      document.documentElement.classList.add('dark')
+    } else {
+      document.documentElement.classList.remove('dark')
+    }
+  }, [theme])
 
   const [options, setOptions] = useState<ConfirmOptions | null>(null)
   const dialog = useRef<HTMLDialogElement>(null)
@@ -21,7 +30,7 @@ const App: FunctionComponent = () => {
     }
   }, [options])
 
-  const context: AppContext = { self, setSelf, setOptions, theme }
+  const context: AppContext = { self, setSelf, setOptions, theme, setTheme }
 
   return (
     <div className='relative flex flex-1 flex-col gap-4 p-4 sm:w-160 sm:self-center'>

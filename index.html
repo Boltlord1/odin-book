@@ -1,12 +1,9 @@
 <!doctype html>
-<html lang="en" class="dark:bg-zinc-900 dark:text-white">
+<html lang="en">
   <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>odin-book</title>
-  </head>
-  <body>
-    <div id="root" class=""></div>
     <script>
     'use strict'
     const theme = localStorage.getItem('theme')
@@ -20,6 +17,15 @@
       document.documentElement.classList.remove('dark')
     }
     </script>
+    <style>
+    html.dark {
+      color: white;
+      background-color: oklch(21% 0.006 285.885);
+    }
+    </style>
+  </head>
+  <body>
+    <div id="root" class=""></div>
     <script type="module" src="/src/main.tsx"></script>
   </body>
 </html>
