@@ -11,6 +11,7 @@ const App: FunctionComponent = () => {
   const [self, setSelf] = useState(data)
 
   const [theme, setTheme] = useState(getTheme())
+  console.log(theme)
 
   useEffect(() => {
     if (theme === 'dark') {
